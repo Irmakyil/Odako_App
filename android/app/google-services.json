@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "295430287001",
+    "project_id": "yzta-bootcamp-c7993",
+    "storage_bucket": "yzta-bootcamp-c7993.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295430287001:android:e7231a59e52115593cd208",
+        "android_client_info": {
+          "package_name": "com.odako.ai.odako"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295430287001-dmgkv1mm1km8116tcv8h4c7q5uu8qjug.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.odako.ai.odako",
+            "certificate_hash": "9f1d3cc01265b68137ce6b804b0da76b550fce5f"
+          }
+        },
+        {
+          "client_id": "295430287001-55h9r72qn9d92ls4i9d8h55og2s49e63.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuQw4Jivjr834TeCLTlozMPoQrDQo3VrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "295430287001-55h9r72qn9d92ls4i9d8h55og2s49e63.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

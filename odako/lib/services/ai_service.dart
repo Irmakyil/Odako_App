@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class AIService {
   static const String _geminiApiKey = '';
-  static const String _geminiApiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+  static const String _geminiApiUrl = '';
 
   static Future<String> getDailyTaskSuggestion(String userInput) async {
     final prompt =

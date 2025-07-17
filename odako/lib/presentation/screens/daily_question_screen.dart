@@ -3,7 +3,6 @@ import '../widgets/chat_bubble.dart';
 import '../../routes/app_routes.dart';
 import '../../services/ai_service.dart';
 import '../../services/chat_service.dart';
-import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class DailyQuestionScreen extends StatefulWidget {
   const DailyQuestionScreen({super.key});
@@ -19,16 +18,10 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
   bool _isProcessingQueue = false;
   String? _sessionId;
 
-  // Speech-to-text fields
-  late stt.SpeechToText _speech;
-  bool _isListening = false;
-  String _speechError = '';
-
   @override
   void initState() {
     super.initState();
     _initializeChatSession();
-    _speech = stt.SpeechToText();
     // Add initial AI message
     _messages.add(ChatMessage(
       text: 'What do you want to accomplish today?',
@@ -82,48 +75,6 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
 
       // Process the message queue
       _processMessageQueue();
-    }
-  }
-
-  Future<void> _listen() async {
-    if (!_isListening) {
-      bool available = await _speech.initialize(
-        onStatus: (status) {
-          if (status == 'done' || status == 'notListening') {
-            setState(() => _isListening = false);
-          }
-        },
-        onError: (error) {
-          setState(() {
-            _isListening = false;
-            _speechError = error.errorMsg;
-          });
-        },
-      );
-      if (available) {
-        setState(() {
-          _isListening = true;
-          _speechError = '';
-        });
-        _speech.listen(
-          onResult: (val) {
-            setState(() {
-              _controller.text = val.recognizedWords;
-              _controller.selection = TextSelection.fromPosition(
-                TextPosition(offset: _controller.text.length),
-              );
-            });
-          },
-          localeId: 'en_US',
-        );
-      } else {
-        setState(() {
-          _speechError = 'Speech recognition unavailable';
-        });
-      }
-    } else {
-      setState(() => _isListening = false);
-      _speech.stop();
     }
   }
 
@@ -256,21 +207,8 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                       controller: _controller,
                       minLines: 1,
                       maxLines: 3,
-                      decoration: InputDecoration(
-                        hintText: 'Type your goal...',
-                        suffixIcon: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: Icon(
-                                Icons.mic,
-                                color: _isListening ? Colors.red : Colors.grey,
-                              ),
-                              onPressed: _isLoading ? null : _listen,
-                              tooltip: _isListening ? 'Listening...' : 'Voice input',
-                            ),
-                          ],
-                        ),
+                      decoration: const InputDecoration(
+                        hintText: 'Type your goal...'
                       ),
                       onSubmitted: (_) => _sendMessage(),
                       enabled: !_isLoading,
@@ -282,14 +220,6 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                   ),
                 ],
               ),
-              if (_speechError.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Text(
-                    _speechError,
-                    style: const TextStyle(color: Colors.red, fontSize: 12),
-                  ),
-                ),
               const SizedBox(height: 16),
               SizedBox(
                 width: double.infinity,

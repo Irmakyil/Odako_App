@@ -98,8 +98,12 @@ class _ChatScreenState extends State<ChatScreen> {
                 color: Colors.grey.shade200,
                 borderRadius: BorderRadius.circular(24),
               ),
-              child: const Center(
-                child: Text('🐙', style: TextStyle(fontSize: 56)),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(
+                  'lib/presentation/assets/mantar_maskot.png',
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
             const SizedBox(height: 16),

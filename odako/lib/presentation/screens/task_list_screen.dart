@@ -14,7 +14,7 @@ class Task {
 class OpenChatSection extends StatelessWidget {
   const OpenChatSection({super.key});
 
-  @override
+   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -26,14 +26,36 @@ class OpenChatSection extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: 80,
-                width: 80,
+                height: 300,
+                width: 300,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(16),
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).colorScheme.surface,
+                      Theme.of(context).colorScheme.primary.withAlpha(20),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.primary.withAlpha(60),
+                    width: 2,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).shadowColor.withAlpha(20),
+                      blurRadius: 12,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
+                  borderRadius: BorderRadius.circular(24),
                 ),
-                child: const Center(
-                  child: Text('🐙', style: TextStyle(fontSize: 36)),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Image.asset(
+                    'lib/presentation/assets/mantar_maskot.png',
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
               const SizedBox(height: 8),

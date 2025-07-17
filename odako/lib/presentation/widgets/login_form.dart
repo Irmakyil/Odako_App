@@ -32,7 +32,7 @@ class LoginForm extends StatelessWidget {
         children: [
           CustomTextField(
             controller: emailController,
-            labelText: 'E-posta',
+            labelText: 'Email',
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
               if (value == null || value.isEmpty) return 'Email is required';
@@ -53,7 +53,7 @@ class LoginForm extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: TextButton(
               onPressed: isLoading ? null : onForgotPassword,
-              style: TextButton.styleFrom(foregroundColor: Colors.white),
+              style: TextButton.styleFrom(foregroundColor: Colors.black87),
               child: const Text('Forgot my password?'),
             ),
           ),
@@ -68,7 +68,7 @@ class LoginForm extends StatelessWidget {
               Expanded(child: Divider()),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text('or', style: TextStyle(color: Colors.white70)),
+                child: Text('or', style: TextStyle(color: Colors.black87)),
               ),
               Expanded(child: Divider()),
             ],

@@ -171,79 +171,79 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFF7B5AFF), Color(0xFF5C258D)],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 16),
+              // Mascot
+              Center(
+                child: Image.asset(
+                  'lib/presentation/assets/logo.png',
+                  height: 120,
+                  fit: BoxFit.contain,
+                ),
               ),
-            ),
-          ),
-          SafeArea(
-            child: Center(
-              child: SingleChildScrollView(
+              const SizedBox(height: 24),
+              // Header
+              Text(
+                'Welcome to Odako',
+                style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Your focus buddy for daily tasks',
+                style: theme.textTheme.bodyLarge?.copyWith(color: theme.hintColor),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 32),
+              // TabBar for Login/Register
+              DefaultTabController(
+                length: 2,
+                initialIndex: _tabController.index,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 40),
-                    // Placeholder for phone image
                     Container(
-                      width: 220,
-                      height: 400,
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(32),
-                      ),
-                      child: const Icon(Icons.phone_android, size: 120, color: Colors.white54),
-                    ),
-                    const SizedBox(height: 32),
-                    const Text(
-                      'xxx',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 32),
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 24),
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.15),
+                        color: theme.colorScheme.surface.withAlpha(30),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: TabBar(
                         controller: _tabController,
                         indicator: BoxDecoration(
-                          color: Colors.white,
+                          color: theme.colorScheme.primary.withAlpha(30),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        labelColor: Colors.deepPurple,
-                        unselectedLabelColor: Colors.white,
+                        labelColor: theme.colorScheme.primary,
+                        unselectedLabelColor: theme.textTheme.bodyMedium?.color,
                         tabs: const [
                           Tab(text: 'Sign Up'),
-                          Tab(text: 'Login'),
+                          Tab(text: 'Sign In'),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxHeight: MediaQuery.of(context).size.height * 0.6,
+                    const SizedBox(height: 20),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.surface.withAlpha(40),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: theme.shadowColor.withAlpha(10),
+                            blurRadius: 8,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
                       ),
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 24),
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.15),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+                      child: SizedBox(
+                        height: 400,
                         child: TabBarView(
                           controller: _tabController,
                           children: [
@@ -255,7 +255,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
                               isLoading: _isLoading,
                               onRegister: _register,
                               onGoogleSignIn: _signInWithGoogle,
-                              googleButtonLabel: 'Sign in with Google',
+                              googleButtonLabel: 'Sign up with Google',
                               googleIcon: const SizedBox.shrink(),
                             ),
                             LoginForm(
@@ -272,25 +272,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
                         ),
                       ),
                     ),
-                    if (_errorMessage != null) ...[
-                      const SizedBox(height: 16),
-                      Text(
-                        _errorMessage!,
-                        style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                    if (_isLoading)
-                      const Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: CircularProgressIndicator(color: Colors.white),
-                      ),
                   ],
                 ),
               ),
-            ),
+              if (_errorMessage != null) ...[
+                const SizedBox(height: 16),
+                Text(
+                  _errorMessage!,
+                  style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+              if (_isLoading)
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+              const SizedBox(height: 32),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

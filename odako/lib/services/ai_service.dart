@@ -2,14 +2,26 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
+final Map<int, String> moodPrompts = {
+  0: "I'm feeling down today. ",
+  1: "I'm feeling okay, but not great. ",
+  2: "I'm feeling good and positive! ",
+};
+
 class AIService {
   static const String _geminiApiKey = '';
-  static const String _geminiApiUrl =
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+  static const String _geminiApiUrl = '';
 
-  static Future<String> getDailyTaskSuggestion(String userInput) async {
+  static Future<String> getDailyTaskSuggestion(
+    String userInput, {
+    int? moodIndex,
+  }) async {
+    final moodPrompt = (moodIndex != null && moodPrompts.containsKey(moodIndex))
+        ? moodPrompts[moodIndex]!
+        : '';
     final prompt =
         'You are a friendly and motivational assistant helping someone with ADHD plan their day. '
+        '$moodPrompt'
         'The user wants to accomplish the following goal: "$userInput". '
         'Suggest a simple, encouraging first step. Be concise and positive.';
 

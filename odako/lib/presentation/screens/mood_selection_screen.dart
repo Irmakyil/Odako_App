@@ -108,7 +108,7 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                     });
                   },
                   activeColor: sliderColor,
-                  inactiveColor: sliderColor.withOpacity(0.3),
+                  inactiveColor: sliderColor.withAlpha(77),
                 ),
 
                 const Spacer(),

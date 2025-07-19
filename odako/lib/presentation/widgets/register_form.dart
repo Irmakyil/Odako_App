@@ -68,7 +68,7 @@ class RegisterForm extends StatelessWidget {
               Expanded(child: Divider()),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text('or', style: TextStyle(color: Colors.white70)),
+                child: Text('or', style: TextStyle(color: Colors.black87)),
               ),
               Expanded(child: Divider()),
             ],

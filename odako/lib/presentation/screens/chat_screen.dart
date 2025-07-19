@@ -107,9 +107,12 @@ class _ChatScreenState extends State<ChatScreen> {
                 color: const Color(0xFF4E7CB2),
                 borderRadius: BorderRadius.circular(24),
               ),
-              child: Image.asset(
-                'lib/presentation/assets/mantar_maskot.png',
-                fit: BoxFit.contain,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(
+                  'lib/presentation/assets/mantar_maskot.png',
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
 

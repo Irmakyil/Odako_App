@@ -10,7 +10,8 @@ class MainMenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
-    final username = user?.displayName ?? (user?.email?.split('@').first ?? 'User');
+    final username =
+        user?.displayName ?? (user?.email?.split('@').first ?? 'User');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Odako'),
@@ -44,7 +45,10 @@ class MainMenuScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Today\'s Tasks', style: Theme.of(context).textTheme.titleMedium),
+                  Text(
+                    'Today\'s Tasks',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                   TextButton(
                     onPressed: () {
                       Navigator.pushNamed(context, AppRoutes.taskList);
@@ -61,13 +65,18 @@ class MainMenuScreen extends StatelessWidget {
                     return const Center(child: Text('No tasks yet.'));
                   }
                   final now = DateTime.now();
-                  final twentyFourHoursAgo = Timestamp.fromDate(now.subtract(const Duration(hours: 24)));
+                  final twentyFourHoursAgo = Timestamp.fromDate(
+                    now.subtract(const Duration(hours: 24)),
+                  );
                   final stream = FirebaseFirestore.instance
                       .collection('users')
                       .doc(FirebaseAuth.instance.currentUser!.uid)
                       .collection('selectedTasks')
                       .where('priority', isEqualTo: 'High')
-                      .where('createdAt', isGreaterThanOrEqualTo: twentyFourHoursAgo)
+                      .where(
+                        'createdAt',
+                        isGreaterThanOrEqualTo: twentyFourHoursAgo,
+                      )
                       .orderBy('createdAt', descending: true)
                       .limit(1)
                       .snapshots();
@@ -86,25 +95,38 @@ class MainMenuScreen extends StatelessWidget {
                       final isCompleted = data['isCompleted'] == true;
                       return Card(
                         elevation: 2,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
                         child: ListTile(
                           leading: Checkbox(
                             value: isCompleted,
                             onChanged: (_) async {
-                              await doc.reference.update({'isCompleted': !isCompleted});
+                              await doc.reference.update({
+                                'isCompleted': !isCompleted,
+                              });
                             },
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6),
+                            ),
                           ),
                           title: Text(
                             data['text'] ?? '',
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  decoration: isCompleted ? TextDecoration.lineThrough : null,
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(
+                                  decoration: isCompleted
+                                      ? TextDecoration.lineThrough
+                                      : null,
                                   color: isCompleted ? Colors.grey : null,
                                 ),
                           ),
-                          subtitle: data['priority'] != null ? Text('Priority: ${data['priority']}') : null,
+                          subtitle: data['priority'] != null
+                              ? Text('Priority: ${data['priority']}')
+                              : null,
                           onTap: () async {
-                            await doc.reference.update({'isCompleted': !isCompleted});
+                            await doc.reference.update({
+                              'isCompleted': !isCompleted,
+                            });
                           },
                         ),
                       );
@@ -158,7 +180,10 @@ class OpenChatSection extends StatelessWidget {
     return Column(
       children: [
         Center(
-          child: Text('If you are anxious talk to me!', style: Theme.of(context).textTheme.bodyMedium),
+          child: Text(
+            'If you are anxious talk to me!',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
         ),
         const SizedBox(height: 12),
         Center(

@@ -23,11 +23,13 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
     super.initState();
     _initializeChatSession();
     // Add initial AI message
-    _messages.add(ChatMessage(
-      text: 'What do you want to accomplish today?',
-      isUser: false,
-      timestamp: DateTime.now(),
-    ));
+    _messages.add(
+      ChatMessage(
+        text: 'What do you want to accomplish today?',
+        isUser: false,
+        timestamp: DateTime.now(),
+      ),
+    );
   }
 
   Future<void> _initializeChatSession() async {
@@ -50,11 +52,9 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
     final text = _controller.text.trim();
     if (text.isNotEmpty && !_isLoading) {
       setState(() {
-        _messages.add(ChatMessage(
-          text: text,
-          isUser: true,
-          timestamp: DateTime.now(),
-        ));
+        _messages.add(
+          ChatMessage(text: text, isUser: true, timestamp: DateTime.now()),
+        );
         _isLoading = true;
         _controller.clear();
       });
@@ -99,30 +99,40 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
       for (final userMessage in pendingUserMessages) {
         // Add typing indicator
         setState(() {
-          _messages.add(ChatMessage(
-            text: 'Typing...',
-            isUser: false,
-            timestamp: DateTime.now(),
-            isTyping: true,
-          ));
+          _messages.add(
+            ChatMessage(
+              text: 'Typing...',
+              isUser: false,
+              timestamp: DateTime.now(),
+              isTyping: true,
+            ),
+          );
         });
 
         // Get AI response
-        final aiReply = await AIService.getDailyTaskSuggestion(userMessage.text);
-        
+        final aiReply = await AIService.getDailyTaskSuggestion(
+          userMessage.text,
+        );
+
         // Remove typing indicator and add AI response
         setState(() {
           _messages.removeWhere((msg) => msg.isTyping);
-          _messages.add(ChatMessage(
-            text: aiReply,
-            isUser: false,
-            timestamp: DateTime.now(),
-          ));
-          
+          _messages.add(
+            ChatMessage(
+              text: aiReply,
+              isUser: false,
+              timestamp: DateTime.now(),
+            ),
+          );
+
           // Mark the user message as having an AI response
-          final userMessageIndex = _messages.indexWhere((msg) => msg == userMessage);
+          final userMessageIndex = _messages.indexWhere(
+            (msg) => msg == userMessage,
+          );
           if (userMessageIndex != -1) {
-            _messages[userMessageIndex] = userMessage.copyWith(hasAiResponse: true);
+            _messages[userMessageIndex] = userMessage.copyWith(
+              hasAiResponse: true,
+            );
           }
         });
 
@@ -156,6 +166,7 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFEFE8E0),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -164,7 +175,10 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
               const SizedBox(height: 16),
               Text(
                 'What do you want to accomplish today?',
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  color: const Color(0xFF203F9A),
+                  fontWeight: FontWeight.bold,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32),
@@ -193,6 +207,8 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                     icon: const Icon(Icons.add),
                     label: const Text('Check Your Tasks'),
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF203F9A),
+                      foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
@@ -208,7 +224,7 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                       minLines: 1,
                       maxLines: 3,
                       decoration: const InputDecoration(
-                        hintText: 'Type your goal...'
+                        hintText: 'Type your goal...',
                       ),
                       onSubmitted: (_) => _sendMessage(),
                       enabled: !_isLoading,
@@ -226,9 +242,22 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                 child: ElevatedButton(
                   onPressed: _messages.length > 1 && !_isLoading
                       ? () {
-                          Navigator.pushNamedAndRemoveUntil(context, AppRoutes.mainMenu, (route) => false);
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            AppRoutes.mainMenu,
+                            (route) => false,
+                          );
                         }
                       : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF203F9A), // Ana mavi
+                    foregroundColor: Colors.white, // Metin rengi
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                  ),
+
                   child: const Text('Continue'),
                 ),
               ),

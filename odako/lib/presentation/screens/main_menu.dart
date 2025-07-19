@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../widgets/daily_progress_circle.dart';
 
+/// Main menu screen showing welcome, progress, today's task, and navigation
 class MainMenuScreen extends StatelessWidget {
   const MainMenuScreen({super.key});
 
@@ -23,7 +24,7 @@ class MainMenuScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Welcome + Progress Row
+              // Welcome and progress row
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -40,7 +41,7 @@ class MainMenuScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 24),
-              // Today's Task List Preview
+              // Today's task list preview
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -54,6 +55,7 @@ class MainMenuScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 12),
+              // High priority task preview (shows only one)
               Builder(
                 builder: (context) {
                   final user = FirebaseAuth.instance.currentUser;
@@ -113,12 +115,13 @@ class MainMenuScreen extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 24),
-              // Replace mascot with OpenChatSection
+              // Section for chat support
               const OpenChatSection(),
             ],
           ),
         ),
       ),
+      // Bottom navigation bar for main navigation
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
@@ -149,7 +152,7 @@ class MainMenuScreen extends StatelessWidget {
   }
 }
 
-// Add this widget at the bottom of the file for reuse
+/// Section for opening the chat if the user feels anxious
 class OpenChatSection extends StatelessWidget {
   const OpenChatSection({super.key});
 

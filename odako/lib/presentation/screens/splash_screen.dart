@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _handleStartupRouting() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 3));
     final user = FirebaseAuth.instance.currentUser;
     if (!mounted) return;
     if (user == null) {

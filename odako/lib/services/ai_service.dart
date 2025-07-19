@@ -4,7 +4,8 @@ import 'package:http/http.dart' as http;
 
 class AIService {
   static const String _geminiApiKey = '';
-  static const String _geminiApiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+  static const String _geminiApiUrl =
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
   static Future<String> getDailyTaskSuggestion(String userInput) async {
     final prompt =
@@ -23,10 +24,10 @@ class AIService {
           'contents': [
             {
               'parts': [
-                {'text': prompt}
-              ]
-            }
-          ]
+                {'text': prompt},
+              ],
+            },
+          ],
         }),
       );
 
@@ -50,11 +51,12 @@ class AIService {
   }
 
   /// Generates structured tasks from chat context
-  /// 
+  ///
   /// [chatContext] - The full conversation history as a string
   /// Returns a JSON string with structured tasks
   static Future<String> getTasksFromChatContext(String chatContext) async {
-    final prompt = '''
+    final prompt =
+        '''
 You are an AI assistant helping someone with ADHD break down their goals into manageable tasks.
 
 Based on this conversation:
@@ -94,10 +96,10 @@ Return ONLY valid JSON like this:
           'contents': [
             {
               'parts': [
-                {'text': prompt}
-              ]
-            }
-          ]
+                {'text': prompt},
+              ],
+            },
+          ],
         }),
       );
 
@@ -142,10 +144,10 @@ Return ONLY valid JSON like this:
           'contents': [
             {
               'parts': [
-                {'text': prompt}
-              ]
-            }
-          ]
+                {'text': prompt},
+              ],
+            },
+          ],
         }),
       );
       if (response.statusCode == 200) {

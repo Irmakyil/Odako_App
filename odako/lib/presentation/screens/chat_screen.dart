@@ -7,7 +7,11 @@ class ChatMessage {
   final String text;
   final bool isUser;
   final DateTime createdAt;
-  ChatMessage({required this.text, required this.isUser, required this.createdAt});
+  ChatMessage({
+    required this.text,
+    required this.isUser,
+    required this.createdAt,
+  });
 
   factory ChatMessage.fromFirestore(Map<String, dynamic> data) {
     return ChatMessage(
@@ -40,7 +44,9 @@ class _ChatScreenState extends State<ChatScreen> {
         .collection('feelingsChat');
     final messenger = ScaffoldMessenger.of(context); // Capture before async
     try {
-      setState(() { _isLoading = true; });
+      setState(() {
+        _isLoading = true;
+      });
       // Save user message to Firestore
       await chatCol.add({
         'text': text,
@@ -65,7 +71,9 @@ class _ChatScreenState extends State<ChatScreen> {
       );
     } finally {
       if (mounted) {
-        setState(() { _isLoading = false; });
+        setState(() {
+          _isLoading = false;
+        });
       }
     }
   }
@@ -81,6 +89,7 @@ class _ChatScreenState extends State<ChatScreen> {
     final user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xFF203F9A),
         title: const Text('Let\'s Talk'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -95,7 +104,7 @@ class _ChatScreenState extends State<ChatScreen> {
               height: 120,
               width: 120,
               decoration: BoxDecoration(
-                color: Colors.grey.shade200,
+                color: const Color(0xFF4E7CB2),
                 borderRadius: BorderRadius.circular(24),
               ),
               child: Padding(
@@ -106,7 +115,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ),
             ),
+
             const SizedBox(height: 16),
+
             Expanded(
               child: user == null
                   ? const Center(child: Text('Not logged in'))
@@ -119,34 +130,50 @@ class _ChatScreenState extends State<ChatScreen> {
                           .snapshots(),
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
-                          return const Center(child: CircularProgressIndicator());
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
                         }
                         final docs = snapshot.data!.docs;
                         final messages = docs
-                            .map((doc) => ChatMessage.fromFirestore(doc.data() as Map<String, dynamic>))
+                            .map(
+                              (doc) => ChatMessage.fromFirestore(
+                                doc.data() as Map<String, dynamic>,
+                              ),
+                            )
                             .toList();
                         final showGreeting = messages.isEmpty;
                         return ListView.builder(
-                          itemCount: _isLoading ? messages.length + 1 : (showGreeting ? 1 : 0) + messages.length,
+                          itemCount: _isLoading
+                              ? messages.length + 1
+                              : (showGreeting ? 1 : 0) + messages.length,
                           itemBuilder: (context, index) {
                             if (showGreeting && index == 0) {
                               // Show default greeting if no messages
                               return Align(
                                 alignment: Alignment.centerLeft,
                                 child: Container(
-                                  margin: const EdgeInsets.symmetric(vertical: 4),
-                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                  margin: const EdgeInsets.symmetric(
+                                    vertical: 4,
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 12,
+                                  ),
                                   decoration: BoxDecoration(
-                                    color: Colors.grey.shade200,
+                                    color: const Color(0xFFEFE8E0),
                                     borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(16),
                                       topRight: Radius.circular(16),
                                       bottomRight: Radius.circular(16),
                                     ),
                                   ),
+
                                   child: Text(
                                     'How are you feeling today?',
-                                    style: Theme.of(context).textTheme.bodyMedium,
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.bodyMedium,
                                   ),
                                 ),
                               );
@@ -156,10 +183,15 @@ class _ChatScreenState extends State<ChatScreen> {
                               return Align(
                                 alignment: Alignment.centerLeft,
                                 child: Container(
-                                  margin: const EdgeInsets.symmetric(vertical: 4),
-                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                  margin: const EdgeInsets.symmetric(
+                                    vertical: 4,
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 12,
+                                  ),
                                   decoration: BoxDecoration(
-                                    color: Colors.grey.shade200,
+                                    color: const Color(0xFFEFE8E0),
                                     borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(16),
                                       topRight: Radius.circular(16),
@@ -169,22 +201,32 @@ class _ChatScreenState extends State<ChatScreen> {
                                   child: const SizedBox(
                                     width: 24,
                                     height: 24,
-                                    child: CircularProgressIndicator(strokeWidth: 2),
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
                                   ),
                                 ),
                               );
                             }
-                            if (msgIndex < 0 || msgIndex >= messages.length) return const SizedBox.shrink();
+                            if (msgIndex < 0 || msgIndex >= messages.length)
+                              return const SizedBox.shrink();
                             final msg = messages[msgIndex];
                             return Align(
-                              alignment: msg.isUser ? Alignment.centerRight : Alignment.centerLeft,
+                              alignment: msg.isUser
+                                  ? Alignment.centerRight
+                                  : Alignment.centerLeft,
                               child: Container(
                                 margin: const EdgeInsets.symmetric(vertical: 4),
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 12,
+                                ),
                                 decoration: BoxDecoration(
                                   color: msg.isUser
-                                      ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.15)
-                                      : Colors.grey.shade200,
+                                      ? const Color(
+                                          0xFFE7A0CC,
+                                        ) // Kullanıcı pastel pembe
+                                      : const Color(0xFFEFE8E0),
                                   borderRadius: msg.isUser
                                       ? const BorderRadius.only(
                                           topLeft: Radius.circular(16),
@@ -208,6 +250,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       },
                     ),
             ),
+
             Row(
               children: [
                 Expanded(
@@ -215,12 +258,16 @@ class _ChatScreenState extends State<ChatScreen> {
                     controller: _controller,
                     minLines: 1,
                     maxLines: 3,
-                    decoration: const InputDecoration(hintText: 'Type your message...'),
+                    decoration: const InputDecoration(
+                      hintText: 'Type your message...',
+                      hintStyle: TextStyle(color: Color(0xFF94C2DA)),
+                    ),
                     onSubmitted: (_) => _sendMessage(),
                   ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.send),
+                  color: Color(0xFFE84797),
                   onPressed: _isLoading ? null : _sendMessage,
                 ),
               ],

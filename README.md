@@ -140,6 +140,7 @@ Odako, özellikle gençler, ADHD'ye sahip bireyler, öğrenciler ve dijital orta
   Daily Scrum buluşmaları Whatsapp üzerinden yapılmıştır. Haftada 1-2 kez ise Google Meets üzerinden toplantı yaparak takım olarak proje hakkındaki ilerleme tartışılmıştır.
 
   <img width="2000" height="1600" alt="daily_scrum_2" src="https://github.com/user-attachments/assets/2c2683ac-1d3f-4651-9051-2bc1ec3b84ee" />
+  <img width="1920" height="1080" alt="sprint2_meets" src="https://github.com/user-attachments/assets/2366d30a-1ac5-4feb-be67-d090cca9515d" />
 
   
 </details>
@@ -162,9 +163,9 @@ Odako, özellikle gençler, ADHD'ye sahip bireyler, öğrenciler ve dijital orta
   * Sprint 2'de takım olarak daha verimli çalışılmış ve uygulamanın ilk versiyonu ortaya çıkmıştır. Bu süreçte Zeynep gerekli artwork'ler ve görsel grafikler üzerinde, Enis projenin ilerleyişi, ADHD araştırması ve yapay zeka konusunda, Irmak veritabanı konusunda, Irmak ve Hayrünnisa mobil uygulamanın sayfalarının geliştirilmesi ve hazırlanmasında çalışmıştır. Gelecek Sprint'te uygulamaya yeni fonksiyonların eklenmesi ve uygulamanın düzenlenmesi/cilalanması hakkında planlar yapılmıştır.
 
 * ### **Sprint Retrospective**
-  * Sprint 2, takım olarak verimli bir ilerleme kaydettiğim bir süreç olmuştur. Uygulamanın genel iskeleti hazırlanmıştır.
+  * Sprint 2, takım olarak verimli bir ilerleme kaydettiğimiz bir süreç olmuştur. Uygulamanın genel iskeleti hazırlanmıştır.
   * Sesli girdi desteği STT servisinin paralı olmasından dolayı rafa kaldırılmıştır. Bir alternatif bulunana kadar bu özellik kullanılmayacaktır.
-  * Yapay zeka entegrasyonu konusunda kullanılmak üzere planlanan Google Cloud Platform (GCP), yaşanılan teknik zorluklar ve kalan Bootcamp zamanının kısıtlayıcılığından dolayı Flutter uygulamasında koda tam manasıyla entegre edilememiştir. Direkt API anahtarı kullanılacaktır.
+  * Yapay zeka entegrasyonu konusunda kullanılmak üzere planlanan Google Cloud Platform (GCP), yaşanılan teknik zorluklar ve kalan Bootcamp zamanının kısıtlayıcılığından dolayı Flutter uygulamasında koda tam manasıyla entegre edilememiştir. Direkt API anahtarı kullanılmaya karar verilmiştir.
 
 </details>
 

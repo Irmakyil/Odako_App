@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _handleStartupRouting() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 3));
     final user = FirebaseAuth.instance.currentUser;
     if (!mounted) return;
     if (user == null) {
@@ -41,36 +41,35 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                height: 150,
-                width: 150,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(12),
+      body: Container(
+        color: const Color(0xFFEFE8E0), // Arka plan: nötr ve sıcak krem tonu
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Maskot görseli
+                Image.asset(
+                  'lib/presentation/assets/mantar_maskot.png',
+                  height: 160,
+                  width: 160,
+                  fit: BoxFit.contain,
                 ),
-                child: const Icon(
-                  Icons.image,
-                  size: 64,
-                  color: Colors.grey,
+                const SizedBox(height: 32),
+
+                // Welcome başlığı
+                Text(
+                  'Welcome!',
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: const Color(
+                      0xFF203F9A,
+                    ), // Derin mavi: karşılama tonuna uygun
+                  ),
                 ),
-              ),
-              const SizedBox(height: 32),
-              Text(
-                'Welcome!',
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -12,7 +12,10 @@ class AIService {
   static const String _geminiApiKey = '';
   static const String _geminiApiUrl = '';
 
-  static Future<String> getDailyTaskSuggestion(String userInput, {int? moodIndex}) async {
+  static Future<String> getDailyTaskSuggestion(
+    String userInput, {
+    int? moodIndex,
+  }) async {
     final moodPrompt = (moodIndex != null && moodPrompts.containsKey(moodIndex))
         ? moodPrompts[moodIndex]!
         : '';
@@ -33,10 +36,10 @@ class AIService {
           'contents': [
             {
               'parts': [
-                {'text': prompt}
-              ]
-            }
-          ]
+                {'text': prompt},
+              ],
+            },
+          ],
         }),
       );
 
@@ -60,11 +63,12 @@ class AIService {
   }
 
   /// Generates structured tasks from chat context
-  /// 
+  ///
   /// [chatContext] - The full conversation history as a string
   /// Returns a JSON string with structured tasks
   static Future<String> getTasksFromChatContext(String chatContext) async {
-    final prompt = '''
+    final prompt =
+        '''
 You are an AI assistant helping someone with ADHD break down their goals into manageable tasks.
 
 Based on this conversation:
@@ -104,10 +108,10 @@ Return ONLY valid JSON like this:
           'contents': [
             {
               'parts': [
-                {'text': prompt}
-              ]
-            }
-          ]
+                {'text': prompt},
+              ],
+            },
+          ],
         }),
       );
 
@@ -152,10 +156,10 @@ Return ONLY valid JSON like this:
           'contents': [
             {
               'parts': [
-                {'text': prompt}
-              ]
-            }
-          ]
+                {'text': prompt},
+              ],
+            },
+          ],
         }),
       );
       if (response.statusCode == 200) {

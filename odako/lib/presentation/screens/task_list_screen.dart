@@ -167,7 +167,6 @@ class _TaskListScreenState extends State<TaskListScreen> {
                                         .get();
                                     final completedToday = tasksSnap.docs.where((d) => (d['isCompleted'] ?? false) == true).length + 1;
                                     await GamificationService().onTaskCompleted(
-                                      priority: data['priority'] ?? 'Low',
                                       completedAt: DateTime.now(),
                                       totalTasksToday: completedToday,
                                     );
@@ -204,7 +203,6 @@ class _TaskListScreenState extends State<TaskListScreen> {
                                       .get();
                                   final completedToday = tasksSnap.docs.where((d) => (d['isCompleted'] ?? false) == true).length + 1;
                                   await GamificationService().onTaskCompleted(
-                                    priority: data['priority'] ?? 'Low',
                                     completedAt: DateTime.now(),
                                     totalTasksToday: completedToday,
                                   );

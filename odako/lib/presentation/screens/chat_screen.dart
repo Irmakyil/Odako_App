@@ -208,8 +208,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                 ),
                               );
                             }
-                            if (msgIndex < 0 || msgIndex >= messages.length)
+                            if (msgIndex < 0 || msgIndex >= messages.length) {
                               return const SizedBox.shrink();
+                            }
                             final msg = messages[msgIndex];
                             return Align(
                               alignment: msg.isUser

@@ -22,57 +22,68 @@ class GamificationService {
       'name': 'First Step',
       'desc': 'You completed your first task!',
       'icon': '🟢',
-      'condition': (int completedTaskCount, int streak, int todayCount, bool isMorning) => completedTaskCount == 1,
+      // CONDITION:
+      // - The user completed their first task
+      // - AND they just started using the app (e.g., completedTaskCount == 1)
+      'condition': (int completedTaskCount, bool isFirstTimeUser) =>
+        completedTaskCount == 1 && isFirstTimeUser,
     },
     {
       'id': 'consistent_mind',
       'name': 'Consistent Mind',
       'desc': 'Completed all tasks for 3 days in a row',
       'icon': '🟡',
-      'condition': (int completedTaskCount, int streak, int todayCount, bool isMorning) => streak == 3,
+      // CONDITION:
+      // - User has 3-day streak
+      // - AND completed ALL tasks on each of those 3 days (streakTaskCompletion == 100%)
+      'condition': (int streak, int streakCompletionRate) =>
+        streak == 3 && streakCompletionRate == 100,
     },
     {
       'id': 'focused_day',
       'name': 'Focused Day',
       'desc': 'Completed all 3 tasks today',
       'icon': '🔵',
-      'condition': (int completedTaskCount, int streak, int todayCount, bool isMorning) => todayCount >= 3,
+      // CONDITION:
+      // - All 3 tasks created today are completed
+      'condition': (int todayCount) => todayCount == 3,
     },
     {
       'id': 'morning_start',
       'name': 'Morning Start',
       'desc': 'Completed a task between 08:00–12:00',
       'icon': '🌅',
-      'condition': (int completedTaskCount, int streak, int todayCount, bool isMorning) => isMorning,
+      // CONDITION:
+      // - A task was completed between 08:00–12:00
+      'condition': (bool isMorning) => isMorning,
     },
     {
       'id': 'productive_streak',
       'name': 'Productive Streak',
       'desc': 'Completed 10 total tasks',
       'icon': '🟠',
-      'condition': (int completedTaskCount, int streak, int todayCount, bool isMorning) => completedTaskCount >= 10,
+      // CONDITION:
+      // - User has completed at least 10 tasks total
+      'condition': (int completedTaskCount) => completedTaskCount >= 10,
     },
   ];
 
-  /// Call this method when a task is completed to update XP, streak, and check for new badges
+  /// Call this method when a task is completed to update streak, completedTaskCount, and check for new badges
   Future<void> onTaskCompleted({
-    required String priority,
     required DateTime completedAt,
     required int totalTasksToday,
   }) async {
     final user = _auth.currentUser;
     if (user == null) return;
     final uid = user.uid;
-    int xpGained = priority == 'High' ? 15 : priority == 'Medium' ? 10 : 5;
     final profileRef = _firestore.collection('users').doc(uid).collection('profile').doc('data');
     try {
-      // Update XP and completed task count
+      // Update completed task count
       await profileRef.set({
-        'xp': FieldValue.increment(xpGained),
         'completedTaskCount': FieldValue.increment(1),
       }, SetOptions(merge: true));
     } catch (e) {
-      debugPrint('Error updating XP: $e');
+      debugPrint('Error updating completedTaskCount: $e');
     }
     // Update streak
     await _updateStreak(uid);
@@ -108,7 +119,7 @@ class GamificationService {
     }
   }
 
-  /// Check and unlock badges after XP and streak update
+  /// Check and unlock badges after streak update
   Future<void> _checkAndUnlockBadges(String uid, DateTime completedAt, int totalTasksToday) async {
     final profileRef = _firestore.collection('users').doc(uid).collection('profile').doc('data');
     final badgesRef = _firestore.collection('users').doc(uid).collection('badges');
@@ -118,6 +129,10 @@ class GamificationService {
       final completedTaskCount = (profile['completedTaskCount'] ?? 0) as int;
       final streak = (profile['streak'] ?? 0) as int;
       final isMorning = completedAt.hour >= 8 && completedAt.hour < 12;
+      // Fallbacks for new badge condition params
+      final isFirstTimeUser = (profile['createdAt'] != null && completedTaskCount == 1);
+      // TODO: Calculate streakCompletionRate for last 3 days (requires more data structure)
+      final streakCompletionRate = 100; // Placeholder: assume 100% for now
       for (final badge in badgeDefinitions) {
         final badgeId = badge['id'] as String;
         try {
@@ -132,7 +147,26 @@ class GamificationService {
               debugPrint('Badge $badgeId has null condition, skipping.');
               continue;
             }
-            unlocked = badge['condition'](completedTaskCount, streak, totalTasksToday, isMorning);
+            // Call the correct condition signature for each badge
+            switch (badgeId) {
+              case 'first_step':
+                unlocked = badge['condition'](completedTaskCount, isFirstTimeUser);
+                break;
+              case 'consistent_mind':
+                unlocked = badge['condition'](streak, streakCompletionRate);
+                break;
+              case 'focused_day':
+                unlocked = badge['condition'](totalTasksToday);
+                break;
+              case 'morning_start':
+                unlocked = badge['condition'](isMorning);
+                break;
+              case 'productive_streak':
+                unlocked = badge['condition'](completedTaskCount);
+                break;
+              default:
+                unlocked = false;
+            }
           } catch (e) {
             debugPrint('Error evaluating badge $badgeId: $e');
             continue;
@@ -161,7 +195,7 @@ class GamificationService {
     }
   }
 
-  /// Fetch the user's profile data (XP, streak, completed task count)
+  /// Fetch the user's profile data (streak, completed task count)
   Future<Map<String, dynamic>> fetchProfile() async {
     final user = _auth.currentUser;
     if (user == null) return {};

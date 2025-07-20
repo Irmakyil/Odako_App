@@ -204,7 +204,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 future: _profileFuture,
                 builder: (context, snapshot) {
                   final data = snapshot.data ?? {};
-                  final xp = data['xp'] ?? 0;
                   final completedTaskCount = data['completedTaskCount'] ?? 0;
                   final streak = data['streak'] ?? 0;
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -235,8 +234,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           const SizedBox(height: 12),
                           Row(
                             children: [
-                              Expanded(child: Text('XP: $xp', style: theme.textTheme.bodyMedium)),
-                              Expanded(child: Text('Tasks: $completedTaskCount', style: theme.textTheme.bodyMedium)),
+                              Expanded(child: Text('Completed Tasks: $completedTaskCount', style: theme.textTheme.bodyMedium)),
                               Expanded(child: Text('Day Streak 🔥: $streak', style: theme.textTheme.bodyMedium)),
                             ],
                           ),

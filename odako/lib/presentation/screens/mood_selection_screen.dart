@@ -16,18 +16,22 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
   static const _moodData = [
     {
       'label': 'MEH',
-      'face': 'lib/presentation/assets/Face_Mid.png',
+      'face': 'lib/presentation/assets/face_meh.png',
       'sliderColor': Color(0xFFC88A9A),
+      'faceColor': Color(0xFFC88A9A), // renk kodları ve widget ayarları yapılacak ben genel assetleri güncelledim 
     },
     {
       'label': 'NOT BAD',
-      'face': 'lib/presentation/assets/Face_Happy.png',
+      'face': 'lib/presentation/assets/face_mid.png',
       'sliderColor': Color(0xFFD4B887),
+      'faceColor': Color(0xFFE2C799), //eğer yüz ifadelerini kod ile yazabilirseniz widgets kısmını kontrol edin 
+                                        //oraya yazabilirsiniz yoksa png üzerinden yapılabilecek güncellemeleri burdan yapalım
     },
     {
       'label': 'GOOD',
-      'face': 'lib/presentation/assets/Face_Happy.png',
+      'face': 'lib/presentation/assets/face_good.png',
       'sliderColor': Color(0xFF9ABA5A),
+      'faceColor': Color(0xFFA7D676), // 
     },
   ];
 
@@ -75,9 +79,15 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                 SizedBox(
                   height: 120,
                   width: 120,
-                  child: Image.asset(
-                    mood['face'] as String,
-                    fit: BoxFit.contain,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: mood['faceColor'] as Color,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Image.asset(
+                      mood['face'] as String,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
 

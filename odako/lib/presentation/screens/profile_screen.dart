@@ -181,7 +181,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       CircleAvatar(
                         radius: 40,
                         backgroundColor: theme.colorScheme.primary.withAlpha(25),
-                        backgroundImage: const AssetImage('lib/presentation/assets/mantar_maskot.png'),
+                        backgroundImage: const AssetImage('lib/presentation/assets/maskot.png'),
                       ),
                       const SizedBox(height: 16),
                       Text(

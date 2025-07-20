@@ -42,7 +42,12 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: const Color(0xFFEFE8E0), // Arka plan: nötr ve sıcak krem tonu
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('lib/presentation/assets/background.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Center(
@@ -51,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
               children: [
                 // Maskot görseli
                 Image.asset(
-                  'lib/presentation/assets/mantar_maskot.png',
+                  'lib/presentation/assets/maskot.png',
                   height: 160,
                   width: 160,
                   fit: BoxFit.contain,

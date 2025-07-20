@@ -220,7 +220,7 @@ class OpenChatSection extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Image.asset(
-                    'lib/presentation/assets/mantar_maskot.png',
+                    'lib/presentation/assets/maskot.png',
                     fit: BoxFit.contain,
                   ),
                 ),

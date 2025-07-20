@@ -11,10 +11,19 @@ import 'presentation/screens/chat_screen.dart';
 import 'presentation/screens/onboarding_screen.dart';
 import 'presentation/screens/profile_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'services/notification_service.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+// Register FCM background handler
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await firebaseMessagingBackgroundHandler(message);
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  await NotificationService().initialize();
   runApp(const OdakoApp());
 }
 

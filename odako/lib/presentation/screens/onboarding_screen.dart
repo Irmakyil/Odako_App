@@ -198,7 +198,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
               ),
               const SizedBox(height: 8),
               Text(
-                'Your focus buddy for daily tasks',
+                'Your personalized AI helper for ADHD.',
                 style: theme.textTheme.bodyLarge?.copyWith(color: theme.hintColor),
                 textAlign: TextAlign.center,
               ),

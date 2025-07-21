@@ -110,7 +110,7 @@ class _ChatScreenState extends State<ChatScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Image.asset(
-                  'lib/presentation/assets/mantar_maskot.png',
+                  'lib/presentation/assets/maskot.png',
                   fit: BoxFit.contain,
                 ),
               ),
@@ -260,7 +260,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     minLines: 1,
                     maxLines: 3,
                     decoration: const InputDecoration(
-                      hintText: 'Type your message...',
+                      hintText: 'Share your thoughts...',
                       hintStyle: TextStyle(color: Color(0xFF94C2DA)),
                     ),
                     onSubmitted: (_) => _sendMessage(),

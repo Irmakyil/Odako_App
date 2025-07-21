@@ -173,7 +173,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AI-Powered Task Suggestions'),
+        title: const Text('Task Suggestions'),
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
@@ -191,7 +191,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Based on your daily input, we\'ve generated tasks and broken them into manageable steps. Let\'s get started!',
+                'Based on your needs, I\'ve generated tasks and broken them into manageable steps. Let\'s get started!',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
               ),
               const SizedBox(height: 32),

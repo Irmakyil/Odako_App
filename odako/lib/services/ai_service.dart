@@ -4,13 +4,13 @@ import 'package:http/http.dart' as http;
 
 final Map<int, String> moodPrompts = {
   0: "I'm feeling down today. ",
-  1: "I'm feeling okay, but not great. ",
-  2: "I'm feeling good and positive! ",
+  1: "I'm feeling okay, but not great today. ",
+  2: "I'm feeling great today! ",
 };
 
 class AIService {
   static const String _geminiApiKey = '';
-  static const String _geminiApiUrl = '';
+  static const String _geminiApiUrl = ''; 
 
   static Future<String> getDailyTaskSuggestion(
     String userInput, {
@@ -22,8 +22,8 @@ class AIService {
     final prompt =
         'You are a friendly and motivational assistant helping someone with ADHD plan their day. '
         '$moodPrompt'
-        'The user wants to accomplish the following goal: "$userInput". '
-        'Suggest a simple, encouraging first step. Be concise and positive.';
+        'This is the user\'s input: "$userInput". It\'s either a task they want to accomplish or just their thoughts and emotions.'
+        'If it is a task, suggest a short and simple first step related to what they want to accomplish. Be concise and direct. If the user is just sharing their thoughts and emotions, have a conversation with them and support them.';
 
     try {
       final response = await http.post(
@@ -69,22 +69,22 @@ class AIService {
   static Future<String> getTasksFromChatContext(String chatContext) async {
     final prompt =
         '''
-You are an AI assistant helping someone with ADHD break down their goals into manageable tasks.
+You are a friendly and motivational assistant helping someone with ADHD break down their task into manageable steps.
 
 Based on this conversation:
 $chatContext
 
 Generate a JSON response with an array of tasks. Each task should have:
-- "text": A clear, actionable description
+- "text": A clear and short, actionable description
 - "priority": One of ["High", "Medium", "Low"]
 
 Focus on:
-1. Breaking large goals into smaller, manageable steps
-2. Prioritizing tasks based on importance and urgency
+1. Breaking large task into smaller, manageable steps
+2. Prioritizing tasks based on importance and urgency (Keep in mind that ADHD users may struggle with prioritization)
 3. Making tasks specific and actionable
 4. Considering ADHD-friendly task sizes
 
-Return ONLY valid JSON like this:
+Return valid JSON formatting like this:
 [
   {
     "text": "Make your bed",

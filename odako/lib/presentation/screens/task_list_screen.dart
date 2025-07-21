@@ -21,7 +21,7 @@ class OpenChatSection extends StatelessWidget {
     return Column(
       children: [
         Center(
-          child: Text('If you are anxious talk to me!', style: Theme.of(context).textTheme.bodyMedium),
+          child: Text('Feel free to talk to me!', style: Theme.of(context).textTheme.bodyMedium),
         ),
         const SizedBox(height: 12),
         Center(
@@ -107,7 +107,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
               children: [
                 Expanded(
                   child: Text(
-                    'You are doing well! Keep pushing!',
+                    'You got this! Keep on trucking!',
                     style: Theme.of(context).textTheme.titleMedium,
                     overflow: TextOverflow.ellipsis,
                   ),

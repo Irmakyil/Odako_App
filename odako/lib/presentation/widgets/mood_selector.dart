@@ -20,7 +20,7 @@ class MoodSelector extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: AppTheme.padding),
           child: Text(
-            'How are you feeling?',
+            'Share Your Feelings',
             style: AppTheme.headingSmall,
           ),
         ),

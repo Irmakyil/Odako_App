@@ -25,7 +25,7 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
     // Add initial AI message
     _messages.add(
       ChatMessage(
-        text: 'What do you want to accomplish today?',
+        text: 'Howdy! I\'m Reishi 🍄. Your personalized AI helper to get you through the hardships that come with ADHD. What do you want to accomplish today?',
         isUser: false,
         timestamp: DateTime.now(),
       ),
@@ -224,7 +224,7 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                       minLines: 1,
                       maxLines: 3,
                       decoration: const InputDecoration(
-                        hintText: 'Type your goal...',
+                        hintText: 'Share your task...',
                       ),
                       onSubmitted: (_) => _sendMessage(),
                       enabled: !_isLoading,

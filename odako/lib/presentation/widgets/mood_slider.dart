@@ -22,11 +22,11 @@ class MoodSlider extends StatelessWidget {
   String _labelForValue(int value) {
     switch (value) {
       case 0:
-        return 'MEH';
+        return 'DEPRESSED';
       case 1:
-        return 'NOT BAD';
+        return 'MEH';
       case 2:
-        return 'GOOD';
+        return 'AMAZING';
       default:
         return '';
     }

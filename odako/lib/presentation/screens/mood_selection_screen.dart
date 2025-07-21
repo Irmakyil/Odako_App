@@ -15,23 +15,23 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
 
   static const _moodData = [
     {
-      'label': 'MEH',
+      'label': 'DEPRESSED',
       'face': 'lib/presentation/assets/face_meh.png',
-      'sliderColor': Color(0xFFC88A9A),
-      'faceColor': Color(0xFFC88A9A), // renk kodları ve widget ayarları yapılacak ben genel assetleri güncelledim 
+      'sliderColor': Color.fromARGB(255, 255, 100, 100),
+      'faceColor': Color.fromARGB(255, 255, 100, 100), // renk kodları ve widget ayarları yapılacak ben genel assetleri güncelledim 
     },
     {
-      'label': 'NOT BAD',
+      'label': 'MEH',
       'face': 'lib/presentation/assets/face_mid.png',
-      'sliderColor': Color(0xFFD4B887),
-      'faceColor': Color(0xFFE2C799), //eğer yüz ifadelerini kod ile yazabilirseniz widgets kısmını kontrol edin 
+      'sliderColor': Color.fromARGB(255, 255, 212, 82),
+      'faceColor': Color.fromARGB(255, 255, 212, 82), //eğer yüz ifadelerini kod ile yazabilirseniz widgets kısmını kontrol edin 
                                         //oraya yazabilirsiniz yoksa png üzerinden yapılabilecek güncellemeleri burdan yapalım
     },
     {
-      'label': 'GOOD',
+      'label': 'AMAZING',
       'face': 'lib/presentation/assets/face_good.png',
-      'sliderColor': Color(0xFF9ABA5A),
-      'faceColor': Color(0xFFA7D676), // 
+      'sliderColor': Color.fromARGB(255, 173, 255, 91),
+      'faceColor': Color.fromARGB(255, 173, 255, 91), // 
     },
   ];
 
@@ -64,7 +64,7 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
 
                 // Başlık
                 Text(
-                  "How's your mood\ntoday?",
+                  "Share Your Feelings",
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.w600,

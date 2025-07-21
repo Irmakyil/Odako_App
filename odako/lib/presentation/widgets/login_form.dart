@@ -35,7 +35,7 @@ class LoginForm extends StatelessWidget {
             labelText: 'Email',
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
-              if (value == null || value.isEmpty) return 'Email is required';
+              if (value == null || value.isEmpty) return 'Email is mandatory';
               final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
               if (!emailRegex.hasMatch(value)) return 'Please enter a valid email address';
               return null;
@@ -54,7 +54,7 @@ class LoginForm extends StatelessWidget {
             child: TextButton(
               onPressed: isLoading ? null : onForgotPassword,
               style: TextButton.styleFrom(foregroundColor: Colors.black87),
-              child: const Text('Forgot my password?'),
+              child: const Text('Forgot my password'),
             ),
           ),
           const SizedBox(height: 16),

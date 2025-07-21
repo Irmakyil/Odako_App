@@ -19,9 +19,9 @@ class GamificationService {
   final List<Badge> badgeDefinitions = [
     {
       'id': 'first_step',
-      'name': 'First Step',
+      'name': 'Headstart',
       'desc': 'You completed your first task!',
-      'icon': '🟢',
+      'icon': '🏁',
       // CONDITION:
       // - The user completed their first task
       // - AND they just started using the app (e.g., completedTaskCount == 1)
@@ -30,9 +30,9 @@ class GamificationService {
     },
     {
       'id': 'consistent_mind',
-      'name': 'Consistent Mind',
+      'name': 'Mushroom Madness',
       'desc': 'Completed all tasks for 3 days in a row',
-      'icon': '🟡',
+      'icon': '🍄',
       // CONDITION:
       // - User has 3-day streak
       // - AND completed ALL tasks on each of those 3 days (streakTaskCompletion == 100%)
@@ -41,16 +41,16 @@ class GamificationService {
     },
     {
       'id': 'focused_day',
-      'name': 'Focused Day',
+      'name': 'Third Time\'s the Charm',
       'desc': 'Completed all 3 tasks today',
-      'icon': '🔵',
+      'icon': '🗓️',
       // CONDITION:
       // - All 3 tasks created today are completed
       'condition': (int todayCount) => todayCount == 3,
     },
     {
       'id': 'morning_start',
-      'name': 'Morning Start',
+      'name': 'Early Bird',
       'desc': 'Completed a task between 08:00–12:00',
       'icon': '🌅',
       // CONDITION:
@@ -59,9 +59,9 @@ class GamificationService {
     },
     {
       'id': 'productive_streak',
-      'name': 'Productive Streak',
-      'desc': 'Completed 10 total tasks',
-      'icon': '🟠',
+      'name': 'Tenacious Ten',
+      'desc': 'Completed 10 tasks in Total',
+      'icon': '🎖️',
       // CONDITION:
       // - User has completed at least 10 tasks total
       'condition': (int completedTaskCount) => completedTaskCount >= 10,

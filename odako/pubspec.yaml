@@ -90,7 +90,10 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: "lib/presentation/assets/logo.png"
+  image_path: "odako/lib/presentation/assets/logo_foreground.png"
+  adaptive_icon:
+    foreground: "lib/presentation/assets/logo_foreground.png"
+    background: "lib/presentation/assets/logo_foreground.png"
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -108,10 +111,10 @@ flutter_icons:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: Marhey
+      fonts:
+        - asset: odako/fonts/Marhey-VariableFont_wght.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

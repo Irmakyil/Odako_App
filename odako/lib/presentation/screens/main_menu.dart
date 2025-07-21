@@ -184,7 +184,7 @@ class OpenChatSection extends StatelessWidget {
       children: [
         Center(
           child: Text(
-            'If you are anxious talk to me!',
+            'Talk to me!',
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),

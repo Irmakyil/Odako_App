@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'routes/app_routes.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'presentation/screens/splash_screen.dart';
 import 'presentation/screens/mood_selection_screen.dart';
 import 'presentation/screens/task_list_screen.dart';
@@ -34,6 +35,9 @@ class OdakoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Odako',
+      theme: ThemeData(
+        textTheme: GoogleFonts.marheyTextTheme(), 
+      ),
       initialRoute: AppRoutes.splash,
       routes: {
         AppRoutes.splash: (context) => const SplashScreen(), 

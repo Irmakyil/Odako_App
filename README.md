@@ -1,39 +1,38 @@
-# Takım İsmi
+# **Takım İsmi**
 **Takım Odak04**
 
-# Ürün İle ilgili Bilgiler
-## Takım Üyeleri
-| Name | Title | Social |
+## **Takım Üyeleri**
+| Üye | Rol | LinkedIn |
 |:-------:| :-----:| :--------:|
-| <a href="https://github.com/zeynepkalaycioglu" style="text-decoration:none; color:blue;">Zeynep Kalaycıoğlu</a> | Product Owner | [<img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" width="20"/>](https://www.linkedin.com/in/zeynep-kalaycioglu/) |
-| <a href="https://github.com/zeynepkalaycioglu" style="text-decoration:none; color:blue;">Enis Tuna</a> | Scrum Master | [<img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" width="20"/>](https://www.linkedin.com/in/enistuna/) |
-| <a href="https://github.com/Irmakyil" style="text-decoration:none; color:blue;">Irmak Yılmaz</a> | Developer | [<img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" width="20"/>](https://www.linkedin.com/in/yilmazirmak/) |
-| <a href="https://github.com/hyrs049" style="text-decoration:none; color:blue;">Hayrunnisa Sarı</a> | Developer | [<img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" width="20"/>](https://www.linkedin.com/in/hayrunnisa-sar%C4%B1-a4a3aa29b?trk=contact-info) |
+| <a href="https://github.com/zeynepkalaycioglu" style="text-decoration:none; color:pink;">Zeynep Kalaycıoğlu</a> | Product Owner | [<img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" width="20"/>](https://www.linkedin.com/in/zeynep-kalaycioglu/) |
+| <a href="https://github.com/zeynepkalaycioglu" style="text-decoration:none; color:pink;">Enis Tuna</a> | Scrum Master | [<img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" width="20"/>](https://www.linkedin.com/in/enistuna/) |
+| <a href="https://github.com/Irmakyil" style="text-decoration:none; color:pink;">Irmak Yılmaz</a> | Developer | [<img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" width="20"/>](https://www.linkedin.com/in/yilmazirmak/) |
+| <a href="https://github.com/hyrs049" style="text-decoration:none; color:pink;">Hayrunnisa Sarı</a> | Developer | [<img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" width="20"/>](https://www.linkedin.com/in/hayrunnisa-sar%C4%B1-a4a3aa29b?trk=contact-info) |
 
-## Ürün İsmi
+# **Ürün İle ilgili Bilgiler**
+## **Ürün İsmi**
 **Odako**
 
-## Ürün Logosu
-<img width="500" height="500" alt="logo" src="https://github.com/user-attachments/assets/02098571-a1f9-47b3-a531-6a836cd4cd6e" />
+## **Ürün Logosu**
+<img width="300" height="300" alt="logo" src="https://github.com/user-attachments/assets/02098571-a1f9-47b3-a531-6a836cd4cd6e" />
 
-## Ürün Açıklaması
-Odako, ADHD'ye sahip bireylerin dikkat, zaman yönetimi ve motivasyon sorunlarına destek olmak amacıyla geliştirilmiş, yapay zeka destekli bir mobil uygulamadır. Kullanıcılar her sabah uygulamaya günlük hedeflerini ve duygularını doğal dille yazar veya konuşur. Odako, yapay zeka yardımıyla durum incelemesi yapar ve görevleri kişiye özel dikkat döngülerine göre planlar. Gün içerisinde empati içeren mikro bildirimlerle kullanıcıyı motive eder. Gün sonunda ise gelişimi yansıtan geri bildirimler sunar.
+## **Ürün Açıklaması**
+**Odako**, ADHD'ye sahip bireylerin dikkat, zaman yönetimi ve motivasyon sorunlarına destek olmak amacıyla geliştirilmiş, yapay zeka destekli bir mobil uygulamadır. Yardımsever maskotumuz *Reishi* sayesinde kullanıcılar her gün uygulamaya günlük hedeflerini ve duygularını anlatır ve planlama konusunda yardım alırlar. *Reishi*, durum incelemesi yapar ve görevleri kişiye özel dikkat döngülerine göre planlar.
 
-## Ürün Özellikleri
-| Özellik | Açıklama | 
+## **Ürün Özellikleri**
+| **Özellik** | **Açıklama** | 
 |:-------:| :-----:|
 | **Duygu Tabanlı Görev Planlama** | Kullanıcının girdilerinden duygu analiz yapılır ve dikkat seviyesine uygun şekilde görev blokları oluşturulur. | 
 | **Görev Parçalama (Chunking)** | Büyük görevler küçük, tamamlanabilir adımlara ayrılır. Özellikle odaklanma problemi yaşayan kullanıcılar için uygundur. |
-| **Empatik Mikro Bildirimler** | Bildirimler sadece hatırlatma değil, motive edici ve kullanıcıya empatiyle yaklaşan içerikler sunar (Örn: “Sadece 5 dakika ile başla, harikasın!”). |
+| **Empatik Mikro Bildirimler** | Bildirimler sadece hatırlatma değil, motive edici ve kullanıcıya empatiyle yaklaşan içerikler sunar. |
 | **Renk Kodlu Arayüz** | Renklerle görev türü ayrımı, dikkat dağıtmayan sade ekranlar. ADHD dostu UX tasarımı. |
 | **Duygusal Gelişim Takibi** | Günlük ruh hali ve görev tamamlama bilgilerine göre haftalık grafiklerle gelişim takibi sağlar. |
 | **Oyunlaştırma** | Günlük tamamlanan görevler ile XP kazanılabilir, rozetler elde edilebilir ve avatar özelleştirilebilir. Uygulamaya her gün girip günlük görev kaydederek "daily log-in streak" serisi korunabilir. |
-| **Offline Modu** | İnternet bağlantısı olmadan da planlama ve görev takibi yapılabilir. (Veriler eşleşince senkronize olur.) |
 
-## Hedef Kitle
-Odako, özellikle gençler, ADHD'ye sahip bireyler, öğrenciler ve dijital ortamda dikkat kaybı yaşayan bireyler için hazırlanmıştır. Kolay kullanılabilir bir kişisel asistan deneyimi de sunar.
+## **Hedef Kitle**
+**Odako**, özellikle gençler, ADHD'ye sahip bireyler, öğrenciler ve dijital ortamda dikkat kaybı yaşayan bireyler için hazırlanmıştır. Kolay kullanılabilir bir kişisel asistan deneyimi de sunar.
 
-## Product Backlog URL
+## **Product Backlog URL**
 [Notion Backlog Documentation](https://www.notion.so/22621a28ee5680bcb8dec59ebcd3ba30?v=22621a28ee56804ea835000cfb89769e&source=copy_link)
 
 <details>
@@ -169,9 +168,78 @@ Odako, özellikle gençler, ADHD'ye sahip bireyler, öğrenciler ve dijital orta
 
 </details>
 
+<details>
+  <summary><h1>Sprint 3 (Pending)</h1></summary>
+  
+* ### **Sprint Notları**
+  Product Backlog URL'a tıklanarak Notion üzerinden takip edilen görevlere göz 
+atılabilir. 3. Sprintte yapılan her görevin açıklamaları ve User Story'ler görevin 
+üstüne tıklandığında çıkan ekrandan incelenebilir.
+
+  * **Sprint içinde tamamlanması tahmin edilen puan:** 100 puan
+
+  * **Puan tamamlama mantığı:** Proje boyunca tamamlanması planlanan toplamda 300 
+puanlık görev bulunmaktadır. Her sprintte 100 puanlık görev tamamlanması yönünde 
+karar alındı.
+
+* ### **Backlog düzeni ve Story Seçimleri**
+    Product backlog için Notion kullanılmıştır. Notion'da 3. sprint için görevlerin 
+yazılı olduğu tablo üzerinden proje gelişimi takip edilmiştir. Google Sheets 
+kullanılarak Burndown Chart hazırlanmıştır. User Story'ler kullanıcıların 
+deneyimleri tahmin edilerek yazılmıştır.
+
+ <details>
+  <summary><h2>Sprint 3 Çalışma Dökümantasyonları (?)</h2></summary>
+
+  (in progress)
+
+</details>
+  
+<details>
+  <summary><h2>Uygulamanın Son Hali</h2></summary>
+
+  (in progress)
+
+</details>
+  
+<details>
+  <summary><h2>Daily Scrum</h2></summary>
+
+  Daily Scrum buluşmaları Whatsapp üzerinden yapılmıştır. Haftada 1-2 kez ise Google 
+Meets üzerinden toplantı yaparak takım olarak proje hakkındaki ilerleme 
+tartışılmıştır.
+
+  (in progress)
+  (in progress)
+  
+</details>
+
+<details>
+  <summary><h2>Sprint 3 Tablosu Güncellemesi</h2></summary>
+
+  (in progress)
+
+</details>
+
+<details>
+  <summary><h2>Sprint 3 Burndown Chart</h2></summary>
+
+  (in progress)
+
+</details>
+
+* ### **Sprint Review**
+  * Sprint 3'de (in progress)
 
 
+* ### **Sprint Retrospective**
+  * (in progress)
+  * (in progress)
 
+</details>
+
+
+## **Uygulama Tanıtım Videosu (Pending)**
 
 
 

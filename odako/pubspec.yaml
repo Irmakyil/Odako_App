@@ -35,6 +35,7 @@ dependencies:
   intl: ^0.20.2
   firebase_messaging: ^14.9.4
   flutter_local_notifications: ^18.0.1
+  google_fonts: ^4.0.4
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +73,7 @@ flutter:
     - lib/presentation/assets/face_mid.png
     - lib/presentation/assets/logo.png
     - lib/presentation/assets/maskot.png
+    - lib/presentation/assets/logo_foreground.png
 
 
 
@@ -80,10 +82,10 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: "odako/lib/presentation/assets/logo_foreground.png"
+  image_path: 'lib/presentation/assets/logo_foreground.png'
   adaptive_icon:
-    foreground: "lib/presentation/assets/logo_foreground.png"
-    background: "lib/presentation/assets/logo_foreground.png"
+    foreground: 'lib/presentation/assets/logo_foreground.png'
+    background: 'lib/presentation/assets/logo_foreground.png'
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -101,10 +103,10 @@ flutter_icons:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: Marhey
-      fonts:
-        - asset: assets/fonts/Marhey-VariableFont_wght.ttf
+  # fonts:
+  #  - family: Marhey
+  #     fonts:
+  #       - asset: assets/fonts/Marhey-VariableFont_wght.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

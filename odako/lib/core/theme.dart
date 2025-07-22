@@ -29,42 +29,42 @@ class AppTheme {
   // Text styles
   static const TextStyle headingLarge = TextStyle(
     fontSize: 28,
-    fontFamily: "Marhey",
+    fontFamily: 'Marhey',
     fontWeight: FontWeight.bold,
     color: textDark,
   );
 
   static const TextStyle headingMedium = TextStyle(
     fontSize: 24,
-    fontFamily: "Marhey",
+    fontFamily: 'Marhey',
     fontWeight: FontWeight.w600,
     color: textDark,
   );
 
   static const TextStyle headingSmall = TextStyle(
     fontSize: 20,
-    fontFamily: "Marhey",
+    fontFamily: 'Marhey',
     fontWeight: FontWeight.w600,
     color: textDark,
   );
 
   static const TextStyle bodyLarge = TextStyle(
     fontSize: 16,
-    fontFamily: "Marhey",
+    fontFamily: 'Marhey',
     fontWeight: FontWeight.normal,
     color: textDark,
   );
 
   static const TextStyle bodyMedium = TextStyle(
     fontSize: 14,
-    fontFamily: "Marhey",
+    fontFamily: 'Marhey',
     fontWeight: FontWeight.normal,
     color: textDark,
   );
 
   static const TextStyle bodySmall = TextStyle(
     fontSize: 12,
-    fontFamily: "Marhey",
+    fontFamily: 'Marhey',
     fontWeight: FontWeight.normal,
     color: darkGray,
   );

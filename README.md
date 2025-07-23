@@ -27,7 +27,7 @@
 | **Empatik Mikro Bildirimler** | Bildirimler sadece hatırlatma değil, motive edici ve kullanıcıya empatiyle yaklaşan içerikler sunar. |
 | **Renk Kodlu Arayüz** | Renklerle görev türü ayrımı, dikkat dağıtmayan sade ekranlar. ADHD dostu UX tasarımı. |
 | **Duygusal Gelişim Takibi** | Günlük ruh hali ve görev tamamlama bilgilerine göre haftalık grafiklerle gelişim takibi sağlar. |
-| **Oyunlaştırma** | Günlük tamamlanan görevler ile XP kazanılabilir, rozetler elde edilebilir ve avatar özelleştirilebilir. Uygulamaya her gün girip günlük görev kaydederek "daily log-in streak" serisi korunabilir. |
+| **Oyunlaştırma** | Günlük tamamlanan görevler ile rozetler elde edilebilir. |
 
 ## **Hedef Kitle**
 **Odako**, özellikle gençler, ADHD'ye sahip bireyler, öğrenciler ve dijital ortamda dikkat kaybı yaşayan bireyler için hazırlanmıştır. Kolay kullanılabilir bir kişisel asistan deneyimi de sunar.

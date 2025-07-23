@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MoodFace extends StatelessWidget {
-  final int moodIndex; // 0: Meh, 1: Not Bad, 2: Good
+  final int moodIndex; // 0: DEPRESSED, 1: NOT BAD, 2: AMAZING
   const MoodFace({super.key, required this.moodIndex});
 
   @override

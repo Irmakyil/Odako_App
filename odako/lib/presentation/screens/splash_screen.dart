@@ -57,20 +57,18 @@ class _SplashScreenState extends State<SplashScreen> {
                 // Maskot görseli
                 Image.asset(
                   'lib/presentation/assets/maskot.png',
-                  height: 160,
-                  width: 160,
+                  height: 200,
+                  width: 200,
                   fit: BoxFit.contain,
                 ),
                 const SizedBox(height: 32),
 
                 // Welcome başlığı
                 Text(
-                  'Welcome!',
+                  'Welcome to Odako',
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: const Color(
-                      0xFF203F9A,
-                    ), // Derin mavi: karşılama tonuna uygun
+                    color: const Color(0xFFFFFFFF),
                   ),
                 ),
               ],

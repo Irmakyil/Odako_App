@@ -74,6 +74,9 @@ flutter:
     - lib/presentation/assets/logo.png
     - lib/presentation/assets/maskot.png
     - lib/presentation/assets/logo_foreground.png
+    - lib/presentation/assets/chatbox1.png
+    - lib/presentation/assets/chatbox2.png
+    - lib/presentation/assets/chatbox3.png
 
 
 

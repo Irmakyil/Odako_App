@@ -9,8 +9,8 @@ final Map<int, String> moodPrompts = {
 };
 
 class AIService {
-  static const String _geminiApiKey = '';
-  static const String _geminiApiUrl = '';
+  static const String _geminiApiKey = 'API_KEY_HERE';
+  static const String _geminiApiUrl = 'API_URL_HERE'; 
 
   static Future<String> getDailyTaskSuggestion(
     String userInput, {

@@ -23,7 +23,7 @@ final List<Map<String, dynamic>> badgeConditions = [
   },
   {
     'id': 'morning_start',
-    'unlockInfo': 'Complete a task between 08:00–12:00',
+    'unlockInfo': 'Complete a task between 06:00–12:00',
   },
   {
     'id': 'productive_streak',
@@ -117,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       builder: (context) => AlertDialog(
         title: Row(
           children: [
-            Text(unlocked ? 'Badge Unlocked!' : 'Locked Badge', style: const TextStyle(fontSize: 20)),
+            Text(unlocked ? 'Badge Unlocked!' : 'Locked Badge', style: const TextStyle(fontSize: 18)),
             const SizedBox(width: 8),
             Text(icon, style: const TextStyle(fontSize: 28)),
           ],
@@ -230,12 +230,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Overview', style: theme.textTheme.titleMedium),
+                          Text('Progress Overview', style: theme.textTheme.titleMedium),
                           const SizedBox(height: 12),
                           Row(
                             children: [
                               Expanded(child: Text('Completed Tasks: $completedTaskCount', style: theme.textTheme.bodyMedium)),
-                              Expanded(child: Text('Day Streak 🔥: $streak', style: theme.textTheme.bodyMedium)),
+                              Expanded(child: Text('Login Streak 🔥: $streak', style: theme.textTheme.bodyMedium)),
                             ],
                           ),
                         ],
@@ -379,7 +379,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'xxx',
+                      'v1.0',
                       style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
                     ),
                   ],

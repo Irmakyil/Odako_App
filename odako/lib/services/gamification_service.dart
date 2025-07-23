@@ -51,10 +51,10 @@ class GamificationService {
     {
       'id': 'morning_start',
       'name': 'Early Bird',
-      'desc': 'Completed a task between 08:00–12:00',
+      'desc': 'Completed a task between 06:00–12:00',
       'icon': '🌅',
       // CONDITION:
-      // - A task was completed between 08:00–12:00
+      // - A task was completed between 06:00–12:00
       'condition': (bool isMorning) => isMorning,
     },
     {
@@ -128,7 +128,7 @@ class GamificationService {
       final profile = profileSnap.data() ?? {};
       final completedTaskCount = (profile['completedTaskCount'] ?? 0) as int;
       final streak = (profile['streak'] ?? 0) as int;
-      final isMorning = completedAt.hour >= 8 && completedAt.hour < 12;
+      final isMorning = completedAt.hour >= 6 && completedAt.hour < 12;
       // Fallbacks for new badge condition params
       final isFirstTimeUser = (profile['createdAt'] != null && completedTaskCount == 1);
       // TODO: Calculate streakCompletionRate for last 3 days (requires more data structure)

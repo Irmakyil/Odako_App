@@ -88,7 +88,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
       );
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('onboarding_completed', true);
-      // Navigate to mood selection
       if (mounted) {
         Navigator.pushReplacementNamed(context, AppRoutes.moodSelection);
       }
@@ -102,13 +101,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
   Future<void> _signInWithGoogle() async {
     setState(() { _isLoading = true; _errorMessage = null; });
     try {
-      // 1. Trigger Google Sign-In
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       if (googleUser == null) {
         setState(() { _isLoading = false; });
         return;
       }
-      // 2. Retrieve tokens
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
       final String? accessToken = googleAuth.accessToken;
       final String? idToken = googleAuth.idToken;
@@ -116,19 +113,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
         setState(() { _errorMessage = 'Signing in with Google failed.'; _isLoading = false; });
         return;
       }
-      // 3. Create Firebase credential
       final credential = GoogleAuthProvider.credential(
         accessToken: accessToken,
         idToken: idToken,
       );
-      // 4. Sign in to Firebase
       final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
       final user = userCredential.user;
       if (user == null) {
         setState(() { _errorMessage = 'Login with Firebase failed.'; });
         return;
       }
-      // 5. Firestore user doc
       final userDoc = FirebaseFirestore.instance.collection('users').doc(user.uid);
       final docSnap = await userDoc.get();
       if (!docSnap.exists) {
@@ -138,10 +132,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
           'createdAt': FieldValue.serverTimestamp(),
         });
       }
-      // 6. Save onboarding flag
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('onboarding_completed', true);
-      // 7. Navigate
       if (!mounted) return;
       Navigator.pushReplacementNamed(context, AppRoutes.moodSelection);
     } on FirebaseAuthException catch (e) {
@@ -173,7 +165,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      body: SafeArea(
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('lib/presentation/assets/na_background.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+      child: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
           child: Column(
@@ -181,7 +180,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 16),
-              // Mascot
               Center(
                 child: Image.asset(
                   'lib/presentation/assets/logo.png',
@@ -190,20 +188,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
                 ),
               ),
               const SizedBox(height: 24),
-              // Header
-              Text(
-                'Welcome to Odako',
-                style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Your personalized AI helper for ADHD.',
-                style: theme.textTheme.bodyLarge?.copyWith(color: theme.hintColor),
-                textAlign: TextAlign.center,
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                decoration: BoxDecoration(
+                  color: Color(0xFFE7A0CC),
+                  borderRadius: BorderRadius.circular(12.0)
+                ),
+                child: Text(
+                  'Your personalized AI helper for ADHD.',
+                  style: theme.textTheme.bodyLarge?.copyWith(color: theme.hintColor),
+                  textAlign: TextAlign.center,
+                ),
               ),
               const SizedBox(height: 32),
-              // TabBar for Login/Register
               DefaultTabController(
                 length: 2,
                 initialIndex: _tabController.index,
@@ -292,6 +289,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
             ],
           ),
         ),
+      ),
       ),
     );
   }

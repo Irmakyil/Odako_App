@@ -11,6 +11,7 @@ import 'presentation/screens/main_menu.dart';
 import 'presentation/screens/chat_screen.dart';
 import 'presentation/screens/onboarding_screen.dart';
 import 'presentation/screens/profile_screen.dart';
+import 'presentation/screens/profile_onboarding_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'services/notification_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -51,6 +52,7 @@ class OdakoApp extends StatelessWidget {
         AppRoutes.mainMenu: (context) => const MainMenuScreen(),
         AppRoutes.chat: (context) => const ChatScreen(),
         AppRoutes.profile: (context) => const ProfileScreen(),
+        '/profile-onboarding': (context) => const ProfileOnboardingScreen(),
       },
       debugShowCheckedModeBanner: false,
     );

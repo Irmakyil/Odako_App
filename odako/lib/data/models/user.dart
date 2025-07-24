@@ -12,6 +12,9 @@ class AppUser with _$AppUser {
     @Default(false) bool hasCompletedOnboarding,
     @Default(false) bool isDeleted,
     required DateTime createdAt,
+    int? age,
+    String? gender,
+    String? adhdType,
   }) = _AppUser;
 
   factory AppUser.fromJson(Map<String, dynamic> json) => _$AppUserFromJson(json);

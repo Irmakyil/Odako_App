@@ -3,6 +3,8 @@ import '../../routes/app_routes.dart';
 import '../../data/datasources/local_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'profile_onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,19 +24,38 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 3));
     final user = FirebaseAuth.instance.currentUser;
     if (!mounted) return;
+    final localContext = context;
     if (user == null) {
       // Not signed in: show onboarding if first launch or after sign out
-      Navigator.pushReplacementNamed(context, AppRoutes.onboarding);
+      Navigator.pushReplacementNamed(localContext, AppRoutes.onboarding);
       return;
     }
-    // User is signed in, check last mood check date
+    // User is signed in, check if profile.username exists
+    try {
+      final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      if (!mounted) return;
+      final profile = doc.data()?['profile'] ?? {};
+      if (profile['username'] == null || (profile['username'] as String).isEmpty) {
+        Navigator.of(localContext).pushReplacement(
+          MaterialPageRoute(builder: (_) => const ProfileOnboardingScreen()),
+        );
+        return;
+      }
+    } catch (e) {
+      debugPrint('Error checking user profile: $e');
+      // Fallback: show onboarding
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(localContext, AppRoutes.onboarding);
+      return;
+    }
+    // User is signed in and has username, check last mood check date
     final today = DateFormat('yyyy-MM-dd').format(DateTime.now());
     final lastMoodCheckDate = await LocalStorage.getString('lastMoodCheckDate');
     if (!mounted) return;
     if (lastMoodCheckDate == today) {
-      Navigator.pushReplacementNamed(context, AppRoutes.mainMenu);
+      Navigator.pushReplacementNamed(localContext, AppRoutes.mainMenu);
     } else {
-      Navigator.pushReplacementNamed(context, AppRoutes.moodSelection);
+      Navigator.pushReplacementNamed(localContext, AppRoutes.moodSelection);
     }
   }
 

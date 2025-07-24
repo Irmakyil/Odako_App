@@ -14,6 +14,9 @@ _$AppUserImpl _$$AppUserImplFromJson(Map<String, dynamic> json) =>
       hasCompletedOnboarding: json['hasCompletedOnboarding'] as bool? ?? false,
       isDeleted: json['isDeleted'] as bool? ?? false,
       createdAt: DateTime.parse(json['createdAt'] as String),
+      age: (json['age'] as num?)?.toInt(),
+      gender: json['gender'] as String?,
+      adhdType: json['adhdType'] as String?,
     );
 
 Map<String, dynamic> _$$AppUserImplToJson(_$AppUserImpl instance) =>
@@ -24,4 +27,7 @@ Map<String, dynamic> _$$AppUserImplToJson(_$AppUserImpl instance) =>
       'hasCompletedOnboarding': instance.hasCompletedOnboarding,
       'isDeleted': instance.isDeleted,
       'createdAt': instance.createdAt.toIso8601String(),
+      'age': instance.age,
+      'gender': instance.gender,
+      'adhdType': instance.adhdType,
     };

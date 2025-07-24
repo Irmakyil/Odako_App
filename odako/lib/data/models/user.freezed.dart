@@ -27,6 +27,9 @@ mixin _$AppUser {
   bool get hasCompletedOnboarding => throw _privateConstructorUsedError;
   bool get isDeleted => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
+  int? get age => throw _privateConstructorUsedError;
+  String? get gender => throw _privateConstructorUsedError;
+  String? get adhdType => throw _privateConstructorUsedError;
 
   /// Serializes this AppUser to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,6 +52,9 @@ abstract class $AppUserCopyWith<$Res> {
     bool hasCompletedOnboarding,
     bool isDeleted,
     DateTime createdAt,
+    int? age,
+    String? gender,
+    String? adhdType,
   });
 }
 
@@ -73,6 +79,9 @@ class _$AppUserCopyWithImpl<$Res, $Val extends AppUser>
     Object? hasCompletedOnboarding = null,
     Object? isDeleted = null,
     Object? createdAt = null,
+    Object? age = freezed,
+    Object? gender = freezed,
+    Object? adhdType = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -100,6 +109,18 @@ class _$AppUserCopyWithImpl<$Res, $Val extends AppUser>
                 ? _value.createdAt
                 : createdAt // ignore: cast_nullable_to_non_nullable
                       as DateTime,
+            age: freezed == age
+                ? _value.age
+                : age // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            gender: freezed == gender
+                ? _value.gender
+                : gender // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            adhdType: freezed == adhdType
+                ? _value.adhdType
+                : adhdType // ignore: cast_nullable_to_non_nullable
+                      as String?,
           )
           as $Val,
     );
@@ -121,6 +142,9 @@ abstract class _$$AppUserImplCopyWith<$Res> implements $AppUserCopyWith<$Res> {
     bool hasCompletedOnboarding,
     bool isDeleted,
     DateTime createdAt,
+    int? age,
+    String? gender,
+    String? adhdType,
   });
 }
 
@@ -144,6 +168,9 @@ class __$$AppUserImplCopyWithImpl<$Res>
     Object? hasCompletedOnboarding = null,
     Object? isDeleted = null,
     Object? createdAt = null,
+    Object? age = freezed,
+    Object? gender = freezed,
+    Object? adhdType = freezed,
   }) {
     return _then(
       _$AppUserImpl(
@@ -171,6 +198,18 @@ class __$$AppUserImplCopyWithImpl<$Res>
             ? _value.createdAt
             : createdAt // ignore: cast_nullable_to_non_nullable
                   as DateTime,
+        age: freezed == age
+            ? _value.age
+            : age // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        gender: freezed == gender
+            ? _value.gender
+            : gender // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        adhdType: freezed == adhdType
+            ? _value.adhdType
+            : adhdType // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -186,6 +225,9 @@ class _$AppUserImpl implements _AppUser {
     this.hasCompletedOnboarding = false,
     this.isDeleted = false,
     required this.createdAt,
+    this.age,
+    this.gender,
+    this.adhdType,
   });
 
   factory _$AppUserImpl.fromJson(Map<String, dynamic> json) =>
@@ -205,10 +247,16 @@ class _$AppUserImpl implements _AppUser {
   final bool isDeleted;
   @override
   final DateTime createdAt;
+  @override
+  final int? age;
+  @override
+  final String? gender;
+  @override
+  final String? adhdType;
 
   @override
   String toString() {
-    return 'AppUser(uid: $uid, name: $name, email: $email, hasCompletedOnboarding: $hasCompletedOnboarding, isDeleted: $isDeleted, createdAt: $createdAt)';
+    return 'AppUser(uid: $uid, name: $name, email: $email, hasCompletedOnboarding: $hasCompletedOnboarding, isDeleted: $isDeleted, createdAt: $createdAt, age: $age, gender: $gender, adhdType: $adhdType)';
   }
 
   @override
@@ -224,7 +272,11 @@ class _$AppUserImpl implements _AppUser {
             (identical(other.isDeleted, isDeleted) ||
                 other.isDeleted == isDeleted) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+                other.createdAt == createdAt) &&
+            (identical(other.age, age) || other.age == age) &&
+            (identical(other.gender, gender) || other.gender == gender) &&
+            (identical(other.adhdType, adhdType) ||
+                other.adhdType == adhdType));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -237,6 +289,9 @@ class _$AppUserImpl implements _AppUser {
     hasCompletedOnboarding,
     isDeleted,
     createdAt,
+    age,
+    gender,
+    adhdType,
   );
 
   /// Create a copy of AppUser
@@ -261,6 +316,9 @@ abstract class _AppUser implements AppUser {
     final bool hasCompletedOnboarding,
     final bool isDeleted,
     required final DateTime createdAt,
+    final int? age,
+    final String? gender,
+    final String? adhdType,
   }) = _$AppUserImpl;
 
   factory _AppUser.fromJson(Map<String, dynamic> json) = _$AppUserImpl.fromJson;
@@ -277,6 +335,12 @@ abstract class _AppUser implements AppUser {
   bool get isDeleted;
   @override
   DateTime get createdAt;
+  @override
+  int? get age;
+  @override
+  String? get gender;
+  @override
+  String? get adhdType;
 
   /// Create a copy of AppUser
   /// with the given fields replaced by the non-null parameter values.

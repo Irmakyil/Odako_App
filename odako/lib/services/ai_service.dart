@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 final Map<int, String> moodPrompts = {
   0: "I'm feeling down today. ",
@@ -19,8 +21,39 @@ class AIService {
     final moodPrompt = (moodIndex != null && moodPrompts.containsKey(moodIndex))
         ? moodPrompts[moodIndex]!
         : '';
+
+    // Fetch user profile info
+    String userInfo = '';
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        final profileRef = FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .collection('profile')
+            .doc('data');
+        final profileSnapshot = await profileRef.get();
+        final data = profileSnapshot.data();
+        final username = (data?['username'] ?? 'User').toString();
+        final age = data?['age'];
+        final gender = data?['gender'];
+        final adhdType = data?['adhdType'];
+        userInfo = "User Info: ";
+        if (username.isNotEmpty) userInfo += "Name is $username";
+        if (age != null) userInfo += ", $age years old";
+        if (gender != null && gender.toString().isNotEmpty) userInfo += ", identifies as $gender";
+        if (adhdType != null && adhdType.toString().isNotEmpty) userInfo += ", with $adhdType ADHD type.";
+        userInfo = userInfo.trim();
+        if (!userInfo.endsWith(".")) userInfo += ".";
+      }
+    } catch (e) {
+      debugPrint('Error fetching user profile for AI prompt: $e');
+      userInfo = '';
+    }
+
     final prompt =
         'You are a friendly and motivational assistant helping someone with ADHD plan their day. '
+        '${userInfo.isNotEmpty ? "$userInfo\n" : ''}'
         '$moodPrompt'
         'This is the user\'s input: "$userInput". It\'s either a task they want to accomplish or just their thoughts and emotions.'
         'If it is a task, suggest a short and simple first step related to what they want to accomplish. Be concise and direct. If the user is just sharing their thoughts and emotions, have a conversation with them and support them.';
@@ -69,33 +102,33 @@ class AIService {
   static Future<String> getTasksFromChatContext(String chatContext) async {
     final prompt =
         '''
-You are a friendly and motivational assistant helping someone with ADHD break down their task into manageable steps.
+          You are a friendly and motivational assistant helping someone with ADHD break down their task into manageable steps.
 
-Based on this conversation:
-$chatContext
+          Based on this conversation:
+          $chatContext
 
-Generate a JSON response with an array of tasks. Each task should have:
-- "text": A clear and short, actionable description
-- "priority": One of ["High", "Medium", "Low"]
+          Generate a JSON response with an array of tasks. Each task should have:
+          - "text": A clear and short, actionable description
+          - "priority": One of ["High", "Medium", "Low"]
 
-Focus on:
-1. Breaking large task into smaller, manageable steps
-2. Prioritizing tasks based on importance and urgency (Keep in mind that ADHD users may struggle with prioritization)
-3. Making tasks specific and actionable
-4. Considering ADHD-friendly task sizes
+          Focus on:
+          1. Breaking large task into smaller, manageable steps
+          2. Prioritizing tasks based on importance and urgency (Keep in mind that ADHD users may struggle with prioritization)
+          3. Making tasks specific and actionable
+          4. Considering ADHD-friendly task sizes
 
-Return valid JSON formatting like this:
-[
-  {
-    "text": "Make your bed",
-    "priority": "High"
-  },
-  {
-    "text": "Organize your desk",
-    "priority": "Medium"
-  }
-]
-''';
+          Return valid JSON formatting like this:
+          [
+            {
+              "text": "Make your bed",
+              "priority": "High"
+            },
+            {
+              "text": "Organize your desk",
+              "priority": "Medium"
+            }
+          ]
+          ''';
 
     try {
       final response = await http.post(

@@ -142,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               if (unlocked)
                 Text(desc,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
+                          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
                         )),
               // Show unlock info only for locked badges
               if (!unlocked && unlockInfo != null && unlockInfo != '')
@@ -150,7 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text('How to unlock: $unlockInfo',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                           )),
                 ),
             ],
@@ -228,7 +228,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           CircleAvatar(
                             radius: 45, // Slightly larger avatar
-                            backgroundColor: theme.colorScheme.primary.withAlpha(50), // More visible background
+                            backgroundColor: theme.colorScheme.primary.withValues(alpha: 50 / 255), // More visible background
                             backgroundImage: const AssetImage('lib/presentation/assets/maskot.png'),
                           ),
                           const SizedBox(height: 16),
@@ -244,7 +244,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Text(
                             email,
                             style: theme.textTheme.bodyLarge?.copyWith(
-                                  color: theme.colorScheme.onSurface.withOpacity(0.7), // Softer email color
+                                  color: theme.colorScheme.onSurface.withValues(alpha: 0.7), // Softer email color
                                 ),
                             textAlign: TextAlign.center,
                           ),
@@ -299,12 +299,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Expanded(
                                       child: Text('Completed Tasks: $completedTaskCount',
                                           style: theme.textTheme.bodyLarge?.copyWith(
-                                                color: theme.colorScheme.onSurface.withOpacity(0.8),
+                                                color: theme.colorScheme.onSurface.withValues(alpha: 0.8),
                                               ))),
                                   Expanded(
                                       child: Text('Login Streak 🔥: $streak',
                                           style: theme.textTheme.bodyLarge?.copyWith(
-                                                color: theme.colorScheme.onSurface.withOpacity(0.8),
+                                                color: theme.colorScheme.onSurface.withValues(alpha: 0.8),
                                               ))),
                                 ],
                               ),
@@ -363,7 +363,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               badges.isEmpty
                                   ? Text('No badges yet! Complete tasks to earn them.',
                                       style: theme.textTheme.bodyLarge?.copyWith(
-                                            color: theme.colorScheme.onSurface.withOpacity(0.8),
+                                            color: theme.colorScheme.onSurface.withValues(alpha: 0.8),
                                           ))
                                   : SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
@@ -383,8 +383,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8), // More padding
                                                 decoration: BoxDecoration(
                                                   color: unlocked
-                                                      ? theme.colorScheme.primary.withAlpha(50) // More prominent unlocked color
-                                                      : theme.colorScheme.surfaceVariant, // Different color for locked
+                                                      ? theme.colorScheme.primary.withValues(alpha: 50 / 255) // More prominent unlocked color
+                                                      : theme.colorScheme.surfaceContainerHighest, // Different color for locked
                                                   borderRadius: BorderRadius.circular(16), // More rounded
                                                   border: Border.all(
                                                     color: unlocked
@@ -395,7 +395,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   boxShadow: [
                                                     if (unlocked) // Add shadow only for unlocked badges
                                                       BoxShadow(
-                                                        color: theme.colorScheme.primary.withAlpha(20),
+                                                        color: theme.colorScheme.primary.withValues(alpha: 20 / 255),
                                                         blurRadius: 8,
                                                         offset: const Offset(0, 4),
                                                       ),
@@ -415,7 +415,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                             fontWeight: FontWeight.w700,
                                                             color: unlocked
                                                                 ? theme.colorScheme.onSurface // OnSurface for unlocked
-                                                                : theme.colorScheme.onSurface.withOpacity(0.7), // Softer for locked
+                                                                : theme.colorScheme.onSurface.withValues(alpha: 0.7), // Softer for locked
                                                           ),
                                                       textAlign: TextAlign.center,
                                                       maxLines: 2,

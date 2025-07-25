@@ -52,7 +52,7 @@ class OdakoApp extends StatelessWidget {
         AppRoutes.mainMenu: (context) => const MainMenuScreen(),
         AppRoutes.chat: (context) => const ChatScreen(),
         AppRoutes.profile: (context) => const ProfileScreen(),
-        '/profile-onboarding': (context) => const ProfileOnboardingScreen(),
+        AppRoutes.profileOnboarding: (context) => const ProfileOnboardingScreen(),
       },
       debugShowCheckedModeBanner: false,
     );

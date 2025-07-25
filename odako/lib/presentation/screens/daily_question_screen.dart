@@ -151,9 +151,11 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
       setState(() {
         _messages.removeWhere((msg) => msg.isTyping);
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
+        );
+      }
     } finally {
       setState(() {
         _isLoading = false;

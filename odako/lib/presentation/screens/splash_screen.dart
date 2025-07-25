@@ -4,7 +4,6 @@ import '../../data/datasources/local_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'profile_onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,37 +20,57 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _handleStartupRouting() async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 1)); // splash delay
     final user = FirebaseAuth.instance.currentUser;
+
     if (!mounted) return;
-    final localContext = context;
+
     if (user == null) {
-      Navigator.pushReplacementNamed(localContext, AppRoutes.onboarding);
+      // No logged in user → Go to onboarding
+      Navigator.pushReplacementNamed(context, AppRoutes.onboarding);
       return;
     }
-    try {
-      final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
-      if (!mounted) return;
-      final profile = doc.data()?['profile'] ?? {};
-      if (profile['username'] == null || (profile['username'] as String).isEmpty) {
-        Navigator.of(localContext).pushReplacement(
-          MaterialPageRoute(builder: (_) => const ProfileOnboardingScreen()),
-        );
-        return;
-      }
-    } catch (e) {
-      debugPrint('Error checking user profile: $e');
-      if (!mounted) return;
-      Navigator.pushReplacementNamed(localContext, AppRoutes.onboarding);
-      return;
-    }
-    final today = DateFormat('yyyy-MM-dd').format(DateTime.now());
-    final lastMoodCheckDate = await LocalStorage.getString('lastMoodCheckDate');
+
+    //  User is signed in
+    final uid = user.uid;
+
+    // Step 1 – Fetch profile data
+    final profileDoc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('profile')
+        .doc('data')
+        .get();
+
+    final profileData = profileDoc.data();
+
+    // Check if user has completed profile onboarding
+    final isProfileComplete = profileData != null &&
+        profileData.containsKey('username') &&
+        profileData.containsKey('age') &&
+        profileData.containsKey('gender') &&
+        profileData.containsKey('adhdType');
+
     if (!mounted) return;
-    if (lastMoodCheckDate == today) {
-      Navigator.pushReplacementNamed(localContext, AppRoutes.mainMenu);
+
+    if (!isProfileComplete) {
+      //  Redirect to profile onboarding screen
+      Navigator.pushReplacementNamed(context, AppRoutes.profileOnboarding);
+      return;
+    }
+
+    // Step 2 – Check mood selection
+    final today = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    final lastMoodDate = await LocalStorage.getString('lastMoodCheckDate');
+
+    if (!mounted) return;
+
+    if (lastMoodDate == today) {
+      //  Mood already selected today → Go to main menu
+      Navigator.pushReplacementNamed(context, AppRoutes.mainMenu);
     } else {
-      Navigator.pushReplacementNamed(localContext, AppRoutes.moodSelection);
+      //  Mood not selected today → Go to mood selection
+      Navigator.pushReplacementNamed(context, AppRoutes.moodSelection);
     }
   }
 

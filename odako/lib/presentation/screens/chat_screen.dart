@@ -32,6 +32,16 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
   bool _isLoading = false;
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    });
+  }
+
 
   Future<void> _sendMessage() async {
     final text = _controller.text.trim();
@@ -42,23 +52,33 @@ class _ChatScreenState extends State<ChatScreen> {
         .collection('users')
         .doc(user.uid)
         .collection('feelingsChat');
-    final messenger = ScaffoldMessenger.of(context); // Capture before async
+    final messenger = ScaffoldMessenger.of(context);
+
+    final userMessageText = text;
+
     try {
       setState(() {
         _isLoading = true;
       });
-      // Save user message to Firestore
+
       await chatCol.add({
-        'text': text,
+        'text': userMessageText,
         'isUser': true,
         'createdAt': FieldValue.serverTimestamp(),
       });
       _controller.clear();
-      // Show loading indicator in UI
       setState(() {});
+
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent + 100,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+
       // Get AI reply
-      final aiReply = await AIService.sendMessageToGemini(text);
-      // Save AI reply to Firestore
+      final aiReply = await AIService.sendMessageToGemini(userMessageText);
+
+      // Add AI reply to Firestore
       await chatCol.add({
         'text': aiReply,
         'isUser': false,
@@ -74,6 +94,11 @@ class _ChatScreenState extends State<ChatScreen> {
         setState(() {
           _isLoading = false;
         });
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent + 100,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
       }
     }
   }
@@ -81,201 +106,265 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void dispose() {
     _controller.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF203F9A),
-        title: const Text('Let\'s Talk'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
+
+    return Stack(
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('lib/presentation/assets/na_background_5.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          children: [
-            Container(
-              height: 120,
-              width: 120,
-              decoration: BoxDecoration(
-                color: const Color(0xFF4E7CB2),
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(
-                  'lib/presentation/assets/maskot.png',
-                  fit: BoxFit.contain,
-                ),
-              ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            title: Text(
+              'Let\'s Talk',
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
             ),
-
-            const SizedBox(height: 16),
-
-            Expanded(
-              child: user == null
-                  ? const Center(child: Text('Not logged in'))
-                  : StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance
-                          .collection('users')
-                          .doc(user.uid)
-                          .collection('feelingsChat')
-                          .orderBy('createdAt', descending: false)
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        final docs = snapshot.data!.docs;
-                        final messages = docs
-                            .map(
-                              (doc) => ChatMessage.fromFirestore(
-                                doc.data() as Map<String, dynamic>,
-                              ),
-                            )
-                            .toList();
-                        final showGreeting = messages.isEmpty;
-                        return ListView.builder(
-                          itemCount: _isLoading
-                              ? messages.length + 1
-                              : (showGreeting ? 1 : 0) + messages.length,
-                          itemBuilder: (context, index) {
-                            if (showGreeting && index == 0) {
-                              // Show default greeting if no messages
-                              return Align(
-                                alignment: Alignment.centerLeft,
-                                child: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                    vertical: 4,
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 12,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFEFE8E0),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(16),
-                                      topRight: Radius.circular(16),
-                                      bottomRight: Radius.circular(16),
-                                    ),
-                                  ),
-
-                                  child: Text(
-                                    'How are you feeling today?',
-                                    style: Theme.of(
-                                      context,
-                                    ).textTheme.bodyMedium,
-                                  ),
-                                ),
-                              );
-                            }
-                            final msgIndex = showGreeting ? index - 1 : index;
-                            if (_isLoading && msgIndex == messages.length) {
-                              return Align(
-                                alignment: Alignment.centerLeft,
-                                child: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                    vertical: 4,
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 12,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFEFE8E0),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(16),
-                                      topRight: Radius.circular(16),
-                                      bottomRight: Radius.circular(16),
-                                    ),
-                                  ),
-                                  child: const SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }
-                            if (msgIndex < 0 || msgIndex >= messages.length) {
-                              return const SizedBox.shrink();
-                            }
-                            final msg = messages[msgIndex];
-                            return Align(
-                              alignment: msg.isUser
-                                  ? Alignment.centerRight
-                                  : Alignment.centerLeft,
-                              child: Container(
-                                margin: const EdgeInsets.symmetric(vertical: 4),
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 12,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: msg.isUser
-                                      ? const Color(
-                                          0xFFE7A0CC,
-                                        ) // Kullanıcı pastel pembe
-                                      : const Color(0xFFEFE8E0),
-                                  borderRadius: msg.isUser
-                                      ? const BorderRadius.only(
-                                          topLeft: Radius.circular(16),
-                                          topRight: Radius.circular(16),
-                                          bottomLeft: Radius.circular(16),
-                                        )
-                                      : const BorderRadius.only(
-                                          topLeft: Radius.circular(16),
-                                          topRight: Radius.circular(16),
-                                          bottomRight: Radius.circular(16),
-                                        ),
-                                ),
-                                child: Text(
-                                  msg.text,
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
+            centerTitle: true,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+              onPressed: () => Navigator.pop(context),
             ),
-
-            Row(
+          ),
+          body: SafeArea(
+            child: Column(
               children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    minLines: 1,
-                    maxLines: 3,
-                    decoration: const InputDecoration(
-                      hintText: 'Share your thoughts...',
-                      hintStyle: TextStyle(color: Color(0xFF94C2DA)),
+                Center(
+                  child: SizedBox(
+                    height: 160,
+                    width: 160, 
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Positioned.fill(
+                          child: Image.asset(
+                            'lib/presentation/assets/chatbox2_variant.png',
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 120,
+                          width: 120, 
+                          child: Image.asset(
+                            'lib/presentation/assets/maskot.png',
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ],
                     ),
-                    onSubmitted: (_) => _sendMessage(),
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.send),
-                  color: Color(0xFFE84797),
-                  onPressed: _isLoading ? null : _sendMessage,
+
+                const SizedBox(height: 16),
+
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: user == null
+                        ? const Center(child: Text('Please sign in to chat.'))
+                        : StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(user.uid)
+                                .collection('feelingsChat')
+                                .orderBy('createdAt', descending: false)
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                              if (snapshot.hasError) {
+                                return Center(child: Text('Error: ${snapshot.error}'));
+                              }
+                              final docs = snapshot.data!.docs;
+                              final messages = docs
+                                  .map(
+                                    (doc) => ChatMessage.fromFirestore(
+                                        doc.data() as Map<String, dynamic>),
+                                  )
+                                  .toList();
+
+                              final showGreeting = messages.isEmpty && !_isLoading;
+                              int itemCount = messages.length;
+                              if (showGreeting) {
+                                itemCount++;
+                              }
+                              if (_isLoading) {
+                                itemCount++;
+                              }
+
+                              return ListView.builder(
+                                controller: _scrollController,
+                                itemCount: itemCount,
+                                itemBuilder: (context, index) {
+                                  if (showGreeting && index == 0) {
+                                    return Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Container(
+                                        margin: const EdgeInsets.symmetric(vertical: 4),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 12),
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context).colorScheme.surface,
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(16),
+                                            topRight: Radius.circular(16),
+                                            bottomRight: Radius.circular(16),
+                                          ),
+                                        ),
+                                        child: Text(
+                                          'How are you feeling today?',
+                                          style: Theme.of(context).textTheme.bodyMedium,
+                                        ),
+                                      ),
+                                    );
+                                  }
+
+                                  final msgIndex = showGreeting ? index - 1 : index;
+
+                                  if (_isLoading && msgIndex == messages.length) {
+                                    return Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Container(
+                                        margin: const EdgeInsets.symmetric(vertical: 4),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 12),
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context).colorScheme.surface,
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(16),
+                                            topRight: Radius.circular(16),
+                                            bottomRight: Radius.circular(16),
+                                          ),
+                                        ),
+                                        child: const SizedBox(
+                                          width: 24,
+                                          height: 24,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            color: Color(0xFFE84797),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+
+                                  if (msgIndex < 0 || msgIndex >= messages.length) {
+                                    return const SizedBox.shrink();
+                                  }
+
+                                  final msg = messages[msgIndex];
+                                  return Align(
+                                    alignment: msg.isUser
+                                        ? Alignment.centerRight
+                                        : Alignment.centerLeft,
+                                    child: Container(
+                                      margin: const EdgeInsets.symmetric(vertical: 4),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 12),
+                                      decoration: BoxDecoration(
+                                        color: msg.isUser
+                                            ? const Color(0xFFE7A0CC)
+                                            : Theme.of(context).colorScheme.surface,
+                                        borderRadius: msg.isUser
+                                            ? const BorderRadius.only(
+                                                topLeft: Radius.circular(16),
+                                                topRight: Radius.circular(16),
+                                                bottomLeft: Radius.circular(16),
+                                              )
+                                            : const BorderRadius.only(
+                                                topLeft: Radius.circular(16),
+                                                topRight: Radius.circular(16),
+                                                bottomRight: Radius.circular(16),
+                                              ),
+                                      ),
+                                      child: Text(
+                                        msg.text,
+                                        style: Theme.of(context).textTheme.bodyMedium,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0), 
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _controller,
+                          minLines: 1,
+                          maxLines: 3,
+                          decoration: InputDecoration(
+                            hintText: 'Share your thoughts...',
+                            hintStyle: TextStyle(
+                              color: Theme.of(context).colorScheme.onSurface, 
+                            ),
+                            filled: true,
+                            fillColor: Theme.of(context).colorScheme.surface,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(24), 
+                              borderSide: BorderSide.none, 
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                          ),
+                          onSubmitted: _isLoading ? null : (_) => _sendMessage(),
+                          style: Theme.of(context).textTheme.bodyMedium, 
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: const Color(0xFFE84797), 
+                          boxShadow: [
+                            BoxShadow(
+                              color: Theme.of(context).shadowColor.withAlpha(20),
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: IconButton(
+                          icon: const Icon(Icons.send),
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          onPressed: _isLoading ? null : _sendMessage,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

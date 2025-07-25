@@ -168,7 +168,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('lib/presentation/assets/na_background.png'),
+            image: AssetImage('lib/presentation/assets/na_background_1.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -191,12 +191,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 decoration: BoxDecoration(
-                  color: Color(0xFFE7A0CC),
-                  borderRadius: BorderRadius.circular(12.0)
+                  image: DecorationImage(
+                    image: AssetImage('lib/presentation/assets/na_background_4.png'),
+                    fit: BoxFit.fill,
+                  ),
+                  borderRadius: BorderRadius.circular(30.0),
                 ),
                 child: Text(
                   'Your personalized AI helper for ADHD.',
-                  style: theme.textTheme.bodyLarge?.copyWith(color: theme.hintColor),
+                  style: theme.textTheme.bodyLarge?.copyWith(color: Color.fromARGB(255, 0, 0, 0)),
                   textAlign: TextAlign.center,
                 ),
               ),

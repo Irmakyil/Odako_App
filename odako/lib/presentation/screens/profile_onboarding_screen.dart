@@ -17,7 +17,6 @@ class _ProfileOnboardingScreenState extends State<ProfileOnboardingScreen> {
   int _currentPage = 0;
   bool _isLoading = false;
 
-  // State for form fields
   String _username = '';
   int _age = 20;
   String? _gender;
@@ -117,7 +116,7 @@ class _ProfileOnboardingScreenState extends State<ProfileOnboardingScreen> {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Color.fromRGBO(255, 255, 255, 0.15),
-                hintText: 'Pick a username you like',
+                hintText: '',
                 hintStyle: const TextStyle(color: Colors.white70),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(24),
@@ -151,7 +150,7 @@ class _ProfileOnboardingScreenState extends State<ProfileOnboardingScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('Tell us more about you',
+            Text('Tell us more about you.',
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -177,8 +176,8 @@ class _ProfileOnboardingScreenState extends State<ProfileOnboardingScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildGenderButton('Female', Icons.female),
                 _buildGenderButton('Male', Icons.male),
+                _buildGenderButton('Female', Icons.female),
                 _buildGenderButton('Other', Icons.transgender),
               ],
             ),
@@ -197,10 +196,10 @@ class _ProfileOnboardingScreenState extends State<ProfileOnboardingScreen> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
         decoration: BoxDecoration(
-          color: selected ? Theme.of(context).colorScheme.primary.withOpacity(0.9) : Color.fromRGBO(255, 255, 255, 0.12),
+          color: selected ? Theme.of(context).colorScheme.primary : Color.fromRGBO(255, 255, 255, 0.12),
           borderRadius: BorderRadius.circular(18),
           border: Border.all(color: selected ? Theme.of(context).colorScheme.primary : Colors.white54, width: 2),
-          boxShadow: selected ? [BoxShadow(color: Theme.of(context).colorScheme.primary.withOpacity(0.2), blurRadius: 8)] : [],
+          boxShadow: selected ? [BoxShadow(color: Theme.of(context).colorScheme.primary, blurRadius: 8)] : [],
         ),
         child: Column(
           children: [
@@ -256,10 +255,10 @@ class _ProfileOnboardingScreenState extends State<ProfileOnboardingScreen> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
         decoration: BoxDecoration(
-          color: selected ? Theme.of(context).colorScheme.primary.withOpacity(0.9) : Color.fromRGBO(255, 255, 255, 0.12),
+          color: selected ? Theme.of(context).colorScheme.primary : Color.fromRGBO(255, 255, 255, 0.12),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: selected ? Theme.of(context).colorScheme.primary : Colors.white54, width: 2),
-          boxShadow: selected ? [BoxShadow(color: Theme.of(context).colorScheme.primary.withOpacity(0.2), blurRadius: 8)] : [],
+          boxShadow: selected ? [BoxShadow(color: Theme.of(context).colorScheme.primary, blurRadius: 8)] : [],
         ),
         child: Text(
           type,
@@ -302,7 +301,6 @@ class _ProfileOnboardingScreenState extends State<ProfileOnboardingScreen> {
       body: SafeArea(
         child: Stack(
           children: [
-            // Background image with overlay
             Positioned.fill(
               child: Stack(
                 children: [
@@ -318,7 +316,6 @@ class _ProfileOnboardingScreenState extends State<ProfileOnboardingScreen> {
                 ],
               ),
             ),
-            // Main content
             Positioned.fill(
               child: Column(
                 children: [

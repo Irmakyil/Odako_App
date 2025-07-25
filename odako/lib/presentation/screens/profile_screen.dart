@@ -111,13 +111,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final name = badge['name'] ?? '';
     final icon = badge['icon'] ?? '';
     final desc = badge['desc'] ?? '';
-    final unlockInfo = badgeConditions.firstWhere((b) => b['id'] == badge['id'], orElse: () => {'unlockInfo': ''})['unlockInfo'];
+    final unlockInfo =
+        badgeConditions.firstWhere((b) => b['id'] == badge['id'], orElse: () => {'unlockInfo': ''})['unlockInfo'];
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
+        backgroundColor: Theme.of(context).colorScheme.surface, // Consistent dialog background
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)), // Rounded corners
         title: Row(
           children: [
-            Text(unlocked ? 'Badge Unlocked!' : 'Locked Badge', style: const TextStyle(fontSize: 18)),
+            Text(unlocked ? 'Badge Unlocked!' : 'Locked Badge',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontWeight: FontWeight.bold,
+                    )),
             const SizedBox(width: 8),
             Text(icon, style: const TextStyle(fontSize: 28)),
           ],
@@ -126,15 +133,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(name, style: Theme.of(context).textTheme.titleMedium),
+              Text(name,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface,
+                        fontWeight: FontWeight.bold,
+                      )),
               const SizedBox(height: 8),
               if (unlocked)
-                Text(desc, style: Theme.of(context).textTheme.bodyMedium),
+                Text(desc,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
+                        )),
               // Show unlock info only for locked badges
               if (!unlocked && unlockInfo != null && unlockInfo != '')
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
-                  child: Text('How to unlock: $unlockInfo', style: Theme.of(context).textTheme.bodySmall),
+                  child: Text('How to unlock: $unlockInfo',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                          )),
                 ),
             ],
           ),
@@ -142,7 +159,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
+            child: Text('Close',
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.primary, // Primary color for action buttons
+                      fontWeight: FontWeight.bold,
+                    )),
           ),
         ],
       ),
@@ -155,240 +176,336 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final email = user?.email ?? 'user@email.com';
     final username = email.split('@').first;
     final theme = Theme.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-        centerTitle: true,
-        elevation: 0.5,
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // User information card
-              Card(
-                elevation: 2,
-                margin: const EdgeInsets.only(bottom: 24),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 40,
-                        backgroundColor: theme.colorScheme.primary.withAlpha(25),
-                        backgroundImage: const AssetImage('lib/presentation/assets/maskot.png'),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        username,
-                        style: theme.textTheme.titleLarge,
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        email,
-                        style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              // Statistics card
-              FutureBuilder<Map<String, dynamic>>(
-                future: _profileFuture,
-                builder: (context, snapshot) {
-                  final data = snapshot.data ?? {};
-                  final completedTaskCount = data['completedTaskCount'] ?? 0;
-                  final streak = data['streak'] ?? 0;
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Card(
-                      elevation: 2,
-                      margin: const EdgeInsets.only(bottom: 24),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(20.0),
-                        child: Center(child: CircularProgressIndicator()),
-                      ),
-                    );
-                  }
-                  return Card(
-                    elevation: 2,
-                    margin: const EdgeInsets.only(bottom: 24),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Progress Overview', style: theme.textTheme.titleMedium),
-                          const SizedBox(height: 12),
-                          Row(
-                            children: [
-                              Expanded(child: Text('Completed Tasks: $completedTaskCount', style: theme.textTheme.bodyMedium)),
-                              Expanded(child: Text('Login Streak 🔥: $streak', style: theme.textTheme.bodyMedium)),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-              // Achievements card
-              FutureBuilder<List<Map<String, dynamic>>>(
-                future: _badgesFuture,
-                builder: (context, snapshot) {
-                  final badges = snapshot.data ?? [];
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Card(
-                      elevation: 2,
-                      margin: const EdgeInsets.only(bottom: 24),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(20.0),
-                        child: Center(child: CircularProgressIndicator()),
-                      ),
-                    );
-                  }
-                  return Card(
-                    elevation: 2,
-                    margin: const EdgeInsets.only(bottom: 24),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text('Achievements', style: theme.textTheme.titleMedium),
-                              const SizedBox(width: 8),
-                            ],
-                          ),
-                          const SizedBox(height: 12),
-                          badges.isEmpty
-                              ? Text('No badges yet!', style: theme.textTheme.bodyMedium)
-                              : SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Wrap(
-                                    spacing: 16,
-                                    runSpacing: 16,
-                                    children: badges.map((badge) {
-                                      final unlocked = badge['unlocked'] == true;
-                                      final icon = badge['icon'] ?? '';
-                                      final name = badge['name'] ?? '';
-                                      return GestureDetector(
-                                        onTap: () => _showBadgeDialog(badge),
-                                        child: Opacity(
-                                          opacity: unlocked ? 1.0 : 0.5,
-                                          child: Container(
-                                            width: 80,
-                                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                                            decoration: BoxDecoration(
-                                              color: unlocked ? theme.colorScheme.primary.withAlpha(30) : Colors.grey[200],
-                                              borderRadius: BorderRadius.circular(12),
-                                              border: Border.all(
-                                                color: unlocked ? theme.colorScheme.primary : Colors.grey[400]!,
-                                                width: 2,
-                                              ),
-                                            ),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Text(
-                                                  icon,
-                                                  style: const TextStyle(fontSize: 32),
-                                                ),
-                                                const SizedBox(height: 4),
-                                                Text(
-                                                  name,
-                                                  style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
-                                                  textAlign: TextAlign.center,
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
-                                ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-              // Feedback button (not implemented yet)
-              SizedBox(
-                width: double.infinity,
-                child: OutlinedButton.icon(
-                  onPressed: null, // Feedback route not implemented yet
-                  icon: const Icon(Icons.feedback_outlined),
-                  label: const Text('Feedback'),
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              // Sign out button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: () => _logout(context),
-                  icon: const Icon(Icons.logout),
-                  label: const Text('Sign Out'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 32),
-              // App information
-              Center(
-                child: Column(
-                  children: [
-                    Text(
-                      'Odako',
-                      style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'v1.0',
-                      style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+    return Stack(
+      children: [
+        // --- Full-screen background image ---
+        Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('lib/presentation/assets/na_background_1.png'), // Use your background image
+              fit: BoxFit.cover,
+            ),
           ),
         ),
-      ),
+        Scaffold(
+          backgroundColor: Colors.transparent, // Make Scaffold background transparent
+          appBar: AppBar(
+            title: Text(
+              'Profile',
+              style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: theme.colorScheme.onSurface, // Consistent title color
+                  ),
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.transparent, // Transparent AppBar
+            elevation: 0, // No shadow for AppBar
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: theme.colorScheme.onSurface, // Consistent icon color
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // User information card
+                  Card(
+                    color: theme.colorScheme.surface, // Use theme surface color
+                    elevation: 4, // Consistent elevation
+                    margin: const EdgeInsets.only(bottom: 24),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20), // More rounded corners
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 45, // Slightly larger avatar
+                            backgroundColor: theme.colorScheme.primary.withAlpha(50), // More visible background
+                            backgroundImage: const AssetImage('lib/presentation/assets/maskot.png'),
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            username,
+                            style: theme.textTheme.headlineSmall?.copyWith(
+                                  color: theme.colorScheme.onSurface,
+                                  fontWeight: FontWeight.bold,
+                                ), // More prominent username
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            email,
+                            style: theme.textTheme.bodyLarge?.copyWith(
+                                  color: theme.colorScheme.onSurface.withOpacity(0.7), // Softer email color
+                                ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Statistics card
+                  FutureBuilder<Map<String, dynamic>>(
+                    future: _profileFuture,
+                    builder: (context, snapshot) {
+                      final data = snapshot.data ?? {};
+                      final completedTaskCount = data['completedTaskCount'] ?? 0;
+                      final streak = data['streak'] ?? 0;
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Card(
+                          color: theme.colorScheme.surface,
+                          elevation: 4,
+                          margin: const EdgeInsets.only(bottom: 24),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Center(
+                                child: CircularProgressIndicator(
+                              color: theme.colorScheme.secondary,
+                            )),
+                          ),
+                        );
+                      }
+                      return Card(
+                        color: theme.colorScheme.surface,
+                        elevation: 4,
+                        margin: const EdgeInsets.only(bottom: 24),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Progress Overview',
+                                  style: theme.textTheme.headlineSmall?.copyWith(
+                                        color: theme.colorScheme.onSurface,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                              const SizedBox(height: 16), // Increased spacing
+                              Row(
+                                children: [
+                                  Expanded(
+                                      child: Text('Completed Tasks: $completedTaskCount',
+                                          style: theme.textTheme.bodyLarge?.copyWith(
+                                                color: theme.colorScheme.onSurface.withOpacity(0.8),
+                                              ))),
+                                  Expanded(
+                                      child: Text('Login Streak 🔥: $streak',
+                                          style: theme.textTheme.bodyLarge?.copyWith(
+                                                color: theme.colorScheme.onSurface.withOpacity(0.8),
+                                              ))),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  // Achievements card
+                  FutureBuilder<List<Map<String, dynamic>>>(
+                    future: _badgesFuture,
+                    builder: (context, snapshot) {
+                      final badges = snapshot.data ?? [];
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Card(
+                          color: theme.colorScheme.surface,
+                          elevation: 4,
+                          margin: const EdgeInsets.only(bottom: 24),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Center(
+                                child: CircularProgressIndicator(
+                              color: theme.colorScheme.secondary,
+                            )),
+                          ),
+                        );
+                      }
+                      return Card(
+                        color: theme.colorScheme.surface,
+                        elevation: 4,
+                        margin: const EdgeInsets.only(bottom: 24),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text('Achievements',
+                                      style: theme.textTheme.headlineSmall?.copyWith(
+                                            color: theme.colorScheme.onSurface,
+                                            fontWeight: FontWeight.bold,
+                                          )),
+                                  const SizedBox(width: 8),
+                                  Icon(Icons.stars, color: theme.colorScheme.secondary), // Added an icon for achievements
+                                ],
+                              ),
+                              const SizedBox(height: 16), // Increased spacing
+                              badges.isEmpty
+                                  ? Text('No badges yet! Complete tasks to earn them.',
+                                      style: theme.textTheme.bodyLarge?.copyWith(
+                                            color: theme.colorScheme.onSurface.withOpacity(0.8),
+                                          ))
+                                  : SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Wrap(
+                                        spacing: 16,
+                                        runSpacing: 16,
+                                        children: badges.map((badge) {
+                                          final unlocked = badge['unlocked'] == true;
+                                          final icon = badge['icon'] ?? '';
+                                          final name = badge['name'] ?? '';
+                                          return GestureDetector(
+                                            onTap: () => _showBadgeDialog(badge),
+                                            child: Opacity(
+                                              opacity: unlocked ? 1.0 : 0.5,
+                                              child: Container(
+                                                width: 100, // Slightly wider badge container
+                                                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8), // More padding
+                                                decoration: BoxDecoration(
+                                                  color: unlocked
+                                                      ? theme.colorScheme.primary.withAlpha(50) // More prominent unlocked color
+                                                      : theme.colorScheme.surfaceVariant, // Different color for locked
+                                                  borderRadius: BorderRadius.circular(16), // More rounded
+                                                  border: Border.all(
+                                                    color: unlocked
+                                                        ? theme.colorScheme.primary // Primary for unlocked border
+                                                        : theme.colorScheme.outline, // Outline for locked border
+                                                    width: 2,
+                                                  ),
+                                                  boxShadow: [
+                                                    if (unlocked) // Add shadow only for unlocked badges
+                                                      BoxShadow(
+                                                        color: theme.colorScheme.primary.withAlpha(20),
+                                                        blurRadius: 8,
+                                                        offset: const Offset(0, 4),
+                                                      ),
+                                                  ],
+                                                ),
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    Text(
+                                                      icon,
+                                                      style: const TextStyle(fontSize: 40), // Larger icon
+                                                    ),
+                                                    const SizedBox(height: 8), // More spacing
+                                                    Text(
+                                                      name,
+                                                      style: theme.textTheme.bodyMedium?.copyWith(
+                                                            fontWeight: FontWeight.w700,
+                                                            color: unlocked
+                                                                ? theme.colorScheme.onSurface // OnSurface for unlocked
+                                                                : theme.colorScheme.onSurface.withOpacity(0.7), // Softer for locked
+                                                          ),
+                                                      textAlign: TextAlign.center,
+                                                      maxLines: 2,
+                                                      overflow: TextOverflow.ellipsis,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  // Feedback button
+                  //SizedBox(
+                    //width: double.infinity,
+                    //height: 50, // Consistent button height
+                    //child: OutlinedButton.icon(
+                      //onPressed: null, // Feedback route not implemented yet
+                      //icon: Icon(Icons.feedback_outlined, color: theme.colorScheme.primary),
+                      //label: Text('Feedback',
+                          //style: theme.textTheme.titleMedium?.copyWith(
+                                //color: theme.colorScheme.primary,
+                                //fontWeight: FontWeight.w600,
+                              //)),
+                      //style: OutlinedButton.styleFrom(
+                        //padding: const EdgeInsets.symmetric(vertical: 16),
+                        //shape: RoundedRectangleBorder(
+                          //borderRadius: BorderRadius.circular(12),
+                        //),
+                        //side: BorderSide(color: theme.colorScheme.primary, width: 2), // Primary color border
+                      //),
+                    //),
+                  //),
+                  const SizedBox(height: 16), // Increased spacing
+                  // Sign out button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50, // Consistent button height
+                    child: ElevatedButton.icon(
+                      onPressed: () => _logout(context),
+                      icon: const Icon(Icons.logout, color: Colors.white),
+                      label: Text('Sign Out',
+                          style: theme.textTheme.titleMedium?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              )),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red.shade700,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          'Odako',
+                          style: theme.textTheme.headlineSmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.onSurface,
+                              ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'v1.0.0',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                                color: theme.colorScheme.onSurface, // Softer color
+                              ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
-} 
+}

@@ -73,25 +73,25 @@ flutter:
     - lib/presentation/assets/face_mid.png
     - lib/presentation/assets/logo.png
     - lib/presentation/assets/maskot.png
-    - lib/presentation/assets/logo_foreground.png
     - lib/presentation/assets/chatbox1.png
     - lib/presentation/assets/chatbox2.png
-    - lib/presentation/assets/chatbox3.png
-    - lib/presentation/assets/login_background.png
-    - lib/presentation/assets/na_background.png
+    - lib/presentation/assets/chatbox1_variant.png
+    - lib/presentation/assets/chatbox2_variant.png
+    - lib/presentation/assets/na_background_1.png
     - lib/presentation/assets/na_background_2.png
     - lib/presentation/assets/na_background_3.png
     - lib/presentation/assets/na_background_4.png
     - lib/presentation/assets/na_background_5.png
+    - lib/presentation/assets/na_background_6.png
+    - lib/presentation/assets/home.png
+    - lib/presentation/assets/profile.png
+    - lib/presentation/assets/task.png
 
 
 flutter_icons:
   android: true
   ios: true
-  image_path: 'lib/presentation/assets/logo_foreground.png'
-  adaptive_icon:
-    foreground: 'lib/presentation/assets/logo_foreground.png'
-    background: 'lib/presentation/assets/logo_foreground.png'
+  image_path: 'lib/presentation/assets/logo.png'
 
   # To add assets to your application, add an assets section, like this:
   # assets:

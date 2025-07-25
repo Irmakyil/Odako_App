@@ -26,11 +26,9 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!mounted) return;
     final localContext = context;
     if (user == null) {
-      // Not signed in: show onboarding if first launch or after sign out
       Navigator.pushReplacementNamed(localContext, AppRoutes.onboarding);
       return;
     }
-    // User is signed in, check if profile.username exists
     try {
       final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
       if (!mounted) return;
@@ -43,12 +41,10 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     } catch (e) {
       debugPrint('Error checking user profile: $e');
-      // Fallback: show onboarding
       if (!mounted) return;
       Navigator.pushReplacementNamed(localContext, AppRoutes.onboarding);
       return;
     }
-    // User is signed in and has username, check last mood check date
     final today = DateFormat('yyyy-MM-dd').format(DateTime.now());
     final lastMoodCheckDate = await LocalStorage.getString('lastMoodCheckDate');
     if (!mounted) return;
@@ -75,7 +71,6 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Maskot görseli
                 Image.asset(
                   'lib/presentation/assets/maskot.png',
                   height: 200,
@@ -84,7 +79,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
                 const SizedBox(height: 32),
 
-                // Welcome başlığı
                 Text(
                   'Welcome to Odako',
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(

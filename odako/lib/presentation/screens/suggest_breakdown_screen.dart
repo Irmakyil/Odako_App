@@ -21,7 +21,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
   Map<String, AITask?> _selectedTasks = {
     'High': null,
     'Medium': null,
-    'Low': null
+    'Low': null,
   };
 
   @override
@@ -68,7 +68,9 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
           cacheDoc.data() != null &&
           cacheDoc.data()!['tasks'] != null) {
         // Use cached
-        final cachedList = List<Map<String, dynamic>>.from(cacheDoc.data()!['tasks']);
+        final cachedList = List<Map<String, dynamic>>.from(
+          cacheDoc.data()!['tasks'],
+        );
         tasks = cachedList.map((e) => AITask.fromJson(e)).toList();
       } else {
         // 3. Get messages for context
@@ -105,11 +107,12 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
             .collection('cachedTasks')
             .doc(_sessionId)
             .set({
-          'sessionId': _sessionId,
-          'tasks':
-              tasks.map((e) => {'text': e.text, 'priority': e.priority}).toList(),
-          'createdAt': FieldValue.serverTimestamp(),
-        });
+              'sessionId': _sessionId,
+              'tasks': tasks
+                  .map((e) => {'text': e.text, 'priority': e.priority})
+                  .toList(),
+              'createdAt': FieldValue.serverTimestamp(),
+            });
       }
       setState(() {
         _tasks = tasks;
@@ -129,7 +132,10 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
     if (_sessionId == null) return;
     final User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) return;
-    final selected = _selectedTasks.values.where((e) => e != null).cast<AITask>().toList();
+    final selected = _selectedTasks.values
+        .where((e) => e != null)
+        .cast<AITask>()
+        .toList();
     if (selected.isEmpty) return;
     setState(() {
       _isSaving = true;
@@ -152,7 +158,10 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
       await batch.commit();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Tasks saved!'), backgroundColor: Colors.green),
+          const SnackBar(
+            content: Text('Tasks saved!'),
+            backgroundColor: Colors.green,
+          ),
         );
         Navigator.pop(context);
       }
@@ -183,7 +192,9 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
   }
 
   List<AITask> _tasksForPriority(String priority) {
-    return _tasks.where((t) => t.priority.toLowerCase() == priority.toLowerCase()).toList();
+    return _tasks
+        .where((t) => t.priority.toLowerCase() == priority.toLowerCase())
+        .toList();
   }
 
   @override
@@ -200,15 +211,16 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
           ),
         ),
         Scaffold(
-          backgroundColor: Colors.transparent, // Make Scaffold background transparent
+          backgroundColor:
+              Colors.transparent, // Make Scaffold background transparent
           // --- App Bar ---
           appBar: AppBar(
             title: Text(
               'Task Suggestions',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
             centerTitle: true,
             backgroundColor: Colors.transparent, // Transparent AppBar
@@ -216,7 +228,9 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
             leading: IconButton(
               icon: Icon(
                 Icons.arrow_back,
-                color: Theme.of(context).colorScheme.onSurface, // Consistent icon color
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface, // Consistent icon color
               ),
               onPressed: () => Navigator.pop(context),
             ),
@@ -224,7 +238,9 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
               IconButton(
                 icon: Icon(
                   Icons.refresh,
-                  color: Theme.of(context).colorScheme.onSurface, // Consistent icon color
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface, // Consistent icon color
                 ),
                 onPressed: _isLoading ? null : _loadOrGenerateTasks,
                 tooltip: 'Refresh',
@@ -240,33 +256,44 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
                   Text(
                     'Based on your needs, I\'ve generated tasks and broken them into manageable steps. Let\'s get started!',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
                   ),
                   const SizedBox(height: 32),
                   Expanded(child: _buildContent()),
-                  if (_selectedTasks.values.any((e) => e != null) && !_isLoading)
+                  if (_selectedTasks.values.any((e) => e != null) &&
+                      !_isLoading)
                     Container(
-                      margin: const EdgeInsets.only(top: 24), // Add some space above the button
+                      margin: const EdgeInsets.only(
+                        top: 24,
+                      ), // Add some space above the button
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: _isSaving ? null : _saveSelectedTasks,
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.zero, // Remove default padding
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10), // Match MainMenuScreen button radius
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ), // Match MainMenuScreen button radius
                           ),
-                          elevation: 5, // Consistent elevation
-                          backgroundColor: Colors.transparent, // Transparent for image background
+                          elevation: 0, // Consistent elevation
+                          backgroundColor: Colors
+                              .transparent, // Transparent for image background
                           shadowColor: Colors.transparent, // Transparent shadow
-                          fixedSize: const Size(double.infinity, 45.0), // Consistent height
+                          fixedSize: const Size(
+                            double.infinity,
+                            45.0,
+                          ), // Consistent height
                           visualDensity: VisualDensity.compact,
                         ),
                         child: Ink(
                           decoration: BoxDecoration(
                             image: const DecorationImage(
-                              image: AssetImage('lib/presentation/assets/na_background_4.png'),
-                              fit: BoxFit.fill,
+                              image: AssetImage(
+                                'lib/presentation/assets/Button.png',
+                              ),
+                              fit: BoxFit.cover,
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -279,13 +306,21 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
                                     width: 20,
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
-                                      color: Color(0xFFE84797), // Accent color for loading
+                                      color: Color(
+                                        0xFFE84797,
+                                      ), // Accent color for loading
                                     ),
                                   )
                                 : Text(
                                     'Save Selected Tasks',
-                                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                          color: const Color.fromARGB(255, 0, 0, 0), // Black text for readability
+                                    style: Theme.of(context).textTheme.bodyLarge
+                                        ?.copyWith(
+                                          color: const Color.fromARGB(
+                                            255,
+                                            0,
+                                            0,
+                                            0,
+                                          ), // Black text for readability
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16,
                                         ),
@@ -317,8 +352,10 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
               'Generating tasks from your conversation...',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface, // Consistent text color
-                  ),
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface, // Consistent text color
+              ),
             ),
           ],
         ),
@@ -329,14 +366,20 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline, size: 64, color: Theme.of(context).colorScheme.error), // Error icon color
+            Icon(
+              Icons.error_outline,
+              size: 64,
+              color: Theme.of(context).colorScheme.error,
+            ), // Error icon color
             const SizedBox(height: 16),
             Text(
               _errorMessage!,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface, // Consistent text color
-                  ),
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface, // Consistent text color
+              ),
             ),
             const SizedBox(height: 16),
             // --- Try Again Button ---
@@ -356,21 +399,26 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
               child: Ink(
                 decoration: BoxDecoration(
                   image: const DecorationImage(
-                    image: AssetImage('lib/presentation/assets/na_background_4.png'),
+                    image: AssetImage(
+                      'lib/presentation/assets/na_background_4.png',
+                    ),
                     fit: BoxFit.fill,
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 12,
+                    horizontal: 20,
+                  ),
                   alignment: Alignment.center,
                   child: Text(
                     'Try Again',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: const Color.fromARGB(255, 0, 0, 0),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
+                      color: const Color.fromARGB(255, 0, 0, 0),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
@@ -381,12 +429,13 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
     }
     if (_tasks.isEmpty) {
       return Center(
-          child: Text(
-        'No tasks generated. Please try again.',
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-      ));
+        child: Text(
+          'No tasks generated. Please try again.',
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+        ),
+      );
     }
     // Group by priority and allow selection
     return ListView(
@@ -397,60 +446,81 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12.0), // More vertical padding
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 12.0,
+                  ), // More vertical padding
                   child: Text(
                     '$priority Priority',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: _getPriorityColor(priority), // Keep dynamic color
-                        ),
+                      fontWeight: FontWeight.bold,
+                      color: _getPriorityColor(priority), // Keep dynamic color
+                    ),
                   ),
                 ),
                 // Wrap CheckboxListTile in a Card for better visual separation
-                ..._tasksForPriority(priority).map((task) => Card(
-                      color: Theme.of(context).colorScheme.surface, // Use theme surface color
-                      margin: const EdgeInsets.symmetric(vertical: 6.0), // Spacing between cards
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12), // Rounded corners for cards
+                ..._tasksForPriority(priority).map(
+                  (task) => Card(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.surface, // Use theme surface color
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 6.0,
+                    ), // Spacing between cards
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        12,
+                      ), // Rounded corners for cards
+                    ),
+                    elevation: 2, // Slight elevation for card effect
+                    child: CheckboxListTile(
+                      value: _selectedTasks[priority]?.text == task.text,
+                      onChanged: (selected) {
+                        setState(() {
+                          if (selected == true) {
+                            _selectedTasks[priority] = task;
+                          } else {
+                            _selectedTasks[priority] = null;
+                          }
+                        });
+                      },
+                      title: Text(
+                        task.text,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface, // Consistent text color
+                        ),
                       ),
-                      elevation: 2, // Slight elevation for card effect
-                      child: CheckboxListTile(
-                        value: _selectedTasks[priority]?.text == task.text,
-                        onChanged: (selected) {
-                          setState(() {
-                            if (selected == true) {
-                              _selectedTasks[priority] = task;
-                            } else {
-                              _selectedTasks[priority] = null;
-                            }
-                          });
-                        },
-                        title: Text(
-                          task.text,
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                color: Theme.of(context).colorScheme.onSurface, // Consistent text color
+                      secondary: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: _getPriorityColor(
+                            priority,
+                          ), // Keep dynamic color
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          priority,
+                          style: Theme.of(context).textTheme.labelSmall
+                              ?.copyWith(
+                                // Use labelSmall
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12, // Maintain size for tag
                               ),
                         ),
-                        secondary: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: _getPriorityColor(priority), // Keep dynamic color
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            priority,
-                            style: Theme.of(context).textTheme.labelSmall?.copyWith( // Use labelSmall
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12, // Maintain size for tag
-                                ),
-                          ),
-                        ),
-                        controlAffinity: ListTileControlAffinity.leading,
-                        activeColor: const Color(0xFFE84797), // Accent color for checkbox
-                        checkColor: Colors.white, // Color of the checkmark
                       ),
-                    )),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      activeColor: const Color(
+                        0xFFE84797,
+                      ), // Accent color for checkbox
+                      checkColor: Colors.white, // Color of the checkmark
+                    ),
+                  ),
+                ),
               ],
             ),
       ],

@@ -97,10 +97,14 @@ class MainMenuScreen extends StatelessWidget {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
                             return const Center(
-                                child: CircularProgressIndicator());
+                              child: CircularProgressIndicator(),
+                            );
                           }
-                          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                            return const Text('No high-priority tasks for today.');
+                          if (!snapshot.hasData ||
+                              snapshot.data!.docs.isEmpty) {
+                            return const Text(
+                              'No high-priority tasks for today.',
+                            );
                           }
 
                           final doc = snapshot.data!.docs.first;
@@ -126,15 +130,12 @@ class MainMenuScreen extends StatelessWidget {
                               ),
                               title: Text(
                                 data['text'] ?? '',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
+                                style: Theme.of(context).textTheme.bodyLarge
                                     ?.copyWith(
                                       decoration: isCompleted
                                           ? TextDecoration.lineThrough
                                           : null,
-                                      color:
-                                          isCompleted ? Colors.grey : null,
+                                      color: isCompleted ? Colors.grey : null,
                                     ),
                               ),
                               subtitle: data['priority'] != null
@@ -180,15 +181,27 @@ class MainMenuScreen extends StatelessWidget {
             },
             items: [
               BottomNavigationBarItem(
-                icon: Image.asset('lib/presentation/assets/home.png', width: 50, height: 50),
+                icon: Image.asset(
+                  'lib/presentation/assets/home.png',
+                  width: 50,
+                  height: 50,
+                ),
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Image.asset('lib/presentation/assets/task.png', width: 50, height: 50),
+                icon: Image.asset(
+                  'lib/presentation/assets/task.png',
+                  width: 50,
+                  height: 50,
+                ),
                 label: 'Tasks',
               ),
               BottomNavigationBarItem(
-                icon: Image.asset('lib/presentation/assets/profile.png', width: 50, height: 50),
+                icon: Image.asset(
+                  'lib/presentation/assets/profile.png',
+                  width: 50,
+                  height: 50,
+                ),
                 label: 'Profile',
               ),
             ],
@@ -249,7 +262,7 @@ class OpenChatSection extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  elevation: 5,
+                  elevation: 0,
                   backgroundColor: Colors.transparent,
                   shadowColor: Colors.transparent,
                   fixedSize: Size(125.0, 45.0),
@@ -257,14 +270,14 @@ class OpenChatSection extends StatelessWidget {
                 ),
                 child: Ink(
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/presentation/assets/na_background_4.png'),
-                      fit: BoxFit.fill,
+                    image: const DecorationImage(
+                      image: AssetImage('lib/presentation/assets/Button.png'),
+                      fit: BoxFit.cover,
                     ),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    height: 45,
                     alignment: Alignment.center,
                     child: const Text(
                       'Open Chat',

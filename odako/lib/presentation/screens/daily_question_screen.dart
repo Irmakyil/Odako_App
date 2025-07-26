@@ -271,58 +271,49 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          elevation: 5,
+                          elevation: 0,
                           backgroundColor: Colors.transparent,
                           shadowColor: Colors.transparent,
-                          fixedSize: const Size(double.infinity, 45.0),
+                          fixedSize: const Size(300, 45),
                           visualDensity: VisualDensity.compact,
                         ),
-                        child: Ink(
+                        child: Container(
                           decoration: BoxDecoration(
-                            image: const DecorationImage(
+                            image: DecorationImage(
                               image: AssetImage(
                                 'lib/presentation/assets/Button.png',
                               ),
-                              fit: BoxFit.fill,
+                              fit: BoxFit.cover,
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 10,
-                            ),
-                            alignment: Alignment.center,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.add,
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSurface,
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  'Check Your Tasks',
-                                  style: Theme.of(context).textTheme.bodyLarge
-                                      ?.copyWith(
-                                        color: const Color.fromARGB(
-                                          255,
-                                          0,
-                                          0,
-                                          0,
-                                        ),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                      ),
-                                ),
-                              ],
-                            ),
+                          height: 45,
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.check_circle_outline,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Check Your Tasks',
+                                style: Theme.of(context).textTheme.bodyLarge
+                                    ?.copyWith(
+                                      color: const Color.fromARGB(255, 0, 0, 0),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ),
+
                   Row(
                     children: [
                       Expanded(
@@ -394,27 +385,24 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        elevation: 5,
+                        elevation: 0,
                         backgroundColor: Colors.transparent,
                         shadowColor: Colors.transparent,
-                        fixedSize: const Size(double.infinity, 45.0),
+                        fixedSize: const Size(300, 45),
                         visualDensity: VisualDensity.compact,
                       ),
-                      child: Ink(
+                      child: Container(
                         decoration: BoxDecoration(
-                          image: const DecorationImage(
+                          image: DecorationImage(
                             image: AssetImage(
                               'lib/presentation/assets/Button.png',
                             ),
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 10,
-                          ),
+                          height: 45,
                           alignment: Alignment.center,
                           child: Text(
                             'Continue',

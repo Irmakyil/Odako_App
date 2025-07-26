@@ -17,13 +17,13 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
     {
       'label': 'DEPRESSED',
       'face': 'lib/presentation/assets/face_meh.png',
-      'sliderColor': Color.fromARGB(255, 255, 100, 100), 
+      'sliderColor': Color.fromARGB(255, 255, 100, 100),
       'faceColor': Color.fromARGB(255, 255, 100, 100),
       'backgroundColor': Color.fromARGB(255, 255, 200, 200),
     },
     {
       'label': 'MEH',
-      'face': 'lib/presentation/assets/face_mid.png',
+      'face': 'lib/presentation/assets/Face_Mid.png',
       'sliderColor': Color.fromARGB(255, 255, 212, 82),
       'faceColor': Color.fromARGB(255, 255, 212, 82),
       'backgroundColor': Color.fromARGB(255, 255, 233, 168),
@@ -66,9 +66,9 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
             title: Text(
               'Mood Tracker',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
             centerTitle: true,
             backgroundColor: Colors.transparent,
@@ -91,9 +91,9 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                   Text(
                     "Share Your Feelings",
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
                     textAlign: TextAlign.center,
                   ),
 
@@ -101,9 +101,9 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
 
                   Container(
                     height: 150,
-                    width: 150, 
+                    width: 150,
                     decoration: BoxDecoration(
-                      color: faceColor, 
+                      color: faceColor,
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
@@ -127,10 +127,10 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                   Text(
                     mood['label'] as String,
                     style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                          fontWeight: FontWeight.w900,
-                          color: Theme.of(context).colorScheme.onSurface,
-                          letterSpacing: 2,
-                        ),
+                      fontWeight: FontWeight.w900,
+                      color: Theme.of(context).colorScheme.onSurface,
+                      letterSpacing: 2,
+                    ),
                     textAlign: TextAlign.center,
                   ),
 
@@ -139,8 +139,12 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                   SliderTheme(
                     data: SliderTheme.of(context).copyWith(
                       trackHeight: 8.0,
-                      thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 12.0),
-                      overlayShape: const RoundSliderOverlayShape(overlayRadius: 24.0),
+                      thumbShape: const RoundSliderThumbShape(
+                        enabledThumbRadius: 12.0,
+                      ),
+                      overlayShape: const RoundSliderOverlayShape(
+                        overlayRadius: 24.0,
+                      ),
                       activeTrackColor: sliderColor,
                       inactiveTrackColor: sliderColor.withAlpha(77),
                       thumbColor: sliderColor,
@@ -180,7 +184,9 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                       child: Ink(
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: const AssetImage('lib/presentation/assets/na_background_4.png'),
+                            image: const AssetImage(
+                              'lib/presentation/assets/na_background_4.png',
+                            ),
                             fit: BoxFit.fill,
                             colorFilter: ColorFilter.mode(
                               sliderColor,
@@ -190,11 +196,15 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                           borderRadius: BorderRadius.circular(28),
                         ),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 20,
+                          ),
                           alignment: Alignment.center,
                           child: Text(
                             'Continue',
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.white,

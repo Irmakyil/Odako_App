@@ -217,7 +217,7 @@ class _ProfileOnboardingScreenState extends State<ProfileOnboardingScreen> {
       'Inattentive',
       'Hyperactive-Impulsive',
       'Combined',
-      'Not sure',
+      'Not Sure',
     ];
     return Center(
       child: Padding(

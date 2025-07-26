@@ -22,7 +22,6 @@ class AIService {
         ? moodPrompts[moodIndex]!
         : '';
 
-    // Fetch user profile info
     String userInfo = '';
     try {
       final user = FirebaseAuth.instance.currentUser;
@@ -39,10 +38,10 @@ class AIService {
         final gender = data?['gender'];
         final adhdType = data?['adhdType'];
         userInfo = "User Info: ";
-        if (username.isNotEmpty) userInfo += "Name is $username";
-        if (age != null) userInfo += ", $age years old";
-        if (gender != null && gender.toString().isNotEmpty) userInfo += ", identifies as $gender";
-        if (adhdType != null && adhdType.toString().isNotEmpty) userInfo += ", with $adhdType ADHD type.";
+        if (username.isNotEmpty) userInfo += "User's name is $username";
+        if (age != null) userInfo += ", is $age years old";
+        if (gender != null && gender.toString().isNotEmpty) userInfo += ", gender is $gender";
+        if (adhdType != null && adhdType.toString().isNotEmpty) userInfo += ", ADHD type is $adhdType .";
         userInfo = userInfo.trim();
         if (!userInfo.endsWith(".")) userInfo += ".";
       }
@@ -52,10 +51,10 @@ class AIService {
     }
 
     final prompt =
-        'You are a friendly and motivational assistant helping someone with ADHD plan their day. '
+        'You are a friendly and motivational assistant helping someone (the user) with ADHD plan their day. '
         '${userInfo.isNotEmpty ? "$userInfo\n" : ''}'
-        '$moodPrompt'
-        'This is the user\'s input: "$userInput". It\'s either a task they want to accomplish or just their thoughts and emotions.'
+        'This is the user\'s current mood: "$moodPrompt"'
+        'This is the user\'s input: "$userInput". It\'s either a task they want to accomplish or just their thoughts and emotions. Change your tone, manner and how you speak and give appropriate responses to the user according to user\'s ADHD type (if it is not "Not Sure"), age and gender.'
         'If it is a task, suggest a short and simple first step related to what they want to accomplish. Be concise and direct. If the user is just sharing their thoughts and emotions, have a conversation with them and support them.';
 
     try {

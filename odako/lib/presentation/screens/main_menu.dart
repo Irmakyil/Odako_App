@@ -7,12 +7,29 @@ import '../widgets/daily_progress_circle.dart';
 class MainMenuScreen extends StatelessWidget {
   const MainMenuScreen({super.key});
 
+  Future<String> _fetchUsername() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) return 'User';
+      final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('profile')
+        .doc('data')
+        .get();
+      final data = doc.data();
+      final username = (data != null && data['username'] != null && data['username'].toString().isNotEmpty)
+        ? data['username']
+        : null;
+      return username ?? 'User';
+    } catch (e) {
+      debugPrint('Error fetching username: $e');
+      return 'User';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-    final username =
-        user?.displayName ?? (user?.email?.split('@').first ?? 'User');
-
     return Stack(
       children: [
         Container(
@@ -37,19 +54,34 @@ class MainMenuScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Hi $username!',
-                          style: Theme.of(context).textTheme.headlineSmall,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      const DailyProgressCircle(size: 56, showLabel: false),
-                    ],
+                  FutureBuilder<String>(
+                    future: _fetchUsername(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Row(
+                          children: [
+                            const CircularProgressIndicator(),
+                            const SizedBox(width: 12),
+                            Text('Hi...', style: Theme.of(context).textTheme.headlineSmall),
+                          ],
+                        );
+                      }
+                      final username = snapshot.data ?? 'User';
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Hi $username!',
+                              style: Theme.of(context).textTheme.headlineSmall,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          const DailyProgressCircle(size: 56, showLabel: false),
+                        ],
+                      );
+                    },
                   ),
                   const SizedBox(height: 24),
                   Row(

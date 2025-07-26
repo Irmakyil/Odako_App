@@ -172,9 +172,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-    final email = user?.email ?? 'user@email.com';
-    final username = email.split('@').first;
     final theme = Theme.of(context);
     return Stack(
       children: [
@@ -198,8 +195,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
             ),
             centerTitle: true,
-            backgroundColor: Colors.transparent, // Transparent AppBar
-            elevation: 0, // No shadow for AppBar
+            backgroundColor: Colors.transparent,
+            elevation: 0,
             leading: IconButton(
               icon: Icon(
                 Icons.arrow_back,
@@ -214,43 +211,79 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // User information card
-                  Card(
-                    color: theme.colorScheme.surface, // Use theme surface color
-                    elevation: 4, // Consistent elevation
-                    margin: const EdgeInsets.only(bottom: 24),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20), // More rounded corners
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        children: [
-                          CircleAvatar(
-                            radius: 45, // Slightly larger avatar
-                            backgroundColor: theme.colorScheme.primary.withValues(alpha: 50 / 255), // More visible background
-                            backgroundImage: const AssetImage('lib/presentation/assets/maskot.png'),
+                  FutureBuilder<Map<String, dynamic>>(
+                    future: _profileFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Card(
+                          color: theme.colorScheme.surface,
+                          elevation: 4,
+                          margin: const EdgeInsets.only(bottom: 24),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                          const SizedBox(height: 16),
-                          Text(
-                            username,
-                            style: theme.textTheme.headlineSmall?.copyWith(
-                                  color: theme.colorScheme.onSurface,
-                                  fontWeight: FontWeight.bold,
-                                ), // More prominent username
-                            textAlign: TextAlign.center,
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Center(child: CircularProgressIndicator(color: theme.colorScheme.secondary)),
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            email,
-                            style: theme.textTheme.bodyLarge?.copyWith(
-                                  color: theme.colorScheme.onSurface.withValues(alpha: 0.7), // Softer email color
-                                ),
-                            textAlign: TextAlign.center,
+                        );
+                      }
+                      final data = snapshot.data ?? {};
+                      // Fix unnecessary null comparison for username
+                      final username = (data['username'] != null && data['username'].toString().isNotEmpty)
+                        ? data['username']
+                        : 'User';
+                      final email = FirebaseAuth.instance.currentUser?.email ?? '';
+                      final age = data['age']?.toString() ?? '';
+                      final gender = data['gender']?.toString() ?? '';
+                      final adhdType = data['adhdType']?.toString() ?? '';
+                      return Card(
+                        color: theme.colorScheme.surface, // Use theme surface color
+                        elevation: 4, // Consistent elevation
+                        margin: const EdgeInsets.only(bottom: 24),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20), // More rounded corners
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            children: [
+                              CircleAvatar(
+                                radius: 45, // Slightly larger avatar
+                                backgroundColor: theme.colorScheme.primary.withValues(alpha: 50 / 255), // More visible background
+                                backgroundImage: const AssetImage('lib/presentation/assets/maskot.png'),
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                username,
+                                style: theme.textTheme.headlineSmall?.copyWith(
+                                      color: theme.colorScheme.onSurface,
+                                      fontWeight: FontWeight.bold,
+                                    ), // More prominent username
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                email,
+                                style: theme.textTheme.bodyLarge?.copyWith(
+                                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7), // Softer email color
+                                    ),
+                                textAlign: TextAlign.center,
+                              ),
+                              if (age.isNotEmpty || gender.isNotEmpty || adhdType.isNotEmpty) ...[
+                                const SizedBox(height: 8),
+                                if (age.isNotEmpty)
+                                  Text('Age: $age', style: theme.textTheme.bodyMedium),
+                                if (gender.isNotEmpty)
+                                  Text('Gender: $gender', style: theme.textTheme.bodyMedium),
+                                if (adhdType.isNotEmpty)
+                                  Text('ADHD Type: $adhdType', style: theme.textTheme.bodyMedium),
+                              ],
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
+                        ),
+                      );
+                    },
                   ),
                   // Statistics card
                   FutureBuilder<Map<String, dynamic>>(

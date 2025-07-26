@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../routes/app_routes.dart';
 
-//yönlendirmelerde bir sorun var tekrar bakacağım
 
 class ProfileOnboardingScreen extends StatefulWidget {
   const ProfileOnboardingScreen({super.key});
@@ -25,6 +24,17 @@ class _ProfileOnboardingScreenState extends State<ProfileOnboardingScreen> {
   final _usernameController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null && user.email != null) {
+      final emailPrefix = user.email!.split('@').first;
+      _username = emailPrefix;
+      _usernameController.text = emailPrefix;
+    }
+  }
+
+  @override
   void dispose() {
     _pageController.dispose();
     _usernameController.dispose();
@@ -42,14 +52,17 @@ class _ProfileOnboardingScreenState extends State<ProfileOnboardingScreen> {
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) throw Exception('No user logged in');
-      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-        'profile': {
+      await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('profile')
+        .doc('data')
+        .set({
           'username': _username.trim(),
           'age': _age,
           'gender': _gender,
           'adhdType': _adhdType,
-        }
-      }, SetOptions(merge: true));
+        }, SetOptions(merge: true));
       if (!mounted) return;
       Navigator.pushReplacementNamed(context, AppRoutes.moodSelection);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile saved!')));

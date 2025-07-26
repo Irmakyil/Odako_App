@@ -23,7 +23,7 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
     },
     {
       'label': 'MEH',
-      'face': 'lib/presentation/assets/Face_Mid.png',
+      'face': 'lib/presentation/assets/face_mid.png',
       'sliderColor': Color.fromARGB(255, 255, 212, 82),
       'faceColor': Color.fromARGB(255, 255, 212, 82),
       'backgroundColor': Color.fromARGB(255, 255, 233, 168),

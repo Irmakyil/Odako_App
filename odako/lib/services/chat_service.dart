@@ -6,6 +6,26 @@ class ChatService {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  static Future<String?> _fetchUsername() async {
+    try {
+      final currentUser = _auth.currentUser;
+      if (currentUser == null) return null;
+      final doc = await _firestore
+          .collection('users')
+          .doc(currentUser.uid)
+          .collection('profile')
+          .doc('data')
+          .get();
+      final data = doc.data();
+      if (data != null && data['username'] != null && data['username'].toString().isNotEmpty) {
+        return data['username'];
+      }
+    } catch (e) {
+      debugPrint('Error fetching username for chat message: $e');
+    }
+    return null;
+  }
+
   /// Saves a chat message to Firestore within a session
   /// 
   /// [message] - The message content
@@ -30,11 +50,19 @@ class ChatService {
         throw Exception('Invalid sender. Must be "user" or "ai"');
       }
 
+      // Fetch username for user messages
+      String? username;
+      if (sender == 'user') {
+        username = await _fetchUsername();
+      }
+
       // Create message data
       final messageData = {
         'message': message,
         'sender': sender,
         'timestamp': FieldValue.serverTimestamp(),
+        if (sender == 'user') 'username': username ?? 'User',
+        if (sender == 'ai') 'ai': true,
       };
 
       // Save to Firestore within session

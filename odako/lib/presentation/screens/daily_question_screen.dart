@@ -289,7 +289,7 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                           ),
                           height: 45,
                           alignment: Alignment.center,
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20,),
 
                           child: Row(
                             mainAxisSize: MainAxisSize.min,

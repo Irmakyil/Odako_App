@@ -16,24 +16,24 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
   static const _moodData = [
     {
       'label': 'DEPRESSED',
-      'face': 'lib/presentation/assets/face_meh.png',
-      'sliderColor': Color(0xFFd5aea1),
-      'faceColor': Color(0xFFeedadb),
-      'backgroundColor': Color(0xFFeedadb),
+      'face': 'lib/presentation/assets/face_bad.png',
+      'sliderColor': Color.fromARGB(255, 255, 100, 100), 
+      'faceColor': Color.fromARGB(255, 255, 100, 100),
+      'backgroundColor': Color.fromARGB(255, 255, 200, 200),
     },
     {
       'label': 'MEH',
       'face': 'lib/presentation/assets/face_mid.png',
-      'sliderColor': Color(0xFFf6d98e),
-      'faceColor': Color(0xFFf3edd5),
-      'backgroundColor': Color(0xFFf3edd5),
+      'sliderColor': Color.fromARGB(255, 255, 212, 82),
+      'faceColor': Color.fromARGB(255, 255, 212, 82),
+      'backgroundColor': Color.fromARGB(255, 255, 233, 168),
     },
     {
       'label': 'AMAZING',
       'face': 'lib/presentation/assets/face_good.png',
-      'sliderColor': Color(0xFFc0cc84),
-      'faceColor': Color(0xFFe5e8d3),
-      'backgroundColor': Color(0xFFe5e8d3),
+      'sliderColor': Color.fromARGB(255, 173, 255, 91),
+      'faceColor': Color.fromARGB(255, 173, 255, 91),
+      'backgroundColor': Color.fromARGB(255, 229, 255, 202),
     },
   ];
 

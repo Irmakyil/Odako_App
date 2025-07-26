@@ -75,10 +75,10 @@ class OpenChatSection extends StatelessWidget {
                   child: Ink(
                     decoration: BoxDecoration(
                       image: const DecorationImage(
-                        image: AssetImage('lib/presentation/assets/na_background_4.png'), // Button background image
-                        fit: BoxFit.fill,
+                        image: AssetImage('lib/presentation/assets/Button.png'),
+                        fit: BoxFit.cover,
                       ),
-                      borderRadius: BorderRadius.circular(10), // Match button shape
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 12),
@@ -86,9 +86,9 @@ class OpenChatSection extends StatelessWidget {
                       child: Text(
                         'Open Chat',
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              color: const Color.fromARGB(255, 0, 0, 0), // Black text on light background
+                              color: const Color.fromARGB(255, 0, 0, 0),
                               fontWeight: FontWeight.w600,
-                              fontSize: 16, // Consistent font size
+                              fontSize: 16,
                             ),
                       ),
                     ),
@@ -103,7 +103,6 @@ class OpenChatSection extends StatelessWidget {
   }
 }
 
-/// Main screen displaying the user's task list and progress
 class TaskListScreen extends StatefulWidget {
   const TaskListScreen({super.key});
 
@@ -119,7 +118,6 @@ class _TaskListScreenState extends State<TaskListScreen> {
 
     return Stack(
       children: [
-        // --- Full-screen background image ---
         Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -129,23 +127,22 @@ class _TaskListScreenState extends State<TaskListScreen> {
           ),
         ),
         Scaffold(
-          backgroundColor: Colors.transparent, // Make Scaffold background transparent
-          // --- App Bar ---
+          backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: Text(
               'Your Tasks',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface, // Consistent title color
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
             ),
             centerTitle: true,
-            backgroundColor: Colors.transparent, // Transparent AppBar
-            elevation: 0, // No shadow for AppBar
+            backgroundColor: Colors.transparent,
+            elevation: 0,
             leading: IconButton(
               icon: Icon(
                 Icons.arrow_back,
-                color: Theme.of(context).colorScheme.onSurface, // Consistent icon color
+                color: Theme.of(context).colorScheme.onSurface,
               ),
               onPressed: () => Navigator.pop(context),
             ),
@@ -155,7 +152,6 @@ class _TaskListScreenState extends State<TaskListScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Progress and encouragement row
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -163,18 +159,16 @@ class _TaskListScreenState extends State<TaskListScreen> {
                       child: Text(
                         'You got this! Keep on trucking!',
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              color: Theme.of(context).colorScheme.onSurface, // Consistent text color
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     const SizedBox(width: 12),
-                    // DailyProgressCircle (assuming it's already styled consistently)
                     const DailyProgressCircle(size: 48, showLabel: false),
                   ],
                 ),
-                const SizedBox(height: 24), // Adjusted spacing
-                // Task list section
+                const SizedBox(height: 24),
                 Expanded(
                   child: StreamBuilder<QuerySnapshot>(
                     stream: FirebaseAuth.instance.currentUser == null
@@ -189,17 +183,17 @@ class _TaskListScreenState extends State<TaskListScreen> {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(
                             child: CircularProgressIndicator(
-                          color: Theme.of(context).colorScheme.secondary, // Use theme accent color
+                          color: Theme.of(context).colorScheme.secondary,
                         ));
                       }
                       if (snapshot.hasError) {
-                        debugPrint('Error fetching tasks: ${snapshot.error}'); // Log the error
+                        debugPrint('Error fetching tasks: ${snapshot.error}');
                         return Center(
                             child: Text(
                           'Error loading tasks. Please try again.',
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                color: Theme.of(context).colorScheme.error, // Use theme error color
+                                color: Theme.of(context).colorScheme.error,
                               ),
                         ));
                       }
@@ -262,20 +256,19 @@ class _TaskListScreenState extends State<TaskListScreen> {
                                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                       decoration: isCompleted ? TextDecoration.lineThrough : null,
                                       color: isCompleted
-                                          ? Theme.of(context).colorScheme.onSurface // Softer grey for completed
-                                          : Theme.of(context).colorScheme.onSurface, // Normal color for in-progress
+                                          ? Theme.of(context).colorScheme.onSurface 
+                                          : Theme.of(context).colorScheme.onSurface,
                                     ),
                               ),
                               subtitle: data['priority'] != null
                                   ? Text(
                                       'Priority: ${data['priority']}',
                                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                            color: Theme.of(context).colorScheme.onSurface, // Softer color for subtitle
+                                            color: Theme.of(context).colorScheme.onSurface,
                                           ),
                                     )
                                   : null,
                               onTap: () async {
-                                // Toggle completion on tap (same as checkbox)
                                 await doc.reference.update({'isCompleted': !isCompleted});
                                 if (!isCompleted) {
                                   try {
@@ -307,13 +300,12 @@ class _TaskListScreenState extends State<TaskListScreen> {
                     },
                   ),
                 ),
-                const SizedBox(height: 24), // Space before chat section
-                // Section for chat support
+                const SizedBox(height: 24),
                 const OpenChatSection(),
               ],
             ),
           ),
-          floatingActionButton: null, // No add task button for selected tasks only
+          floatingActionButton: null,
         ),
       ],
     );

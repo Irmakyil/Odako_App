@@ -183,9 +183,9 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
             title: Text(
               'Daily Task Helper',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
             centerTitle: true,
             backgroundColor: Colors.transparent,
@@ -207,9 +207,9 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                   Text(
                     'What do you want to accomplish today?',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          color: const Color(0xFF203F9A),
-                          fontWeight: FontWeight.bold,
-                        ),
+                      color: const Color(0xFF203F9A),
+                      fontWeight: FontWeight.bold,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
@@ -226,7 +226,9 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                             child: Container(
                               margin: const EdgeInsets.symmetric(vertical: 4),
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 12),
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).colorScheme.surface,
                                 borderRadius: const BorderRadius.only(
@@ -259,7 +261,10 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                       margin: const EdgeInsets.only(bottom: 16),
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, AppRoutes.suggestBreakdown);
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.suggestBreakdown,
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.zero,
@@ -269,29 +274,45 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                           elevation: 5,
                           backgroundColor: Colors.transparent,
                           shadowColor: Colors.transparent,
-                          fixedSize: const Size(double.infinity, 45.0), 
+                          fixedSize: const Size(double.infinity, 45.0),
                           visualDensity: VisualDensity.compact,
                         ),
                         child: Ink(
                           decoration: BoxDecoration(
                             image: const DecorationImage(
-                              image: AssetImage('lib/presentation/assets/na_background_4.png'),
+                              image: AssetImage(
+                                'lib/presentation/assets/Button.png',
+                              ),
                               fit: BoxFit.fill,
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 10,
+                            ),
                             alignment: Alignment.center,
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(Icons.add, color: Theme.of(context).colorScheme.onSurface),
+                                Icon(
+                                  Icons.add,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurface,
+                                ),
                                 const SizedBox(width: 8),
                                 Text(
                                   'Check Your Tasks',
-                                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                        color: const Color.fromARGB(255, 0, 0, 0),
+                                  style: Theme.of(context).textTheme.bodyLarge
+                                      ?.copyWith(
+                                        color: const Color.fromARGB(
+                                          255,
+                                          0,
+                                          0,
+                                          0,
+                                        ),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
                                       ),
@@ -312,24 +333,22 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                           decoration: InputDecoration(
                             hintText: 'Share your task...',
                             hintStyle: TextStyle(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurface,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                             filled: true,
-                            fillColor: Theme.of(context)
-                                .colorScheme
-                                .surface,
+                            fillColor: Theme.of(context).colorScheme.surface,
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                  24),
+                              borderRadius: BorderRadius.circular(24),
                               borderSide: BorderSide.none,
                             ),
                             contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 12),
+                              horizontal: 20,
+                              vertical: 12,
+                            ),
                           ),
-                          onSubmitted: _isLoading ? null : (_) => _sendMessage(),
+                          onSubmitted: _isLoading
+                              ? null
+                              : (_) => _sendMessage(),
                           enabled: !_isLoading,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
@@ -341,7 +360,9 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                           color: const Color(0xFFE84797),
                           boxShadow: [
                             BoxShadow(
-                              color: Theme.of(context).shadowColor.withAlpha(20),
+                              color: Theme.of(
+                                context,
+                              ).shadowColor.withAlpha(20),
                               blurRadius: 8,
                               offset: const Offset(0, 4),
                             ),
@@ -375,24 +396,30 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                         ),
                         elevation: 5,
                         backgroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent, 
+                        shadowColor: Colors.transparent,
                         fixedSize: const Size(double.infinity, 45.0),
                         visualDensity: VisualDensity.compact,
                       ),
                       child: Ink(
                         decoration: BoxDecoration(
                           image: const DecorationImage(
-                            image: AssetImage('lib/presentation/assets/na_background_4.png'),
+                            image: AssetImage(
+                              'lib/presentation/assets/Button.png',
+                            ),
                             fit: BoxFit.fill,
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 10,
+                          ),
                           alignment: Alignment.center,
                           child: Text(
                             'Continue',
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(
                                   color: const Color.fromARGB(255, 0, 0, 0),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,

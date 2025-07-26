@@ -17,25 +17,26 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
     {
       'label': 'DEPRESSED',
       'face': 'lib/presentation/assets/face_meh.png',
-      'sliderColor': Color.fromARGB(255, 255, 100, 100),
-      'faceColor': Color.fromARGB(255, 255, 100, 100),
-      'backgroundColor': Color.fromARGB(255, 255, 200, 200),
+      'sliderColor': Color(0xFFd5aea1),
+      'faceColor': Color(0xFFeedadb),
+      'backgroundColor': Color(0xFFeedadb),
     },
     {
       'label': 'MEH',
       'face': 'lib/presentation/assets/face_mid.png',
-      'sliderColor': Color.fromARGB(255, 255, 212, 82),
-      'faceColor': Color.fromARGB(255, 255, 212, 82),
-      'backgroundColor': Color.fromARGB(255, 255, 233, 168),
+      'sliderColor': Color(0xFFf6d98e),
+      'faceColor': Color(0xFFf3edd5),
+      'backgroundColor': Color(0xFFf3edd5),
     },
     {
       'label': 'AMAZING',
       'face': 'lib/presentation/assets/face_good.png',
-      'sliderColor': Color.fromARGB(255, 173, 255, 91),
-      'faceColor': Color.fromARGB(255, 173, 255, 91),
-      'backgroundColor': Color.fromARGB(255, 229, 255, 202),
+      'sliderColor': Color(0xFFc0cc84),
+      'faceColor': Color(0xFFe5e8d3),
+      'backgroundColor': Color(0xFFe5e8d3),
     },
   ];
+
 
   Future<void> _handleContinue() async {
     final today = DateFormat('yyyy-MM-dd').format(DateTime.now());
@@ -99,30 +100,34 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
 
                   const Spacer(),
 
-                  Container(
-                    height: 150,
-                    width: 150,
-                    decoration: BoxDecoration(
-                      color: faceColor,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Theme.of(context).shadowColor.withAlpha(50),
-                          blurRadius: 16,
-                          offset: const Offset(0, 8),
+                  Center(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      decoration: BoxDecoration(
+                        color: faceColor,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Theme.of(context).shadowColor.withAlpha(50),
+                            blurRadius: 20,
+                            offset: const Offset(0, 8),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Image.asset(
+                          mood['face'] as String,
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          height: MediaQuery.of(context).size.height * 0.4,
+                          fit: BoxFit.contain,
                         ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Image.asset(
-                        mood['face'] as String,
-                        fit: BoxFit.contain,
                       ),
                     ),
                   ),
 
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 50),
 
                   Text(
                     mood['label'] as String,

@@ -70,7 +70,7 @@ flutter:
     - lib/presentation/assets/background.png
     - lib/presentation/assets/face_good.png
     - lib/presentation/assets/face_meh.png
-    - lib/presentation/assets/Face_Mid.png
+    - lib/presentation/assets/face_mid.png
     - lib/presentation/assets/logo.png
     - lib/presentation/assets/maskot.png
     - lib/presentation/assets/chatbox1.png

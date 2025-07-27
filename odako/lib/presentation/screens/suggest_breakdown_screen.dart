@@ -204,8 +204,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
           ),
         ),
         Scaffold(
-          backgroundColor:
-              Colors.transparent,
+          backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: Text(
               'Task Suggestions',
@@ -220,9 +219,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
             leading: IconButton(
               icon: Icon(
                 Icons.arrow_back,
-                color: Theme.of(
-                  context,
-                ).colorScheme.onSurface,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
               onPressed: () => Navigator.pop(context),
             ),
@@ -230,9 +227,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
               IconButton(
                 icon: Icon(
                   Icons.refresh,
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onSurface,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
                 onPressed: _isLoading ? null : _loadOrGenerateTasks,
                 tooltip: 'Refresh',
@@ -256,26 +251,19 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
                   if (_selectedTasks.values.any((e) => e != null) &&
                       !_isLoading)
                     Container(
-                      margin: const EdgeInsets.only(
-                        top: 24,
-                      ),
+                      margin: const EdgeInsets.only(top: 24),
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: _isSaving ? null : _saveSelectedTasks,
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.zero,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                              10,
-                            ),
+                            borderRadius: BorderRadius.circular(10),
                           ),
                           elevation: 0,
                           backgroundColor: Colors.transparent,
                           shadowColor: Colors.transparent,
-                          fixedSize: const Size(
-                            double.infinity,
-                            45.0,
-                          ),
+                          fixedSize: const Size(double.infinity, 45.0),
                           visualDensity: VisualDensity.compact,
                         ),
                         child: Ink(
@@ -297,9 +285,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
                                     width: 20,
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
-                                      color: Color(
-                                        0xFFE84797,
-                                      ),
+                                      color: Color(0xFFE84797),
                                     ),
                                   )
                                 : Text(
@@ -335,17 +321,13 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const CircularProgressIndicator(
-              color: Color(0xFFE84797),
-            ),
+            const CircularProgressIndicator(color: Color(0xFFE84797)),
             const SizedBox(height: 16),
             Text(
               'Generating tasks from your conversation...',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Theme.of(
-                  context,
-                ).colorScheme.onSurface,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
           ],
@@ -367,9 +349,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
               _errorMessage!,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Theme.of(
-                  context,
-                ).colorScheme.onSurface,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 16),
@@ -435,9 +415,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12.0,
-                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 12.0),
                   child: Text(
                     '$priority Priority',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -448,16 +426,10 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
                 ),
                 ..._tasksForPriority(priority).map(
                   (task) => Card(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.surface,
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 6.0,
-                    ),
+                    color: Theme.of(context).colorScheme.surface,
+                    margin: const EdgeInsets.symmetric(vertical: 6.0),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        12,
-                      ),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     elevation: 2,
                     child: CheckboxListTile(
@@ -474,36 +446,41 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
                       title: Text(
                         task.text,
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onSurface,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                       secondary: Container(
+                        width: 120,
+                        height: 45,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 8,
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: _getPriorityColor(
-                            priority,
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'lib/presentation/assets/${priority.toLowerCase()}.png',
+                            ),
+                            fit: BoxFit.cover,
                           ),
+
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Text(
-                          priority,
-                          style: Theme.of(context).textTheme.labelSmall
-                              ?.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                              ),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            priority,
+                            style: Theme.of(context).textTheme.labelSmall
+                                ?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
+                          ),
                         ),
                       ),
                       controlAffinity: ListTileControlAffinity.leading,
-                      activeColor: const Color(
-                        0xFFE84797,
-                      ),
+                      activeColor: _getPriorityColor(priority),
                       checkColor: Colors.white,
                     ),
                   ),

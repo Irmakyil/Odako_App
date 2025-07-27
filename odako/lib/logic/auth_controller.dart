@@ -14,6 +14,4 @@ class AuthState with _$AuthState {
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(const AuthState.initial());
-
-  // Add authentication logic here (register, login, etc.)
 }

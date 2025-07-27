@@ -6,7 +6,6 @@ import 'presentation/screens/mood_selection_screen.dart';
 import 'presentation/screens/task_list_screen.dart';
 import 'presentation/screens/daily_question_screen.dart';
 import 'presentation/screens/suggest_breakdown_screen.dart';
-//import 'presentation/screens/list_showcase_screen.dart';
 import 'presentation/screens/main_menu.dart';
 import 'presentation/screens/chat_screen.dart';
 import 'presentation/screens/onboarding_screen.dart';
@@ -48,7 +47,6 @@ class OdakoApp extends StatelessWidget {
         AppRoutes.taskList: (context) => const TaskListScreen(),
         AppRoutes.dailyQuestion: (context) => const DailyQuestionScreen(),
         AppRoutes.suggestBreakdown: (context) => const SuggestBreakdownScreen(),
-        //AppRoutes.listShowcase: (context) => const ListShowcaseScreen(),
         AppRoutes.mainMenu: (context) => const MainMenuScreen(),
         AppRoutes.chat: (context) => const ChatScreen(),
         AppRoutes.profile: (context) => const ProfileScreen(),

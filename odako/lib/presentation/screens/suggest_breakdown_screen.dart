@@ -38,7 +38,6 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
     try {
       final User? currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser == null) throw Exception('User not authenticated');
-      // 1. Get latest session
       final sessionsQuery = await FirebaseFirestore.instance
           .collection('users')
           .doc(currentUser.uid)
@@ -56,7 +55,6 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
       }
       final latestSession = sessionsQuery.docs.first;
       _sessionId = latestSession.id;
-      // 2. Check cache
       final cacheDoc = await FirebaseFirestore.instance
           .collection('users')
           .doc(currentUser.uid)
@@ -67,13 +65,11 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
       if (cacheDoc.exists &&
           cacheDoc.data() != null &&
           cacheDoc.data()!['tasks'] != null) {
-        // Use cached
         final cachedList = List<Map<String, dynamic>>.from(
           cacheDoc.data()!['tasks'],
         );
         tasks = cachedList.map((e) => AITask.fromJson(e)).toList();
       } else {
-        // 3. Get messages for context
         final messagesQuery = await FirebaseFirestore.instance
             .collection('users')
             .doc(currentUser.uid)
@@ -97,10 +93,8 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
           contextBuilder.writeln('$sender: $message');
         }
         final chatContext = contextBuilder.toString();
-        // 4. Call AI
         final aiResponse = await AIService.getTasksFromChatContext(chatContext);
         tasks = TaskService.parseAITasksFromJson(aiResponse);
-        // 5. Cache result
         await FirebaseFirestore.instance
             .collection('users')
             .doc(currentUser.uid)
@@ -120,7 +114,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
         _selectedTasks = {'High': null, 'Medium': null, 'Low': null};
       });
     } catch (e) {
-      debugPrint('Error loading/generating tasks: $e'); // Log the actual error
+      debugPrint('Error loading/generating tasks: $e');
       setState(() {
         _errorMessage = 'Failed to generate tasks. Please try again.';
         _isLoading = false;
@@ -201,7 +195,6 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // --- Full-screen background image ---
         Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -212,8 +205,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
         ),
         Scaffold(
           backgroundColor:
-              Colors.transparent, // Make Scaffold background transparent
-          // --- App Bar ---
+              Colors.transparent,
           appBar: AppBar(
             title: Text(
               'Task Suggestions',
@@ -223,14 +215,14 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
               ),
             ),
             centerTitle: true,
-            backgroundColor: Colors.transparent, // Transparent AppBar
-            elevation: 0, // No shadow for AppBar
+            backgroundColor: Colors.transparent,
+            elevation: 0,
             leading: IconButton(
               icon: Icon(
                 Icons.arrow_back,
                 color: Theme.of(
                   context,
-                ).colorScheme.onSurface, // Consistent icon color
+                ).colorScheme.onSurface,
               ),
               onPressed: () => Navigator.pop(context),
             ),
@@ -240,7 +232,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
                   Icons.refresh,
                   color: Theme.of(
                     context,
-                  ).colorScheme.onSurface, // Consistent icon color
+                  ).colorScheme.onSurface,
                 ),
                 onPressed: _isLoading ? null : _loadOrGenerateTasks,
                 tooltip: 'Refresh',
@@ -266,25 +258,24 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
                     Container(
                       margin: const EdgeInsets.only(
                         top: 24,
-                      ), // Add some space above the button
+                      ),
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: _isSaving ? null : _saveSelectedTasks,
                         style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.zero, // Remove default padding
+                          padding: EdgeInsets.zero,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                               10,
-                            ), // Match MainMenuScreen button radius
+                            ),
                           ),
-                          elevation: 0, // Consistent elevation
-                          backgroundColor: Colors
-                              .transparent, // Transparent for image background
-                          shadowColor: Colors.transparent, // Transparent shadow
+                          elevation: 0,
+                          backgroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
                           fixedSize: const Size(
                             double.infinity,
                             45.0,
-                          ), // Consistent height
+                          ),
                           visualDensity: VisualDensity.compact,
                         ),
                         child: Ink(
@@ -308,7 +299,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
                                       strokeWidth: 2,
                                       color: Color(
                                         0xFFE84797,
-                                      ), // Accent color for loading
+                                      ),
                                     ),
                                   )
                                 : Text(
@@ -320,7 +311,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
                                             0,
                                             0,
                                             0,
-                                          ), // Black text for readability
+                                          ),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16,
                                         ),
@@ -345,7 +336,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const CircularProgressIndicator(
-              color: Color(0xFFE84797), // Accent color for loading indicator
+              color: Color(0xFFE84797),
             ),
             const SizedBox(height: 16),
             Text(
@@ -354,7 +345,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 color: Theme.of(
                   context,
-                ).colorScheme.onSurface, // Consistent text color
+                ).colorScheme.onSurface,
               ),
             ),
           ],
@@ -370,7 +361,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
               Icons.error_outline,
               size: 64,
               color: Theme.of(context).colorScheme.error,
-            ), // Error icon color
+            ),
             const SizedBox(height: 16),
             Text(
               _errorMessage!,
@@ -378,11 +369,10 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 color: Theme.of(
                   context,
-                ).colorScheme.onSurface, // Consistent text color
+                ).colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 16),
-            // --- Try Again Button ---
             ElevatedButton(
               onPressed: _loadOrGenerateTasks,
               style: ElevatedButton.styleFrom(
@@ -393,7 +383,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
                 elevation: 5,
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
-                fixedSize: const Size(150, 45.0), // Adjust size for "Try Again"
+                fixedSize: const Size(150, 45.0),
                 visualDensity: VisualDensity.compact,
               ),
               child: Ink(
@@ -437,7 +427,6 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
         ),
       );
     }
-    // Group by priority and allow selection
     return ListView(
       children: [
         for (final priority in ['High', 'Medium', 'Low'])
@@ -448,30 +437,29 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 12.0,
-                  ), // More vertical padding
+                  ),
                   child: Text(
                     '$priority Priority',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: _getPriorityColor(priority), // Keep dynamic color
+                      color: _getPriorityColor(priority),
                     ),
                   ),
                 ),
-                // Wrap CheckboxListTile in a Card for better visual separation
                 ..._tasksForPriority(priority).map(
                   (task) => Card(
                     color: Theme.of(
                       context,
-                    ).colorScheme.surface, // Use theme surface color
+                    ).colorScheme.surface,
                     margin: const EdgeInsets.symmetric(
                       vertical: 6.0,
-                    ), // Spacing between cards
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
                         12,
-                      ), // Rounded corners for cards
+                      ),
                     ),
-                    elevation: 2, // Slight elevation for card effect
+                    elevation: 2,
                     child: CheckboxListTile(
                       value: _selectedTasks[priority]?.text == task.text,
                       onChanged: (selected) {
@@ -488,7 +476,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Theme.of(
                             context,
-                          ).colorScheme.onSurface, // Consistent text color
+                          ).colorScheme.onSurface,
                         ),
                       ),
                       secondary: Container(
@@ -499,25 +487,24 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
                         decoration: BoxDecoration(
                           color: _getPriorityColor(
                             priority,
-                          ), // Keep dynamic color
+                          ),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
                           priority,
                           style: Theme.of(context).textTheme.labelSmall
                               ?.copyWith(
-                                // Use labelSmall
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 12, // Maintain size for tag
+                                fontSize: 12,
                               ),
                         ),
                       ),
                       controlAffinity: ListTileControlAffinity.leading,
                       activeColor: const Color(
                         0xFFE84797,
-                      ), // Accent color for checkbox
-                      checkColor: Colors.white, // Color of the checkmark
+                      ),
+                      checkColor: Colors.white,
                     ),
                   ),
                 ),

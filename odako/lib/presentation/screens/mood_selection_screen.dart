@@ -17,23 +17,26 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
     {
       'label': 'DEPRESSED',
       'face': 'lib/presentation/assets/face_bad.png',
-      'sliderColor': Color.fromARGB(255, 255, 100, 100), 
+      'sliderColor': Color.fromARGB(255, 255, 100, 100), //RENKLER DÜZENLENECEK
       'faceColor': Color.fromARGB(255, 255, 100, 100),
       'backgroundColor': Color.fromARGB(255, 255, 200, 200),
+      'background': 'lib/presentation/assets/background_bad.png',
     },
     {
       'label': 'MEH',
       'face': 'lib/presentation/assets/face_mid.png',
-      'sliderColor': Color.fromARGB(255, 255, 212, 82),
+      'sliderColor': Color.fromARGB(255, 255, 212, 82), //RENKLER DÜZENLENECEK
       'faceColor': Color.fromARGB(255, 255, 212, 82),
       'backgroundColor': Color.fromARGB(255, 255, 233, 168),
+      'background': 'lib/presentation/assets/background_mid.png',
     },
     {
       'label': 'AMAZING',
       'face': 'lib/presentation/assets/face_good.png',
-      'sliderColor': Color.fromARGB(255, 173, 255, 91),
+      'sliderColor': Color.fromARGB(255, 173, 255, 91), //RENKLER DÜZENLENECEK
       'faceColor': Color.fromARGB(255, 173, 255, 91),
       'backgroundColor': Color.fromARGB(255, 229, 255, 202),
+      'background': 'lib/presentation/assets/background_good.png',
     },
   ];
 
@@ -50,13 +53,14 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
     final mood = _moodData[_mood];
     final sliderColor = mood['sliderColor'] as Color;
     final faceColor = mood['faceColor'] as Color;
+    final backgroundImage = mood['background'] as String;
 
     return Stack(
       children: [
         Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('lib/presentation/assets/na_background_3.png'),
+              image: AssetImage(backgroundImage),
               fit: BoxFit.cover,
             ),
           ),
@@ -176,45 +180,29 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                     child: ElevatedButton(
                       onPressed: _handleContinue,
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.zero,
+                        backgroundColor: sliderColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(28),
                         ),
                         elevation: 5,
-                        backgroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent,
+                        shadowColor: Theme.of(context).shadowColor.withAlpha(50),
                         fixedSize: const Size(double.infinity, 56.0),
                         visualDensity: VisualDensity.compact,
                       ),
-                      child: Ink(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: const AssetImage(
-                              'lib/presentation/assets/na_background_4.png',
-                            ),
-                            fit: BoxFit.fill,
-                            colorFilter: ColorFilter.mode(
-                              sliderColor,
-                              BlendMode.srcATop,
-                            ),
-                          ),
-                          borderRadius: BorderRadius.circular(28),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 20,
                         ),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 12,
-                            horizontal: 20,
-                          ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Continue',
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                ),
-                          ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Continue',
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
                         ),
                       ),
                     ),

@@ -3,9 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../widgets/daily_progress_circle.dart';
 import '../../services/gamification_service.dart';
-import '../../routes/app_routes.dart'; // Import AppRoutes for navigation
+import '../../routes/app_routes.dart';
 
-/// Model representing a task (remains unchanged as it's a data model)
 class Task {
   final String title;
   final String? emoji;
@@ -13,7 +12,6 @@ class Task {
   Task({required this.title, this.emoji, this.isCompleted = false});
 }
 
-/// Section for opening the chat if the user feels anxious
 class OpenChatSection extends StatelessWidget {
   const OpenChatSection({super.key});
 
@@ -21,17 +19,16 @@ class OpenChatSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // "Talk to me!" text
         Center(
           child: Text(
             'Talk to me!',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface, // Consistent text color
+                  color: Theme.of(context).colorScheme.onSurface,
                   fontWeight: FontWeight.bold,
                 ),
           ),
         ),
-        const SizedBox(height: 16), // Adjusted spacing
+        const SizedBox(height: 16),
         Center(
           child: Column(
             children: [

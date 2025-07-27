@@ -7,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../routes/app_routes.dart';
 import '../../services/gamification_service.dart';
 
-// List of badge conditions for unlock information
 final List<Map<String, dynamic>> badgeConditions = [
   {
     'id': 'first_step',
@@ -51,7 +50,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _listenForNewBadges();
   }
 
-  // Listen for new badges in Firestore and show a snackbar when a new badge is earned
   void _listenForNewBadges() {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
@@ -82,7 +80,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
-  // Log out the user and reset onboarding status
   Future<void> _logout(BuildContext context) async {
     try {
       await FirebaseAuth.instance.signOut();
@@ -105,7 +102,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  // Show a dialog with badge details and unlock information
   void _showBadgeDialog(Map<String, dynamic> badge) {
     final unlocked = badge['unlocked'] == true;
     final name = badge['name'] ?? '';
@@ -116,8 +112,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: Theme.of(context).colorScheme.surface, // Consistent dialog background
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)), // Rounded corners
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Row(
           children: [
             Text(unlocked ? 'Badge Unlocked!' : 'Locked Badge',
@@ -144,7 +140,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
                         )),
-              // Show unlock info only for locked badges
               if (!unlocked && unlockInfo != null && unlockInfo != '')
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
@@ -161,7 +156,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onPressed: () => Navigator.of(context).pop(),
             child: Text('Close',
                 style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.primary, // Primary color for action buttons
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,
                     )),
           ),
@@ -175,23 +170,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final theme = Theme.of(context);
     return Stack(
       children: [
-        // --- Full-screen background image ---
         Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('lib/presentation/assets/na_background_1.png'), // Use your background image
+              image: AssetImage('lib/presentation/assets/na_background_1.png'),
               fit: BoxFit.cover,
             ),
           ),
         ),
         Scaffold(
-          backgroundColor: Colors.transparent, // Make Scaffold background transparent
+          backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: Text(
               'Profile',
               style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: theme.colorScheme.onSurface, // Consistent title color
+                    color: theme.colorScheme.onSurface,
                   ),
             ),
             centerTitle: true,
@@ -200,7 +194,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             leading: IconButton(
               icon: Icon(
                 Icons.arrow_back,
-                color: theme.colorScheme.onSurface, // Consistent icon color
+                color: theme.colorScheme.onSurface,
               ),
               onPressed: () => Navigator.pop(context),
             ),
@@ -229,7 +223,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         );
                       }
                       final data = snapshot.data ?? {};
-                      // Fix unnecessary null comparison for username
                       final username = (data['username'] != null && data['username'].toString().isNotEmpty)
                         ? data['username']
                         : 'User';
@@ -238,19 +231,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       final gender = data['gender']?.toString() ?? '';
                       final adhdType = data['adhdType']?.toString() ?? '';
                       return Card(
-                        color: theme.colorScheme.surface, // Use theme surface color
-                        elevation: 4, // Consistent elevation
+                        color: theme.colorScheme.surface,
+                        elevation: 4,
                         margin: const EdgeInsets.only(bottom: 24),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20), // More rounded corners
+                          borderRadius: BorderRadius.circular(20),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Column(
                             children: [
                               CircleAvatar(
-                                radius: 45, // Slightly larger avatar
-                                backgroundColor: theme.colorScheme.primary.withValues(alpha: 50 / 255), // More visible background
+                                radius: 45,
+                                backgroundColor: theme.colorScheme.primary.withValues(alpha: 50 / 255),
                                 backgroundImage: const AssetImage('lib/presentation/assets/maskot.png'),
                               ),
                               const SizedBox(height: 16),
@@ -259,14 +252,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 style: theme.textTheme.headlineSmall?.copyWith(
                                       color: theme.colorScheme.onSurface,
                                       fontWeight: FontWeight.bold,
-                                    ), // More prominent username
+                                    ),
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 8),
                               Text(
                                 email,
                                 style: theme.textTheme.bodyLarge?.copyWith(
-                                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7), // Softer email color
+                                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                                     ),
                                 textAlign: TextAlign.center,
                               ),
@@ -326,7 +319,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         color: theme.colorScheme.onSurface,
                                         fontWeight: FontWeight.bold,
                                       )),
-                              const SizedBox(height: 16), // Increased spacing
+                              const SizedBox(height: 16),
                               Row(
                                 children: [
                                   Expanded(
@@ -347,7 +340,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       );
                     },
                   ),
-                  // Achievements card
                   FutureBuilder<List<Map<String, dynamic>>>(
                     future: _badgesFuture,
                     builder: (context, snapshot) {
@@ -389,10 +381,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             fontWeight: FontWeight.bold,
                                           )),
                                   const SizedBox(width: 8),
-                                  Icon(Icons.stars, color: theme.colorScheme.secondary), // Added an icon for achievements
+                                  Icon(Icons.stars, color: theme.colorScheme.secondary),
                                 ],
                               ),
-                              const SizedBox(height: 16), // Increased spacing
+                              const SizedBox(height: 16),
                               badges.isEmpty
                                   ? Text('No badges yet! Complete tasks to earn them.',
                                       style: theme.textTheme.bodyLarge?.copyWith(
@@ -412,21 +404,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             child: Opacity(
                                               opacity: unlocked ? 1.0 : 0.5,
                                               child: Container(
-                                                width: 100, // Slightly wider badge container
-                                                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8), // More padding
+                                                width: 100,
+                                                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
                                                 decoration: BoxDecoration(
                                                   color: unlocked
-                                                      ? theme.colorScheme.primary.withValues(alpha: 50 / 255) // More prominent unlocked color
-                                                      : theme.colorScheme.surfaceContainerHighest, // Different color for locked
-                                                  borderRadius: BorderRadius.circular(16), // More rounded
+                                                      ? theme.colorScheme.primary.withValues(alpha: 50 / 255)
+                                                      : theme.colorScheme.surfaceContainerHighest,
+                                                  borderRadius: BorderRadius.circular(16),
                                                   border: Border.all(
                                                     color: unlocked
-                                                        ? theme.colorScheme.primary // Primary for unlocked border
-                                                        : theme.colorScheme.outline, // Outline for locked border
+                                                        ? theme.colorScheme.primary 
+                                                        : theme.colorScheme.outline,
                                                     width: 2,
                                                   ),
                                                   boxShadow: [
-                                                    if (unlocked) // Add shadow only for unlocked badges
+                                                    if (unlocked)
                                                       BoxShadow(
                                                         color: theme.colorScheme.primary.withValues(alpha: 20 / 255),
                                                         blurRadius: 8,
@@ -439,16 +431,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   children: [
                                                     Text(
                                                       icon,
-                                                      style: const TextStyle(fontSize: 40), // Larger icon
+                                                      style: const TextStyle(fontSize: 40),
                                                     ),
-                                                    const SizedBox(height: 8), // More spacing
+                                                    const SizedBox(height: 8),
                                                     Text(
                                                       name,
                                                       style: theme.textTheme.bodyMedium?.copyWith(
                                                             fontWeight: FontWeight.w700,
                                                             color: unlocked
-                                                                ? theme.colorScheme.onSurface // OnSurface for unlocked
-                                                                : theme.colorScheme.onSurface.withValues(alpha: 0.7), // Softer for locked
+                                                                ? theme.colorScheme.onSurface 
+                                                                : theme.colorScheme.onSurface.withValues(alpha: 0.7),
                                                           ),
                                                       textAlign: TextAlign.center,
                                                       maxLines: 2,
@@ -489,11 +481,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       //),
                     //),
                   //),
-                  const SizedBox(height: 16), // Increased spacing
-                  // Sign out button
+                  const SizedBox(height: 16),
                   SizedBox(
                     width: double.infinity,
-                    height: 50, // Consistent button height
+                    height: 50,
                     child: ElevatedButton.icon(
                       onPressed: () => _logout(context),
                       icon: const Icon(Icons.logout, color: Colors.white),
@@ -527,7 +518,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Text(
                           'v1.0.0',
                           style: theme.textTheme.bodySmall?.copyWith(
-                                color: theme.colorScheme.onSurface, // Softer color
+                                color: theme.colorScheme.onSurface,
                               ),
                         ),
                       ],

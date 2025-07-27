@@ -65,9 +65,11 @@ flutter:
 
  
   assets:
-    - lib/presentation/assets/background.png
     - lib/presentation/assets/Button.png
     - lib/presentation/assets/background.png
+    - lib/presentation/assets/background_good.png
+    - lib/presentation/assets/background_mid.png
+    - lib/presentation/assets/background_bad.png
     - lib/presentation/assets/face_good.png
     - lib/presentation/assets/face_mid.png
     - lib/presentation/assets/face_bad.png

@@ -20,21 +20,18 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _handleStartupRouting() async {
-    await Future.delayed(const Duration(seconds: 1)); // splash delay
+    await Future.delayed(const Duration(seconds: 1));
     final user = FirebaseAuth.instance.currentUser;
 
     if (!mounted) return;
 
     if (user == null) {
-      // No logged in user → Go to onboarding
       Navigator.pushReplacementNamed(context, AppRoutes.onboarding);
       return;
     }
 
-    //  User is signed in
     final uid = user.uid;
 
-    // Step 1 – Fetch profile data
     final profileDoc = await FirebaseFirestore.instance
         .collection('users')
         .doc(uid)
@@ -44,7 +41,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
     final profileData = profileDoc.data();
 
-    // Check if user has completed profile onboarding
     final isProfileComplete = profileData != null &&
         profileData.containsKey('username') &&
         profileData.containsKey('age') &&
@@ -54,22 +50,18 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!mounted) return;
 
     if (!isProfileComplete) {
-      //  Redirect to profile onboarding screen
       Navigator.pushReplacementNamed(context, AppRoutes.profileOnboarding);
       return;
     }
 
-    // Step 2 – Check mood selection
     final today = DateFormat('yyyy-MM-dd').format(DateTime.now());
     final lastMoodDate = await LocalStorage.getString('lastMoodCheckDate');
 
     if (!mounted) return;
 
     if (lastMoodDate == today) {
-      //  Mood already selected today → Go to main menu
       Navigator.pushReplacementNamed(context, AppRoutes.mainMenu);
     } else {
-      //  Mood not selected today → Go to mood selection
       Navigator.pushReplacementNamed(context, AppRoutes.moodSelection);
     }
   }
@@ -99,7 +91,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 const SizedBox(height: 32),
 
                 Text(
-                  'Welcome to Odako',
+                  'Welcome!',
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: const Color(0xFFFFFFFF),

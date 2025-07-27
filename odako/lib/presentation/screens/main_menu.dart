@@ -77,9 +77,9 @@ class MainMenuScreen extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          const SizedBox(width: 24), // Increased spacing for larger circle
+                          const SizedBox(width: 24),
                           DailyProgressCircle(
-                            size: MediaQuery.of(context).size.width * 0.22, // Responsive size
+                            size: MediaQuery.of(context).size.width * 0.22,
                             showLabel: false,
                           ),
                         ],

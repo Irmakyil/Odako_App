@@ -88,6 +88,9 @@ flutter:
     - lib/presentation/assets/home.png
     - lib/presentation/assets/profile.png
     - lib/presentation/assets/task.png
+    - lib/presentation/assets/medium.png
+    - lib/presentation/assets/high.png
+    - lib/presentation/assets/low.png
 
 
 flutter_icons:

@@ -13,7 +13,7 @@ class DailyProgressCircle extends StatelessWidget {
 
   const DailyProgressCircle({
     super.key,
-    this.size = 100, // Increased from 56 to 100 for better visibility
+    this.size = 56,
     this.percentTextStyle,
     this.backgroundColor,
     this.progressColor,
@@ -79,7 +79,7 @@ class DailyProgressCircle extends StatelessWidget {
               value: total == 0 ? 0 : percent,
               backgroundColor: backgroundColor ?? bg,
               color: fg,
-              strokeWidth: size * 0.10, // Make stroke width proportional to size
+              strokeWidth: 6,
             ),
           ),
           Column(
@@ -87,12 +87,12 @@ class DailyProgressCircle extends StatelessWidget {
             children: [
               Text(
                 percentText,
-                style: percentTextStyle ?? theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold, fontSize: size * 0.22),
+                style: percentTextStyle ?? theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               if (showLabel)
                 Text(
                   'Today',
-                  style: theme.textTheme.labelSmall?.copyWith(fontSize: size * 0.13),
+                  style: theme.textTheme.labelSmall,
                 ),
             ],
           ),

@@ -50,7 +50,7 @@ class MainMenuScreen extends StatelessWidget {
           ),
           body: SafeArea(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 24.0), // More vertical padding for larger widgets
+              padding: const EdgeInsets.all(24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -77,11 +77,8 @@ class MainMenuScreen extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          const SizedBox(width: 24), // Increased spacing for larger circle
-                          DailyProgressCircle(
-                            size: MediaQuery.of(context).size.width * 0.22, // Responsive size
-                            showLabel: false,
-                          ),
+                          const SizedBox(width: 12),
+                          const DailyProgressCircle(size: 56, showLabel: false),
                         ],
                       );
                     },

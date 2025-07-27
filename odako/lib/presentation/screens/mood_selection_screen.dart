@@ -17,13 +17,13 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
     {
       'label': 'DEPRESSED',
       'face': 'lib/presentation/assets/face_bad.png',
-      'sliderColor': Color.fromARGB(255, 255, 100, 100),
+      'sliderColor': Color.fromARGB(255, 255, 100, 100), 
       'faceColor': Color.fromARGB(255, 255, 100, 100),
       'backgroundColor': Color.fromARGB(255, 255, 200, 200),
     },
     {
       'label': 'MEH',
-      'face': 'lib/presentation/assets/Face_Mid.png',
+      'face': 'lib/presentation/assets/face_mid.png',
       'sliderColor': Color.fromARGB(255, 255, 212, 82),
       'faceColor': Color.fromARGB(255, 255, 212, 82),
       'backgroundColor': Color.fromARGB(255, 255, 233, 168),
@@ -36,6 +36,7 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
       'backgroundColor': Color.fromARGB(255, 229, 255, 202),
     },
   ];
+
 
   Future<void> _handleContinue() async {
     final today = DateFormat('yyyy-MM-dd').format(DateTime.now());

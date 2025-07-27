@@ -21,17 +21,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _handleStartupRouting() async {
     await Future.delayed(const Duration(seconds: 1));
-    final user = FirebaseAuth.instance.currentUser;
-
     if (!mounted) return;
 
+    final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       Navigator.pushReplacementNamed(context, AppRoutes.onboarding);
       return;
     }
 
     final uid = user.uid;
-
     final profileDoc = await FirebaseFirestore.instance
         .collection('users')
         .doc(uid)
@@ -39,15 +37,14 @@ class _SplashScreenState extends State<SplashScreen> {
         .doc('data')
         .get();
 
-    final profileData = profileDoc.data();
+    if (!mounted) return;
 
+    final profileData = profileDoc.data();
     final isProfileComplete = profileData != null &&
         profileData.containsKey('username') &&
         profileData.containsKey('age') &&
         profileData.containsKey('gender') &&
         profileData.containsKey('adhdType');
-
-    if (!mounted) return;
 
     if (!isProfileComplete) {
       Navigator.pushReplacementNamed(context, AppRoutes.profileOnboarding);
@@ -59,15 +56,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (!mounted) return;
 
-    if (lastMoodDate == today) {
-      Navigator.pushReplacementNamed(context, AppRoutes.mainMenu);
-    } else {
-      Navigator.pushReplacementNamed(context, AppRoutes.moodSelection);
-    }
+    Navigator.pushReplacementNamed(
+      context,
+      lastMoodDate == today ? AppRoutes.mainMenu : AppRoutes.moodSelection,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -77,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(24),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -89,12 +86,11 @@ class _SplashScreenState extends State<SplashScreen> {
                   fit: BoxFit.contain,
                 ),
                 const SizedBox(height: 32),
-
                 Text(
                   'Welcome!',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  style: theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: const Color(0xFFFFFFFF),
+                    color: Colors.white,
                   ),
                 ),
               ],

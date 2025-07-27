@@ -15,7 +15,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'services/notification_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-// Register FCM background handler
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await firebaseMessagingBackgroundHandler(message);
 }

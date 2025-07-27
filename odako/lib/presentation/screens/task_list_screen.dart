@@ -17,15 +17,16 @@ class OpenChatSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       children: [
         Center(
           child: Text(
             'Talk to me!',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface,
-                  fontWeight: FontWeight.bold,
-                ),
+            style: theme.textTheme.titleMedium?.copyWith(
+              color: theme.colorScheme.onSurface,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         const SizedBox(height: 16),
@@ -34,7 +35,7 @@ class OpenChatSection extends StatelessWidget {
             children: [
               Container(
                 height: 250,
-                width: 250, 
+                width: 250,
                 decoration: BoxDecoration(
                   image: const DecorationImage(
                     image: AssetImage('lib/presentation/assets/chatbox2_variant.png'),
@@ -55,9 +56,7 @@ class OpenChatSection extends StatelessWidget {
                 width: double.infinity,
                 height: 45,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, AppRoutes.chat);
-                  },
+                  onPressed: () => Navigator.pushNamed(context, AppRoutes.chat),
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.zero,
                     shape: RoundedRectangleBorder(
@@ -82,11 +81,11 @@ class OpenChatSection extends StatelessWidget {
                       alignment: Alignment.center,
                       child: Text(
                         'Open Chat',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              color: const Color.fromARGB(255, 0, 0, 0),
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                            ),
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          color: const Color.fromARGB(255, 0, 0, 0),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),
@@ -108,10 +107,50 @@ class TaskListScreen extends StatefulWidget {
 }
 
 class _TaskListScreenState extends State<TaskListScreen> {
+  final now = DateTime.now();
+
+  Timestamp get twentyFourHoursAgo => Timestamp.fromDate(now.subtract(const Duration(hours: 24)));
+
+  Future<void> _handleTaskCompletion(DocumentReference docRef, bool currentStatus) async {
+    await docRef.update({'isCompleted': !currentStatus});
+
+    if (!currentStatus) {
+      try {
+        final user = FirebaseAuth.instance.currentUser;
+        if (user == null) return;
+
+        final tasksSnap = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .collection('selectedTasks')
+            .where('createdAt', isGreaterThanOrEqualTo: twentyFourHoursAgo)
+            .get();
+
+        final completedToday = tasksSnap.docs.where((d) => (d['isCompleted'] ?? false) == true).length;
+
+        await GamificationService().onTaskCompleted(
+          completedAt: DateTime.now(),
+          totalTasksToday: completedToday + 1,
+        );
+      } catch (e) {
+        debugPrint('Gamification error: $e');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final now = DateTime.now();
-    final twentyFourHoursAgo = Timestamp.fromDate(now.subtract(const Duration(hours: 24)));
+    final theme = Theme.of(context);
+
+    final user = FirebaseAuth.instance.currentUser;
+    final tasksStream = user == null
+        ? null
+        : FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .collection('selectedTasks')
+            .where('createdAt', isGreaterThanOrEqualTo: twentyFourHoursAgo)
+            .snapshots();
 
     return Stack(
       children: [
@@ -128,19 +167,16 @@ class _TaskListScreenState extends State<TaskListScreen> {
           appBar: AppBar(
             title: Text(
               'Your Tasks',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: theme.colorScheme.onSurface,
+              ),
             ),
             centerTitle: true,
             backgroundColor: Colors.transparent,
             elevation: 0,
             leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
+              icon: Icon(Icons.arrow_back, color: theme.colorScheme.onSurface),
               onPressed: () => Navigator.pop(context),
             ),
           ),
@@ -155,9 +191,9 @@ class _TaskListScreenState extends State<TaskListScreen> {
                     Expanded(
                       child: Text(
                         'You got this! Keep on trucking!',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              color: Theme.of(context).colorScheme.onSurface,
-                            ),
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          color: theme.colorScheme.onSurface,
+                        ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -168,128 +204,74 @@ class _TaskListScreenState extends State<TaskListScreen> {
                 const SizedBox(height: 24),
                 Expanded(
                   child: StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseAuth.instance.currentUser == null
-                        ? null
-                        : FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(FirebaseAuth.instance.currentUser!.uid)
-                            .collection('selectedTasks')
-                            .where('createdAt', isGreaterThanOrEqualTo: twentyFourHoursAgo)
-                            .snapshots(),
+                    stream: tasksStream,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(
-                            child: CircularProgressIndicator(
-                          color: Theme.of(context).colorScheme.secondary,
-                        ));
+                          child: CircularProgressIndicator(color: theme.colorScheme.secondary),
+                        );
                       }
                       if (snapshot.hasError) {
                         debugPrint('Error fetching tasks: ${snapshot.error}');
                         return Center(
-                            child: Text(
-                          'Error loading tasks. Please try again.',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                color: Theme.of(context).colorScheme.error,
-                              ),
-                        ));
+                          child: Text(
+                            'Error loading tasks. Please try again.',
+                            textAlign: TextAlign.center,
+                            style: theme.textTheme.bodyLarge?.copyWith(
+                              color: theme.colorScheme.error,
+                            ),
+                          ),
+                        );
                       }
-                      final docs = snapshot.data!.docs;
+                      final docs = snapshot.data?.docs ?? [];
                       if (docs.isEmpty) {
                         return Center(
-                            child: Text(
-                          'No tasks yet. Start a conversation with me to get some!',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                        ));
+                          child: Text(
+                            'No tasks yet. Start a conversation with me to get some!',
+                            textAlign: TextAlign.center,
+                            style: theme.textTheme.bodyLarge?.copyWith(
+                              color: theme.colorScheme.onSurface,
+                            ),
+                          ),
+                        );
                       }
+
                       return ListView.separated(
                         itemCount: docs.length,
-                        separatorBuilder: (context, index) => const SizedBox(height: 12),
+                        separatorBuilder: (_, __) => const SizedBox(height: 12),
                         itemBuilder: (context, index) {
                           final doc = docs[index];
-                          final data = doc.data() as Map<String, dynamic>;
+                          final data = doc.data()! as Map<String, dynamic>;
                           final isCompleted = data['isCompleted'] == true;
+
                           return Card(
-                            color: Theme.of(context).colorScheme.surface,
+                            color: theme.colorScheme.surface,
                             elevation: 4,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                             child: ListTile(
                               leading: Checkbox(
                                 value: isCompleted,
-                                onChanged: (_) async {
-                                  await doc.reference.update({'isCompleted': !isCompleted});
-                                  if (!isCompleted) {
-                                    try {
-                                      final user = FirebaseAuth.instance.currentUser;
-                                      if (user != null) {
-                                        final now = DateTime.now();
-                                        final twentyFourHoursAgo = Timestamp.fromDate(now.subtract(const Duration(hours: 24)));
-                                        final tasksSnap = await FirebaseFirestore.instance
-                                            .collection('users')
-                                            .doc(user.uid)
-                                            .collection('selectedTasks')
-                                            .where('createdAt', isGreaterThanOrEqualTo: twentyFourHoursAgo)
-                                            .get();
-                                        final completedToday = tasksSnap.docs.where((d) => (d['isCompleted'] ?? false) == true).length;
-                                        await GamificationService().onTaskCompleted(
-                                          completedAt: DateTime.now(),
-                                          totalTasksToday: completedToday + 1,
-                                        );
-                                      }
-                                    } catch (e) {
-                                      debugPrint('Gamification error: $e');
-                                    }
-                                  }
-                                },
-                                activeColor: Theme.of(context).colorScheme.secondary,
+                                onChanged: (_) => _handleTaskCompletion(doc.reference, isCompleted),
+                                activeColor: theme.colorScheme.secondary,
                                 checkColor: Colors.white,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
                               ),
                               title: Text(
                                 data['text'] ?? '',
-                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                      decoration: isCompleted ? TextDecoration.lineThrough : null,
-                                      color: isCompleted
-                                          ? Theme.of(context).colorScheme.onSurface 
-                                          : Theme.of(context).colorScheme.onSurface,
-                                    ),
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  decoration: isCompleted ? TextDecoration.lineThrough : null,
+                                  color: theme.colorScheme.onSurface,
+                                ),
                               ),
                               subtitle: data['priority'] != null
                                   ? Text(
                                       'Priority: ${data['priority']}',
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                            color: Theme.of(context).colorScheme.onSurface,
-                                          ),
+                                      style: theme.textTheme.bodySmall?.copyWith(
+                                        color: theme.colorScheme.onSurface,
+                                      ),
                                     )
                                   : null,
-                              onTap: () async {
-                                await doc.reference.update({'isCompleted': !isCompleted});
-                                if (!isCompleted) {
-                                  try {
-                                    final user = FirebaseAuth.instance.currentUser;
-                                    if (user != null) {
-                                      final now = DateTime.now();
-                                      final twentyFourHoursAgo = Timestamp.fromDate(now.subtract(const Duration(hours: 24)));
-                                      final tasksSnap = await FirebaseFirestore.instance
-                                          .collection('users')
-                                          .doc(user.uid)
-                                          .collection('selectedTasks')
-                                          .where('createdAt', isGreaterThanOrEqualTo: twentyFourHoursAgo)
-                                          .get();
-                                      final completedToday = tasksSnap.docs.where((d) => (d['isCompleted'] ?? false) == true).length;
-                                      await GamificationService().onTaskCompleted(
-                                        completedAt: DateTime.now(),
-                                        totalTasksToday: completedToday + 1,
-                                      );
-                                    }
-                                  } catch (e) {
-                                    debugPrint('Gamification error: $e');
-                                  }
-                                }
-                              },
+                              onTap: () => _handleTaskCompletion(doc.reference, isCompleted),
                             ),
                           );
                         },
@@ -302,7 +284,6 @@ class _TaskListScreenState extends State<TaskListScreen> {
               ],
             ),
           ),
-          floatingActionButton: null,
         ),
       ],
     );

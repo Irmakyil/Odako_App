@@ -1,9 +1,9 @@
+import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:io';
 
 class NotificationService {
   static final NotificationService _instance = NotificationService._internal();
@@ -11,9 +11,9 @@ class NotificationService {
   NotificationService._internal();
 
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
-  final FlutterLocalNotificationsPlugin _localNotifications = FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin _localNotifications =
+      FlutterLocalNotificationsPlugin();
 
-  /// Call this at app startup (before runApp)
   Future<void> initialize() async {
     if (Platform.isAndroid) {
       final settings = await _messaging.requestPermission(
@@ -26,58 +26,56 @@ class NotificationService {
 
     const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
     const initSettings = InitializationSettings(android: androidSettings);
-    await _localNotifications.initialize(initSettings,
+
+    await _localNotifications.initialize(
+      initSettings,
       onDidReceiveNotificationResponse: (details) {
         debugPrint('Notification tapped: ${details.payload}');
       },
     );
 
-    // Foreground message handler
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      debugPrint('FCM onMessage: ${message.notification?.title} | ${message.notification?.body}');
-      if (message.notification != null) {
-        showNotification(
-          message.notification!.title ?? 'Notification',
-          message.notification!.body ?? '',
-        );
+    FirebaseMessaging.onMessage.listen((message) {
+      final notification = message.notification;
+      if (notification != null) {
+        debugPrint('FCM onMessage: ${notification.title} | ${notification.body}');
+        showNotification(notification.title ?? 'Notification', notification.body ?? '');
       }
     });
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
       debugPrint('FCM onMessageOpenedApp: ${message.notification?.title}');
     });
 
-    // Background handler is registered in main.dart (see docs)
-    await setupToken();
+    await _setupToken();
   }
 
-  /// FCM token management
-  Future<void> setupToken() async {
+  Future<void> _setupToken() async {
     try {
       final token = await _messaging.getToken();
       debugPrint('FCM Token: ${token ?? 'null'}');
-      // Optionally upload to Firestore
+
       final user = FirebaseAuth.instance.currentUser;
       if (user != null && token != null) {
-        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-          'fcm_token': token,
-        }, SetOptions(merge: true));
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).set(
+          {'fcm_token': token},
+          SetOptions(merge: true),
+        );
       }
-      // Listen for token refresh
+
       _messaging.onTokenRefresh.listen((newToken) async {
         debugPrint('FCM Token refreshed: $newToken');
         if (user != null) {
-          await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-            'fcm_token': newToken,
-          }, SetOptions(merge: true));
+          await FirebaseFirestore.instance.collection('users').doc(user.uid).set(
+            {'fcm_token': newToken},
+            SetOptions(merge: true),
+          );
         }
       });
     } catch (e) {
-      debugPrint('Error getting FCM token: ${e.toString()}');
+      debugPrint('Error getting FCM token: $e');
     }
   }
 
-  /// Show a system-level notification (Android)
   Future<void> showNotification(String title, String body) async {
     const androidDetails = AndroidNotificationDetails(
       'default_channel',
@@ -87,7 +85,9 @@ class NotificationService {
       priority: Priority.high,
       playSound: true,
     );
+
     const notificationDetails = NotificationDetails(android: androidDetails);
+
     await _localNotifications.show(
       DateTime.now().millisecondsSinceEpoch ~/ 1000,
       title,
@@ -97,8 +97,6 @@ class NotificationService {
   }
 }
 
-/// Top-level background handler for FCM
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   debugPrint('FCM background message: ${message.notification?.title} | ${message.notification?.body}');
-  // You can show a notification here if needed (requires plugin initialization)
 }

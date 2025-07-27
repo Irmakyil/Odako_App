@@ -6,7 +6,7 @@ class AuthService {
 
   Future<User?> registerWithEmail(String email, String password) async {
     try {
-      final UserCredential result = await _auth.createUserWithEmailAndPassword(
+      final result = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -18,7 +18,7 @@ class AuthService {
 
   Future<User?> loginWithEmail(String email, String password) async {
     try {
-      final UserCredential result = await _auth.signInWithEmailAndPassword(
+      final result = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -30,14 +30,16 @@ class AuthService {
 
   Future<User?> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final googleUser = await GoogleSignIn().signIn();
       if (googleUser == null) return null;
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      final googleAuth = await googleUser.authentication;
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      final UserCredential result = await _auth.signInWithCredential(credential);
+
+      final result = await _auth.signInWithCredential(credential);
       return result.user;
     } on FirebaseAuthException {
       rethrow;
@@ -45,7 +47,9 @@ class AuthService {
   }
 
   Future<void> signOut() async {
-    await _auth.signOut();
-    await GoogleSignIn().signOut();
+    await Future.wait([
+      _auth.signOut(),
+      GoogleSignIn().signOut(),
+    ]);
   }
 }

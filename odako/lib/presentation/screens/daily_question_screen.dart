@@ -12,12 +12,12 @@ class DailyQuestionScreen extends StatefulWidget {
 }
 
 class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
-  final TextEditingController _controller = TextEditingController();
+  final _controller = TextEditingController();
+  final _scrollController = ScrollController();
   final List<ChatMessage> _messages = [];
   bool _isLoading = false;
   bool _isProcessingQueue = false;
   String? _sessionId;
-  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -31,9 +31,14 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
         timestamp: DateTime.now(),
       ),
     );
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollToBottom();
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _scrollController.dispose();
+    super.dispose();
   }
 
   void _scrollToBottom() {
@@ -55,113 +60,95 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
     }
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    _scrollController.dispose();
-    super.dispose();
-  }
-
   Future<void> _sendMessage() async {
     final text = _controller.text.trim();
-    if (text.isNotEmpty && !_isLoading) {
-      setState(() {
-        _messages.add(
-          ChatMessage(text: text, isUser: true, timestamp: DateTime.now()),
+    if (text.isEmpty || _isLoading) return;
+
+    setState(() {
+      _messages.add(ChatMessage(
+        text: text,
+        isUser: true,
+        timestamp: DateTime.now(),
+      ));
+      _isLoading = true;
+      _controller.clear();
+    });
+
+    _scrollToBottom();
+
+    if (_sessionId != null) {
+      try {
+        await ChatService.saveMessageToSession(
+          message: text,
+          sender: 'user',
+          sessionId: _sessionId!,
         );
-        _isLoading = true;
-        _controller.clear();
-      });
-      _scrollToBottom();
-
-      if (_sessionId != null) {
-        try {
-          await ChatService.saveMessageToSession(
-            message: text,
-            sender: 'user',
-            sessionId: _sessionId!,
-          );
-        } catch (e) {
-          debugPrint('Error saving user message to session: $e');
-        }
+      } catch (e) {
+        debugPrint('Error saving user message to session: $e');
       }
-
-      _processMessageQueue();
     }
+
+    _processMessageQueue();
   }
 
   Future<void> _processMessageQueue() async {
     if (_isProcessingQueue) return;
 
-    setState(() {
-      _isProcessingQueue = true;
-    });
+    setState(() => _isProcessingQueue = true);
 
     try {
-      final pendingUserMessages = <ChatMessage>[];
-      for (int i = 0; i < _messages.length; i++) {
-        final message = _messages[i];
-        if (message.isUser && !message.hasAiResponse) {
-          pendingUserMessages.add(message);
-        }
-      }
+      final pendingUserMessages = _messages
+          .where((msg) => msg.isUser && !msg.hasAiResponse)
+          .toList();
 
       for (final userMessage in pendingUserMessages) {
         setState(() {
-          _messages.add(
-            ChatMessage(
-              text: 'Typing...',
-              isUser: false,
-              timestamp: DateTime.now(),
-              isTyping: true,
-            ),
-          );
+          _messages.add(ChatMessage(
+            text: 'Typing...',
+            isUser: false,
+            timestamp: DateTime.now(),
+            isTyping: true,
+          ));
         });
+
         _scrollToBottom();
 
-        final aiReply = await AIService.getDailyTaskSuggestion(
-          userMessage.text,
-        );
+        final aiReply = await AIService.getDailyTaskSuggestion(userMessage.text);
 
         setState(() {
           _messages.removeWhere((msg) => msg.isTyping);
-          _messages.add(
-            ChatMessage(
-              text: aiReply,
-              isUser: false,
-              timestamp: DateTime.now(),
-            ),
-          );
+          _messages.add(ChatMessage(
+            text: aiReply,
+            isUser: false,
+            timestamp: DateTime.now(),
+          ));
 
-          final userMessageIndex = _messages.indexWhere(
-            (msg) => msg == userMessage,
-          );
-          if (userMessageIndex != -1) {
-            _messages[userMessageIndex] = userMessage.copyWith(
-              hasAiResponse: true,
-            );
+          final index = _messages.indexOf(userMessage);
+          if (index != -1) {
+            _messages[index] = userMessage.copyWith(hasAiResponse: true);
           }
         });
-        _scrollToBottom();
 
+        _scrollToBottom();
         await Future.delayed(const Duration(milliseconds: 500));
       }
     } catch (e) {
       debugPrint('Error processing message queue: $e');
-      setState(() {
-        _messages.removeWhere((msg) => msg.isTyping);
-      });
+      setState(() => _messages.removeWhere((msg) => msg.isTyping));
+
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
         );
       }
     } finally {
-      setState(() {
-        _isLoading = false;
-        _isProcessingQueue = false;
-      });
-      _scrollToBottom();
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+          _isProcessingQueue = false;
+        });
+        _scrollToBottom();
+      }
     }
   }
 
@@ -183,9 +170,9 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
             title: Text(
               'Daily Task Helper',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
             ),
             centerTitle: true,
             backgroundColor: Colors.transparent,
@@ -207,9 +194,9 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                   Text(
                     'What do you want to accomplish today?',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      color: const Color(0xFF203F9A),
-                      fontWeight: FontWeight.bold,
-                    ),
+                          color: const Color(0xFF203F9A),
+                          fontWeight: FontWeight.bold,
+                        ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
@@ -256,173 +243,140 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                     ),
                   ),
                   if (_messages.length > 1 && !_isLoading)
-                    Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.only(bottom: 16),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(
-                            context,
-                            AppRoutes.suggestBreakdown,
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          elevation: 0,
-                          backgroundColor: Colors.transparent,
-                          shadowColor: Colors.transparent,
-                          fixedSize: const Size(300, 45),
-                          visualDensity: VisualDensity.compact,
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(
-                                'lib/presentation/assets/Button.png',
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          height: 45,
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.symmetric(horizontal: 20,),
-
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.check_circle_outline,
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                'Check Your Tasks',
-                                style: Theme.of(context).textTheme.bodyLarge
-                                    ?.copyWith(
-                                      color: const Color.fromARGB(255, 0, 0, 0),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: _controller,
-                          minLines: 1,
-                          maxLines: 3,
-                          decoration: InputDecoration(
-                            hintText: 'Share your task...',
-                            hintStyle: TextStyle(
-                              color: Theme.of(context).colorScheme.onSurface,
-                            ),
-                            filled: true,
-                            fillColor: Theme.of(context).colorScheme.surface,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(24),
-                              borderSide: BorderSide.none,
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 12,
-                            ),
-                          ),
-                          onSubmitted: _isLoading
-                              ? null
-                              : (_) => _sendMessage(),
-                          enabled: !_isLoading,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: const Color(0xFFE84797),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Theme.of(
-                                context,
-                              ).shadowColor.withAlpha(20),
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: IconButton(
-                          icon: const Icon(Icons.send),
-                          color: Theme.of(context).colorScheme.onPrimary,
-                          onPressed: _isLoading ? null : _sendMessage,
-                        ),
-                      ),
-                    ],
-                  ),
+                    _buildSuggestBreakdownButton(context),
+                  _buildMessageInputRow(context),
                   const SizedBox(height: 16),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: _messages.length > 1 && !_isLoading
-                          ? () {
-                              Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                AppRoutes.mainMenu,
-                                (route) => false,
-                              );
-                            }
-                          : null,
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        elevation: 0,
-                        backgroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent,
-                        fixedSize: const Size(300, 45),
-                        visualDensity: VisualDensity.compact,
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                              'lib/presentation/assets/Button.png',
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Container(
-                          height: 45,
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Continue',
-                            style: Theme.of(context).textTheme.bodyLarge
-                                ?.copyWith(
-                                  color: const Color.fromARGB(255, 0, 0, 0),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  _buildContinueButton(context),
                 ],
               ),
             ),
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildSuggestBreakdownButton(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(bottom: 16),
+      child: ElevatedButton(
+        onPressed: () => Navigator.pushNamed(context, AppRoutes.suggestBreakdown),
+        style: _buttonStyle(),
+        child: _buttonContent(
+          icon: Icons.check_circle_outline,
+          label: 'Check Your Tasks',
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMessageInputRow(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            controller: _controller,
+            minLines: 1,
+            maxLines: 3,
+            decoration: InputDecoration(
+              hintText: 'Share your task...',
+              hintStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+              filled: true,
+              fillColor: Theme.of(context).colorScheme.surface,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(24),
+                borderSide: BorderSide.none,
+              ),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            ),
+            onSubmitted: _isLoading ? null : (_) => _sendMessage(),
+            enabled: !_isLoading,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
+        const SizedBox(width: 8),
+        Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: const Color(0xFFE84797),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(context).shadowColor.withAlpha(20),
+                blurRadius: 8,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: IconButton(
+            icon: const Icon(Icons.send),
+            color: Theme.of(context).colorScheme.onPrimary,
+            onPressed: _isLoading ? null : _sendMessage,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildContinueButton(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: _messages.length > 1 && !_isLoading
+            ? () => Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  AppRoutes.mainMenu,
+                  (route) => false,
+                )
+            : null,
+        style: _buttonStyle(),
+        child: _buttonContent(label: 'Continue'),
+      ),
+    );
+  }
+
+  ButtonStyle _buttonStyle() {
+    return ElevatedButton.styleFrom(
+      padding: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      shadowColor: Colors.transparent,
+      fixedSize: const Size(300, 45),
+      visualDensity: VisualDensity.compact,
+    );
+  }
+
+  Widget _buttonContent({required String label, IconData? icon}) {
+    return Container(
+      height: 45,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        image: const DecorationImage(
+          image: AssetImage('lib/presentation/assets/Button.png'),
+          fit: BoxFit.cover,
+        ),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (icon != null) ...[
+            Icon(icon, color: Colors.black),
+            const SizedBox(width: 8),
+          ],
+          Text(
+            label,
+            style: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -459,22 +413,16 @@ class ChatMessage {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is ChatMessage &&
-        other.text == text &&
-        other.isUser == isUser &&
-        other.timestamp == timestamp &&
-        other.isTyping == isTyping &&
-        other.hasAiResponse == hasAiResponse;
-  }
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ChatMessage &&
+          runtimeType == other.runtimeType &&
+          text == other.text &&
+          isUser == other.isUser &&
+          timestamp == other.timestamp &&
+          isTyping == other.isTyping &&
+          hasAiResponse == other.hasAiResponse;
 
   @override
-  int get hashCode {
-    return text.hashCode ^
-        isUser.hashCode ^
-        timestamp.hashCode ^
-        isTyping.hashCode ^
-        hasAiResponse.hashCode;
-  }
+  int get hashCode => Object.hash(text, isUser, timestamp, isTyping, hasAiResponse);
 }

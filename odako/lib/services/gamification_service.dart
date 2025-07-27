@@ -2,10 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-/// Type definition for a badge
 typedef Badge = Map<String, dynamic>;
 
-/// Service for handling gamification logic, including XP, streaks, and badges
 class GamificationService {
   // Singleton pattern
   static final GamificationService _instance = GamificationService._internal();
@@ -15,16 +13,12 @@ class GamificationService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  /// List of all badge definitions and their unlock conditions
   final List<Badge> badgeDefinitions = [
     {
       'id': 'first_step',
       'name': 'Headstart',
       'desc': 'You completed your first task!',
       'icon': '🏁',
-      // CONDITION:
-      // - The user completed their first task
-      // - AND they just started using the app (e.g., completedTaskCount == 1)
       'condition': (int completedTaskCount, bool isFirstTimeUser) =>
         completedTaskCount == 1 && isFirstTimeUser,
     },
@@ -33,9 +27,6 @@ class GamificationService {
       'name': 'Mushroom Madness',
       'desc': 'Completed all tasks for 3 days in a row',
       'icon': '🍄',
-      // CONDITION:
-      // - User has 3-day streak
-      // - AND completed ALL tasks on each of those 3 days (streakTaskCompletion == 100%)
       'condition': (int streak, int streakCompletionRate) =>
         streak == 3 && streakCompletionRate == 100,
     },
@@ -44,8 +35,6 @@ class GamificationService {
       'name': 'Third Time\'s the Charm',
       'desc': 'Completed all 3 tasks today',
       'icon': '🗓️',
-      // CONDITION:
-      // - All 3 tasks created today are completed
       'condition': (int todayCount) => todayCount == 3,
     },
     {
@@ -53,8 +42,6 @@ class GamificationService {
       'name': 'Early Bird',
       'desc': 'Completed a task between 06:00–12:00',
       'icon': '🌅',
-      // CONDITION:
-      // - A task was completed between 06:00–12:00
       'condition': (bool isMorning) => isMorning,
     },
     {
@@ -62,13 +49,10 @@ class GamificationService {
       'name': 'Tenacious Ten',
       'desc': 'Completed 10 tasks in Total',
       'icon': '🎖️',
-      // CONDITION:
-      // - User has completed at least 10 tasks total
       'condition': (int completedTaskCount) => completedTaskCount >= 10,
     },
   ];
 
-  /// Call this method when a task is completed to update streak, completedTaskCount, and check for new badges
   Future<void> onTaskCompleted({
     required DateTime completedAt,
     required int totalTasksToday,
@@ -78,20 +62,16 @@ class GamificationService {
     final uid = user.uid;
     final profileRef = _firestore.collection('users').doc(uid).collection('profile').doc('data');
     try {
-      // Update completed task count
       await profileRef.set({
         'completedTaskCount': FieldValue.increment(1),
       }, SetOptions(merge: true));
     } catch (e) {
       debugPrint('Error updating completedTaskCount: $e');
     }
-    // Update streak
     await _updateStreak(uid);
-    // Check and unlock badges
     await _checkAndUnlockBadges(uid, completedAt, totalTasksToday);
   }
 
-  /// Update the user's streak based on the last completion date
   Future<void> _updateStreak(String uid) async {
     final profileRef = _firestore.collection('users').doc(uid).collection('profile').doc('data');
     try {
@@ -119,7 +99,6 @@ class GamificationService {
     }
   }
 
-  /// Check and unlock badges after streak update
   Future<void> _checkAndUnlockBadges(String uid, DateTime completedAt, int totalTasksToday) async {
     final profileRef = _firestore.collection('users').doc(uid).collection('profile').doc('data');
     final badgesRef = _firestore.collection('users').doc(uid).collection('badges');
@@ -129,17 +108,15 @@ class GamificationService {
       final completedTaskCount = (profile['completedTaskCount'] ?? 0) as int;
       final streak = (profile['streak'] ?? 0) as int;
       final isMorning = completedAt.hour >= 6 && completedAt.hour < 12;
-      // Fallbacks for new badge condition params
       final isFirstTimeUser = (profile['createdAt'] != null && completedTaskCount == 1);
-      // TODO: Calculate streakCompletionRate for last 3 days (requires more data structure)
-      final streakCompletionRate = 100; // Placeholder: assume 100% for now
+      final streakCompletionRate = 100; 
       for (final badge in badgeDefinitions) {
         final badgeId = badge['id'] as String;
         try {
           final badgeDoc = await badgesRef.doc(badgeId).get();
           if (badgeDoc.exists) {
             debugPrint('Badge $badgeId already unlocked, skipping.');
-            continue; // Already unlocked
+            continue; 
           }
           bool unlocked = false;
           try {
@@ -147,7 +124,6 @@ class GamificationService {
               debugPrint('Badge $badgeId has null condition, skipping.');
               continue;
             }
-            // Call the correct condition signature for each badge
             switch (badgeId) {
               case 'first_step':
                 unlocked = badge['condition'](completedTaskCount, isFirstTimeUser);
@@ -195,7 +171,6 @@ class GamificationService {
     }
   }
 
-  /// Fetch the user's profile data (streak, completed task count)
   Future<Map<String, dynamic>> fetchProfile() async {
     final user = _auth.currentUser;
     if (user == null) return {};
@@ -209,7 +184,6 @@ class GamificationService {
     }
   }
 
-  /// Fetch all badges (both unlocked and locked) for the user
   Future<List<Badge>> fetchBadges() async {
     final user = _auth.currentUser;
     if (user == null) return [];

@@ -460,27 +460,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       );
                     },
                   ),
-                  // Feedback button
-                  //SizedBox(
-                    //width: double.infinity,
-                    //height: 50, // Consistent button height
-                    //child: OutlinedButton.icon(
-                      //onPressed: null, // Feedback route not implemented yet
-                      //icon: Icon(Icons.feedback_outlined, color: theme.colorScheme.primary),
-                      //label: Text('Feedback',
-                          //style: theme.textTheme.titleMedium?.copyWith(
-                                //color: theme.colorScheme.primary,
-                                //fontWeight: FontWeight.w600,
-                              //)),
-                      //style: OutlinedButton.styleFrom(
-                        //padding: const EdgeInsets.symmetric(vertical: 16),
-                        //shape: RoundedRectangleBorder(
-                          //borderRadius: BorderRadius.circular(12),
-                        //),
-                        //side: BorderSide(color: theme.colorScheme.primary, width: 2), // Primary color border
-                      //),
-                    //),
-                  //),
                   const SizedBox(height: 16),
                   SizedBox(
                     width: double.infinity,

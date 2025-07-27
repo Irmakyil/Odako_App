@@ -191,7 +191,7 @@ kullanılarak Burndown Chart hazırlanmıştır. User Story'ler kullanıcıları
 deneyimleri tahmin edilerek yazılmıştır.
 
  <details>
-  <summary><h2>Sprint 3 Çalışma Dökümantasyonları (?)</h2></summary>
+  <summary><h2>Sprint 3 Çalışma Dökümantasyonları</h2></summary>
 
   (in progress)
 
@@ -211,8 +211,8 @@ deneyimleri tahmin edilerek yazılmıştır.
 Meets üzerinden toplantı yaparak takım olarak proje hakkındaki ilerleme 
 tartışılmıştır.
 
-  (in progress)
-  (in progress)
+  WHATSAPP KOLAJ (in progress)
+  GOOGLE MEET SS (in progress) ???
   
 </details>
 
@@ -235,7 +235,7 @@ tartışılmıştır.
 
 
 * ### **Sprint Retrospective**
-  * (in progress)
+  * Duygusal Gelişim Takibi özelliği, Bootcamp sürecinin bitimine kalan sürenin yetersizliği, ayrıca Backend tarafında gerektireceği teknik hazırlık ve yapılacak işlerin boyutundan dolayı takım olarak uygulamada yer almamasında karar kılınmıştır.
   * (in progress)
 
 </details>

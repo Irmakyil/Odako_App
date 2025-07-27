@@ -69,7 +69,7 @@ flutter:
     - lib/presentation/assets/Button.png
     - lib/presentation/assets/background.png
     - lib/presentation/assets/face_good.png
-    - lib/presentation/assets/face_mid.png
+    - lib/presentation/assets/Face_Mid.png
     - lib/presentation/assets/face_bad.png
     - lib/presentation/assets/logo.png
     - lib/presentation/assets/maskot.png
@@ -86,6 +86,8 @@ flutter:
     - lib/presentation/assets/home.png
     - lib/presentation/assets/profile.png
     - lib/presentation/assets/task.png
+    - lib/presentation/assets/singout.png
+
 
 
 flutter_icons:

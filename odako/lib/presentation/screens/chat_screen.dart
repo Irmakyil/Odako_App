@@ -42,7 +42,6 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
-
   Future<void> _sendMessage() async {
     final text = _controller.text.trim();
     if (text.isEmpty) return;
@@ -119,7 +118,7 @@ class _ChatScreenState extends State<ChatScreen> {
         Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('lib/presentation/assets/na_background_5.png'),
+              image: AssetImage('lib/presentation/assets/Button.png'),
               fit: BoxFit.cover,
             ),
           ),
@@ -130,9 +129,9 @@ class _ChatScreenState extends State<ChatScreen> {
             title: Text(
               'Let\'s Talk',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
             centerTitle: true,
             backgroundColor: Colors.transparent,
@@ -151,7 +150,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 Center(
                   child: SizedBox(
                     height: 160,
-                    width: 160, 
+                    width: 160,
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
@@ -163,7 +162,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                         SizedBox(
                           height: 120,
-                          width: 120, 
+                          width: 120,
                           child: Image.asset(
                             'lib/presentation/assets/maskot.png',
                             fit: BoxFit.contain,
@@ -189,23 +188,28 @@ class _ChatScreenState extends State<ChatScreen> {
                                 .orderBy('createdAt', descending: false)
                                 .snapshots(),
                             builder: (context, snapshot) {
-                              if (snapshot.connectionState == ConnectionState.waiting) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
                                 return const Center(
                                   child: CircularProgressIndicator(),
                                 );
                               }
                               if (snapshot.hasError) {
-                                return Center(child: Text('Error: ${snapshot.error}'));
+                                return Center(
+                                  child: Text('Error: ${snapshot.error}'),
+                                );
                               }
                               final docs = snapshot.data!.docs;
                               final messages = docs
                                   .map(
                                     (doc) => ChatMessage.fromFirestore(
-                                        doc.data() as Map<String, dynamic>),
+                                      doc.data() as Map<String, dynamic>,
+                                    ),
                                   )
                                   .toList();
 
-                              final showGreeting = messages.isEmpty && !_isLoading;
+                              final showGreeting =
+                                  messages.isEmpty && !_isLoading;
                               int itemCount = messages.length;
                               if (showGreeting) {
                                 itemCount++;
@@ -222,11 +226,17 @@ class _ChatScreenState extends State<ChatScreen> {
                                     return Align(
                                       alignment: Alignment.centerLeft,
                                       child: Container(
-                                        margin: const EdgeInsets.symmetric(vertical: 4),
+                                        margin: const EdgeInsets.symmetric(
+                                          vertical: 4,
+                                        ),
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 16, vertical: 12),
+                                          horizontal: 16,
+                                          vertical: 12,
+                                        ),
                                         decoration: BoxDecoration(
-                                          color: Theme.of(context).colorScheme.surface,
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.surface,
                                           borderRadius: const BorderRadius.only(
                                             topLeft: Radius.circular(16),
                                             topRight: Radius.circular(16),
@@ -235,23 +245,34 @@ class _ChatScreenState extends State<ChatScreen> {
                                         ),
                                         child: Text(
                                           'How are you feeling today?',
-                                          style: Theme.of(context).textTheme.bodyMedium,
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium,
                                         ),
                                       ),
                                     );
                                   }
 
-                                  final msgIndex = showGreeting ? index - 1 : index;
+                                  final msgIndex = showGreeting
+                                      ? index - 1
+                                      : index;
 
-                                  if (_isLoading && msgIndex == messages.length) {
+                                  if (_isLoading &&
+                                      msgIndex == messages.length) {
                                     return Align(
                                       alignment: Alignment.centerLeft,
                                       child: Container(
-                                        margin: const EdgeInsets.symmetric(vertical: 4),
+                                        margin: const EdgeInsets.symmetric(
+                                          vertical: 4,
+                                        ),
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 16, vertical: 12),
+                                          horizontal: 16,
+                                          vertical: 12,
+                                        ),
                                         decoration: BoxDecoration(
-                                          color: Theme.of(context).colorScheme.surface,
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.surface,
                                           borderRadius: const BorderRadius.only(
                                             topLeft: Radius.circular(16),
                                             topRight: Radius.circular(16),
@@ -270,7 +291,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                     );
                                   }
 
-                                  if (msgIndex < 0 || msgIndex >= messages.length) {
+                                  if (msgIndex < 0 ||
+                                      msgIndex >= messages.length) {
                                     return const SizedBox.shrink();
                                   }
 
@@ -280,13 +302,19 @@ class _ChatScreenState extends State<ChatScreen> {
                                         ? Alignment.centerRight
                                         : Alignment.centerLeft,
                                     child: Container(
-                                      margin: const EdgeInsets.symmetric(vertical: 4),
+                                      margin: const EdgeInsets.symmetric(
+                                        vertical: 4,
+                                      ),
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 16, vertical: 12),
+                                        horizontal: 16,
+                                        vertical: 12,
+                                      ),
                                       decoration: BoxDecoration(
                                         color: msg.isUser
                                             ? const Color(0xFFE7A0CC)
-                                            : Theme.of(context).colorScheme.surface,
+                                            : Theme.of(
+                                                context,
+                                              ).colorScheme.surface,
                                         borderRadius: msg.isUser
                                             ? const BorderRadius.only(
                                                 topLeft: Radius.circular(16),
@@ -296,12 +324,16 @@ class _ChatScreenState extends State<ChatScreen> {
                                             : const BorderRadius.only(
                                                 topLeft: Radius.circular(16),
                                                 topRight: Radius.circular(16),
-                                                bottomRight: Radius.circular(16),
+                                                bottomRight: Radius.circular(
+                                                  16,
+                                                ),
                                               ),
                                       ),
                                       child: Text(
                                         msg.text,
-                                        style: Theme.of(context).textTheme.bodyMedium,
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium,
                                       ),
                                     ),
                                   );
@@ -313,7 +345,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.all(8.0), 
+                  padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
                       Expanded(
@@ -324,28 +356,35 @@ class _ChatScreenState extends State<ChatScreen> {
                           decoration: InputDecoration(
                             hintText: 'Share your thoughts...',
                             hintStyle: TextStyle(
-                              color: Theme.of(context).colorScheme.onSurface, 
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                             filled: true,
                             fillColor: Theme.of(context).colorScheme.surface,
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(24), 
-                              borderSide: BorderSide.none, 
+                              borderRadius: BorderRadius.circular(24),
+                              borderSide: BorderSide.none,
                             ),
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 12,
+                            ),
                           ),
-                          onSubmitted: _isLoading ? null : (_) => _sendMessage(),
-                          style: Theme.of(context).textTheme.bodyMedium, 
+                          onSubmitted: _isLoading
+                              ? null
+                              : (_) => _sendMessage(),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
                       const SizedBox(width: 8),
                       Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: const Color(0xFFE84797), 
+                          color: const Color(0xFFE84797),
                           boxShadow: [
                             BoxShadow(
-                              color: Theme.of(context).shadowColor.withAlpha(20),
+                              color: Theme.of(
+                                context,
+                              ).shadowColor.withAlpha(20),
                               blurRadius: 8,
                               offset: const Offset(0, 4),
                             ),

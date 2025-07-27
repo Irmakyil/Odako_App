@@ -17,25 +17,25 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
     {
       'label': 'DEPRESSED',
       'face': 'lib/presentation/assets/face_bad.png',
-      'sliderColor': Color.fromARGB(255, 255, 100, 100), //RENKLER DÜZENLENECEK
-      'faceColor': Color.fromARGB(255, 255, 100, 100),
-      'backgroundColor': Color.fromARGB(255, 255, 200, 200),
+      'sliderColor': Color(0xFFCE6B70),
+      'faceColor': Color(0xFF693537),
+      //'faceColor': Color(0xFFCE6B70), //same color design
       'background': 'lib/presentation/assets/background_bad.png',
     },
     {
       'label': 'MEH',
       'face': 'lib/presentation/assets/face_mid.png',
-      'sliderColor': Color.fromARGB(255, 255, 212, 82), //RENKLER DÜZENLENECEK
-      'faceColor': Color.fromARGB(255, 255, 212, 82),
-      'backgroundColor': Color.fromARGB(255, 255, 233, 168),
+      'sliderColor': Color(0xFFF1CC59),
+      'faceColor': Color(0xFF786A3D),
+      //'faceColor': Color(0xFFF1CC59), //same color design
       'background': 'lib/presentation/assets/background_mid.png',
     },
     {
       'label': 'AMAZING',
       'face': 'lib/presentation/assets/face_good.png',
-      'sliderColor': Color.fromARGB(255, 173, 255, 91), //RENKLER DÜZENLENECEK
-      'faceColor': Color.fromARGB(255, 173, 255, 91),
-      'backgroundColor': Color.fromARGB(255, 229, 255, 202),
+      'sliderColor': Color(0xFFA6BA49),
+      'faceColor': Color(0xFF666F36),
+      //'faceColor': Color(0xFFA6BA49), //same color design
       'background': 'lib/presentation/assets/background_good.png',
     },
   ];

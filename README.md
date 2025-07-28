@@ -13,13 +13,13 @@
 
 # **Proje Bilgileri**
 ## **Ürün İsmi**
-**Odako**
+**Reishi**
 
 ## **Ürün Logosu**
 <img width="300" height="300" alt="logo" src="https://github.com/user-attachments/assets/02098571-a1f9-47b3-a531-6a836cd4cd6e" />
 
 ## **Ürün Açıklaması**
-**Odako**, ADHD'ye sahip bireylerin dikkat, zaman yönetimi ve motivasyon sorunlarına destek olmak amacıyla geliştirilmiş, yapay zeka destekli bir mobil uygulamadır. Yardımsever maskotumuz *Reishi* sayesinde kullanıcılar her gün uygulamaya günlük hedeflerini ve duygularını anlatır ve planlama konusunda yardım alırlar. *Reishi*, durum incelemesi yapar ve görevleri kişiye özel dikkat döngülerine göre planlar.
+**Reishi**, ADHD'ye sahip bireylerin dikkat, zaman yönetimi ve motivasyon sorunlarına destek olmak amacıyla geliştirilmiş, yapay zeka destekli bir mobil uygulamadır. Yardımsever maskotumuz *Reishi* sayesinde kullanıcılar her gün uygulamaya günlük hedeflerini ve duygularını anlatır ve planlama konusunda yardım alırlar. *Reishi*, durum incelemesi yapar ve görevleri kişiye özel dikkat döngülerine göre planlar.
 
 ## **Ürün Özellikleri**
 | **Özellik** | **Açıklama** | 
@@ -28,11 +28,10 @@
 | **Görev Parçalama (Chunking)** | Büyük görevler küçük, tamamlanabilir adımlara ayrılır. Özellikle odaklanma problemi yaşayan kullanıcılar için uygundur. |
 | **Empatik Mikro Bildirimler** | Bildirimler sadece hatırlatma değil, motive edici ve kullanıcıya empatiyle yaklaşan içerikler sunar. |
 | **Renk Kodlu Arayüz** | Renklerle görev türü ayrımı, dikkat dağıtmayan sade ekranlar. ADHD dostu UX tasarımı. |
-| **Duygusal Gelişim Takibi** | Günlük ruh hali ve görev tamamlama bilgilerine göre haftalık grafiklerle gelişim takibi sağlar. |
 | **Oyunlaştırma** | Günlük tamamlanan görevler ile rozetler elde edilebilir. |
 
 ## **Hedef Kitle**
-**Odako**, özellikle gençler, ADHD'ye sahip bireyler, öğrenciler ve dijital ortamda dikkat kaybı yaşayan bireyler için hazırlanmıştır. Kolay kullanılabilir bir kişisel asistan deneyimi de sunar.
+**Reishi**, özellikle gençler, ADHD'ye sahip bireyler, öğrenciler ve dijital ortamda dikkat kaybı yaşayan bireyler için hazırlanmıştır. Kolay kullanılabilir bir kişisel asistan deneyimi de sunar.
 
 ## **Product Backlog URL**
 [Notion Backlog Documentation](https://www.notion.so/22621a28ee5680bcb8dec59ebcd3ba30?v=22621a28ee56804ea835000cfb89769e&source=copy_link)

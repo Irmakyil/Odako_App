@@ -284,9 +284,11 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                           controller: _tabController,
                           indicator: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage('lib/presentation/assets/chatbox1_variant_1.png'),
-                              fit: BoxFit.fill,
+                              image: AssetImage(
+                                'lib/presentation/assets/chatbox1_variant_1.png',
                               ),
+                              fit: BoxFit.fill,
+                            ),
                           ),
                           labelColor: theme.colorScheme.primary,
                           unselectedLabelColor:

@@ -8,7 +8,10 @@ import '../../services/gamification_service.dart';
 
 final List<Map<String, dynamic>> badgeConditions = [
   {'id': 'headstart', 'unlockInfo': 'Complete your first task'},
-  {'id': 'mushroom_madness', 'unlockInfo': 'Complete all tasks for 3 days in a row'},
+  {
+    'id': 'mushroom_madness',
+    'unlockInfo': 'Complete all tasks for 3 days in a row',
+  },
   {'id': 'charm', 'unlockInfo': 'Complete all 3 tasks today'},
   {'id': 'early_bird', 'unlockInfo': 'Complete a task between 06:00–12:00'},
   {'id': 'tenacious_ten', 'unlockInfo': 'Complete 10 total tasks'},
@@ -52,9 +55,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             );
             if (newBadgeId.isNotEmpty) {
               final badge = GamificationService().badgeDefinitions.firstWhere(
-                    (b) => b['id'] == newBadgeId,
-                    orElse: () => {},
-                  );
+                (b) => b['id'] == newBadgeId,
+                orElse: () => {},
+              );
               if (badge.isNotEmpty && mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -116,17 +119,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Text(
               unlocked ? 'Badge Unlocked!' : 'Locked Badge',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface,
-                    fontWeight: FontWeight.bold,
-                  ),
+                color: Theme.of(context).colorScheme.onSurface,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(width: 8),
-            if (icon.isNotEmpty)
-              Image.asset(
-                icon,
-                width: 28,
-                height: 28,
-              ),
+            if (icon.isNotEmpty) Image.asset(icon, width: 28, height: 28),
           ],
         ),
         content: SingleChildScrollView(
@@ -137,17 +135,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Text(
                 name,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  color: Theme.of(context).colorScheme.onSurface,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 8),
               if (unlocked)
                 Text(
                   desc,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
               if (!unlocked && unlockInfo != null && unlockInfo != '')
                 Padding(
@@ -155,8 +153,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Text(
                     'How to unlock: $unlockInfo',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
                   ),
                 ),
             ],
@@ -168,9 +166,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Text(
               'Close',
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
-                  ),
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],
@@ -237,8 +235,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         );
                       }
                       final data = snapshot.data ?? {};
-                      final username = (data['username'] != null &&
-                                  data['username'].toString().isNotEmpty)
+                      final username =
+                          (data['username'] != null &&
+                              data['username'].toString().isNotEmpty)
                           ? data['username']
                           : 'User';
                       final email =
@@ -253,7 +252,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Container(
                           decoration: BoxDecoration(
                             image: const DecorationImage(
-                              image: AssetImage('lib/presentation/assets/box_profile1c.png'),
+                              image: AssetImage(
+                                'lib/presentation/assets/box_profile1c.png',
+                              ),
                               fit: BoxFit.cover,
                             ),
                             borderRadius: BorderRadius.circular(20),
@@ -266,7 +267,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   radius: 45,
                                   backgroundColor: Color(0xFFECA0CC),
                                   backgroundImage: const AssetImage(
-                                      'lib/presentation/assets/maskot.png'),
+                                    'lib/presentation/assets/maskot.png',
+                                  ),
                                 ),
                                 const SizedBox(height: 16),
                                 Text(
@@ -282,7 +284,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Text(
                                   email,
                                   style: theme.textTheme.bodyLarge?.copyWith(
-                                      color: theme.colorScheme.onSurface),
+                                    color: theme.colorScheme.onSurface,
+                                  ),
                                   textAlign: TextAlign.center,
                                 ),
                                 if (age.isNotEmpty ||
@@ -319,7 +322,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         return const SizedBox.shrink();
                       }
                       final data = snapshot.data ?? {};
-                      final completedTaskCount = data['completedTaskCount'] ?? 0;
+                      final completedTaskCount =
+                          data['completedTaskCount'] ?? 0;
                       final streak = data['streak'] ?? 0;
                       return Card(
                         color: Colors.transparent,
@@ -328,7 +332,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Container(
                           decoration: BoxDecoration(
                             image: const DecorationImage(
-                              image: AssetImage('lib/presentation/assets/box_profile2c.png'),
+                              image: AssetImage(
+                                'lib/presentation/assets/box_profile2c.png',
+                              ),
                               fit: BoxFit.cover,
                             ),
                             borderRadius: BorderRadius.circular(20),
@@ -354,9 +360,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         'Completed Tasks: $completedTaskCount',
                                         style: theme.textTheme.bodyLarge
                                             ?.copyWith(
-                                                color:
-                                                    theme.colorScheme.onSurface,
-                                                ),
+                                              color:
+                                                  theme.colorScheme.onSurface,
+                                            ),
                                       ),
                                     ),
                                     Expanded(
@@ -364,9 +370,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         'Login Streak 🔥: $streak',
                                         style: theme.textTheme.bodyLarge
                                             ?.copyWith(
-                                                color:
-                                                    theme.colorScheme.onSurface,
-                                                ),
+                                              color:
+                                                  theme.colorScheme.onSurface,
+                                            ),
                                       ),
                                     ),
                                   ],
@@ -407,7 +413,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Container(
                           decoration: BoxDecoration(
                             image: const DecorationImage(
-                              image: AssetImage('lib/presentation/assets/box_profile3c.png'),
+                              image: AssetImage(
+                                'lib/presentation/assets/box_profile3c.png',
+                              ),
                               fit: BoxFit.cover,
                             ),
                             borderRadius: BorderRadius.circular(20),
@@ -428,10 +436,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ),
                                     ),
                                     const SizedBox(width: 8),
-                                    Icon(
-                                      Icons.stars,
-                                      color: Color(0xFF203F9A),
-                                    ),
+                                    Icon(Icons.stars, color: Color(0xFF203F9A)),
                                   ],
                                 ),
                                 const SizedBox(height: 16),
@@ -440,9 +445,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         'No badges yet! Complete tasks to earn them.',
                                         style: theme.textTheme.bodyLarge
                                             ?.copyWith(
-                                                color:
-                                                    theme.colorScheme.onSurface,
-                                                ),
+                                              color:
+                                                  theme.colorScheme.onSurface,
+                                            ),
                                       )
                                     : SizedBox(
                                         height: 120,
@@ -459,16 +464,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               onTap: () =>
                                                   _showBadgeDialog(badge),
                                               child: Opacity(
-                                                opacity:
-                                                    unlocked ? 1.0 : 0.4,
+                                                opacity: unlocked ? 1.0 : 0.4,
                                                 child: Container(
                                                   width: 100,
                                                   margin: const EdgeInsets.only(
-                                                      right: 16),
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      vertical: 12,
-                                                      horizontal: 8,
+                                                    right: 16,
+                                                  ),
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                        vertical: 12,
+                                                        horizontal: 8,
                                                       ),
                                                   decoration: BoxDecoration(
                                                     color: unlocked
@@ -476,12 +481,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         : Colors.white,
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            16),
+                                                          16,
+                                                        ),
                                                     border: Border.all(
                                                       color: unlocked
                                                           ? Color(0xFF94C2DA)
-                                                          : theme.colorScheme
-                                                              .outline,
+                                                          : theme
+                                                                .colorScheme
+                                                                .outline,
                                                       width: 1.5,
                                                     ),
                                                   ),
@@ -546,7 +553,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(6),
                           image: const DecorationImage(
-                            image: AssetImage('lib/presentation/assets/signin&out_button_red.png'),
+                            image: AssetImage(
+                              'lib/presentation/assets/signin&out_button_red.png',
+                            ),
                             fit: BoxFit.fill,
                           ),
                         ),

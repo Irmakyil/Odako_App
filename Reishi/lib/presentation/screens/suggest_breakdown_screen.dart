@@ -400,7 +400,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage('lib/presentation/assets/${priority.toLowerCase()}.png'),
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fill,
                           ),
                           borderRadius: BorderRadius.circular(12),
                         ),

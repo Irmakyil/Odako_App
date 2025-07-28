@@ -33,7 +33,10 @@ class AIService {
     }
   }
 
-  static Future<String> getDailyTaskSuggestion(String userInput, {int? moodIndex}) async {
+  static Future<String> getDailyTaskSuggestion(
+    String userInput, {
+    int? moodIndex,
+  }) async {
     final moodPrompt = moodIndex != null && moodPrompts.containsKey(moodIndex)
         ? moodPrompts[moodIndex]!
         : '';
@@ -41,12 +44,16 @@ class AIService {
     String userInfo = '';
     try {
       final data = await fetchUserProfile();
-      final username = (data?['username']?.toString().isNotEmpty ?? false) ? data!['username'] : 'User';
+      final username = (data?['username']?.toString().isNotEmpty ?? false)
+          ? data!['username']
+          : 'User';
       userInfo = 'User profile → Name: $username';
 
       if (data?['age'] != null) userInfo += ', Age: ${data!['age']}';
-      if (data?['gender']?.toString().isNotEmpty ?? false) userInfo += ', Gender: ${data!['gender']}';
-      if (data?['adhdType']?.toString().isNotEmpty ?? false) userInfo += ', ADHD Type: ${data!['adhdType']}';
+      if (data?['gender']?.toString().isNotEmpty ?? false)
+        userInfo += ', Gender: ${data!['gender']}';
+      if (data?['adhdType']?.toString().isNotEmpty ?? false)
+        userInfo += ', ADHD Type: ${data!['adhdType']}';
 
       userInfo += '.';
     } catch (e) {
@@ -54,7 +61,8 @@ class AIService {
       userInfo = '';
     }
 
-    final prompt = '''
+    final prompt =
+        '''
 You are a friendly and motivational assistant helping someone (the user) with ADHD plan their day. 
 ${userInfo.isNotEmpty ? "$userInfo\n" : ''}
 Today, the user feels: $moodPrompt
@@ -68,7 +76,8 @@ If the user is just sharing their thoughts and emotions, have a conversation wit
   }
 
   static Future<String> getTasksFromChatContext(String chatContext) async {
-    final prompt = '''
+    final prompt =
+        '''
 You are a friendly and motivational assistant helping someone with ADHD break down their task into manageable steps.
 
 Based on this conversation:
@@ -121,9 +130,11 @@ Return valid JSON formatting like this:
       debugPrint('Error fetching username for chat: $e');
     }
 
-    final prompt = 'The user\'s name is "$username". When you refer to the user, use their name instead of generic terms like \'User\'.\n$userMessage';
+    final prompt =
+        'The user\'s name is "$username". When you refer to the user, use their name instead of generic terms like \'User\'.\n$userMessage';
 
-    return await _postToGeminiApi(prompt) ?? "Sorry, I couldn't process that right now.";
+    return await _postToGeminiApi(prompt) ??
+        "Sorry, I couldn't process that right now.";
   }
 
   // Helper method to post request to Gemini API and parse response

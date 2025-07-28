@@ -35,7 +35,7 @@ class OdakoApp extends StatelessWidget {
     return MaterialApp(
       title: 'Odako',
       theme: ThemeData(
-        textTheme: GoogleFonts.marheyTextTheme(), 
+        textTheme: GoogleFonts.ranchersTextTheme(), 
       ),
       initialRoute: AppRoutes.splash,
       routes: {

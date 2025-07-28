@@ -11,14 +11,14 @@ class ChatBubble extends StatelessWidget {
     final align = isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start;
     final radius = isUser
         ? const BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
-            bottomLeft: Radius.circular(16),
+            topLeft: Radius.circular(32),
+            topRight: Radius.circular(32),
+            bottomLeft: Radius.circular(32),
           )
         : const BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
-            bottomRight: Radius.circular(16),
+            topLeft: Radius.circular(32),
+            topRight: Radius.circular(32),
+            bottomRight: Radius.circular(32),
           );
     return Column(
       crossAxisAlignment: align,

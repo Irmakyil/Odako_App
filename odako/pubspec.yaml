@@ -66,6 +66,7 @@ flutter:
  
   assets:
     - lib/presentation/assets/Button.png
+    - lib/presentation/assets/button_send.png
     - lib/presentation/assets/background.png
     - lib/presentation/assets/background_good.png
     - lib/presentation/assets/background_mid.png

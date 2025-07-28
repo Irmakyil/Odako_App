@@ -207,34 +207,6 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
                       itemCount: _messages.length,
                       itemBuilder: (context, index) {
                         final message = _messages[index];
-                        if (message.isTyping) {
-                          return Align(
-                            alignment: Alignment.centerLeft,
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(vertical: 4),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 12,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.surface,
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(16),
-                                  topRight: Radius.circular(16),
-                                  bottomRight: Radius.circular(16),
-                                ),
-                              ),
-                              child: const SizedBox(
-                                width: 24,
-                                height: 24,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Color(0xFFE84797),
-                                ),
-                              ),
-                            ),
-                          );
-                        }
                         return ChatBubble(
                           text: message.text,
                           isUser: message.isUser,
@@ -296,22 +268,12 @@ class _DailyQuestionScreenState extends State<DailyQuestionScreen> {
           ),
         ),
         const SizedBox(width: 8),
-        Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: const Color(0xFFE84797),
-            boxShadow: [
-              BoxShadow(
-                color: Theme.of(context).shadowColor.withAlpha(20),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: IconButton(
-            icon: const Icon(Icons.send),
-            color: Theme.of(context).colorScheme.onPrimary,
-            onPressed: _isLoading ? null : _sendMessage,
+        InkWell(
+          onTap: _isLoading ? null : _sendMessage,
+          child: Image.asset(
+            'lib/presentation/assets/button_send.png',
+            width: 48, // Adjust width as needed
+            height: 48, // Adjust height as needed
           ),
         ),
       ],

@@ -18,21 +18,18 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
       'label': 'DEPRESSED',
       'face': 'lib/presentation/assets/face_bad.png',
       'sliderColor': Color(0xFFCE6B70),
-      'faceColor': Color(0xFF693537),
       'background': 'lib/presentation/assets/background_bad.png',
     },
     {
       'label': 'MEH',
       'face': 'lib/presentation/assets/face_mid.png',
       'sliderColor': Color(0xFFF1CC59),
-      'faceColor': Color(0xFF786A3D),
       'background': 'lib/presentation/assets/background_mid.png',
     },
     {
       'label': 'AMAZING',
       'face': 'lib/presentation/assets/face_good.png',
       'sliderColor': Color(0xFFA6BA49),
-      'faceColor': Color(0xFF666F36),
       'background': 'lib/presentation/assets/background_good.png',
     },
   ];
@@ -44,7 +41,7 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
     Navigator.pushNamed(context, AppRoutes.dailyQuestion);
   }
 
-  Widget _buildFaceCircle(BuildContext context, Color faceColor, String faceAsset) {
+  Widget _buildFaceCircle(BuildContext context, String faceAsset) {
     final width = MediaQuery.of(context).size.width * 0.7;
     final height = MediaQuery.of(context).size.height * 0.4;
 
@@ -52,17 +49,6 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
       child: Container(
         width: width,
         height: height,
-        decoration: BoxDecoration(
-          color: faceColor,
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).shadowColor.withAlpha(50),
-              blurRadius: 20,
-              offset: const Offset(0, 8),
-            ),
-          ],
-        ),
         padding: const EdgeInsets.all(12),
         child: Image.asset(
           faceAsset,
@@ -127,7 +113,6 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
   Widget build(BuildContext context) {
     final mood = _moodData[_mood];
     final sliderColor = mood['sliderColor'] as Color;
-    final faceColor = mood['faceColor'] as Color;
     final backgroundImage = mood['background'] as String;
 
     return Stack(
@@ -173,7 +158,7 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                     textAlign: TextAlign.center,
                   ),
                   const Spacer(),
-                  _buildFaceCircle(context, faceColor, mood['face'] as String),
+                  _buildFaceCircle(context, mood['face'] as String),
                   const SizedBox(height: 50),
                   Text(
                     mood['label'] as String,

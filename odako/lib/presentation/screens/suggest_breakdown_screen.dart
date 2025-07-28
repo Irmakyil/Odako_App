@@ -142,7 +142,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Tasks saved!'), backgroundColor: Colors.green),
+        const SnackBar(content: Text('Tasks saved!'), backgroundColor: Color(0xFFE7A0CC)),
       );
       Navigator.pop(context);
     } catch (e) {
@@ -158,11 +158,11 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
   Color _getPriorityColor(String priority) {
     switch (priority.toLowerCase()) {
       case 'high':
-        return const Color.fromARGB(255, 255, 0, 0);
+        return const Color(0xFFCC3537);
       case 'medium':
-        return Colors.orangeAccent;
+        return const Color(0xFFF3AF44);
       case 'low':
-        return const Color.fromARGB(255, 0, 255, 85);
+        return const Color(0xFFD8C12D);
       default:
         return Colors.grey;
     }

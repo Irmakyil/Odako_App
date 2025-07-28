@@ -87,10 +87,11 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
                 const SizedBox(height: 32),
                 Text(
-                  'Welcome!',
+                  'WELCOME!',
                   style: theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                    backgroundColor: Colors.white,
                   ),
                 ),
               ],

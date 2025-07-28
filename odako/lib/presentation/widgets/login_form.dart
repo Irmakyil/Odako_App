@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'custom_text_field.dart';
-import 'gradient_button.dart';
 
 class LoginForm extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -26,6 +25,7 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Form(
       key: formKey,
       child: Column(
@@ -53,14 +53,44 @@ class LoginForm extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: TextButton(
               onPressed: isLoading ? null : onForgotPassword,
-              style: TextButton.styleFrom(foregroundColor: Colors.black87),
-              child: const Text('Forgot my password'),
+              style: TextButton.styleFrom(
+                foregroundColor: theme.colorScheme.primary,
+              ),
+              child: Text(
+                'Forgot my password',
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 16),
-          GradientButton(
-            text: 'Login',
-            onPressed: isLoading ? null : onLogin,
+          SizedBox(
+            width: double.infinity,
+            height: 50,
+            child: InkWell(
+              onTap: isLoading ? null : onLogin,
+              borderRadius: BorderRadius.circular(12),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  image: const DecorationImage(
+                    image: AssetImage('lib/presentation/assets/signin&out_button_blue.png'),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                alignment: Alignment.center,
+                child: isLoading
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : Text(
+                        'Login',
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+              ),
+            ),
           ),
           const SizedBox(height: 20),
           Row(
@@ -76,24 +106,40 @@ class LoginForm extends StatelessWidget {
           const SizedBox(height: 20),
           SizedBox(
             width: double.infinity,
-            child: OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black87,
-                minimumSize: const Size.fromHeight(48),
-                shape: RoundedRectangleBorder(
+            height: 50,
+            child: InkWell(
+              onTap: isLoading ? null : onGoogleSignIn,
+              borderRadius: BorderRadius.circular(12),
+              child: Container(
+                decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
+                  image: const DecorationImage(
+                    image: AssetImage('lib/presentation/assets/signin&out_button_white.png'),
+                    fit: BoxFit.fill,
+                  ),
                 ),
-                side: BorderSide.none,
-                textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                alignment: Alignment.center,
+                child: isLoading
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          googleIcon,
+                          const SizedBox(width: 8),
+                          Text(
+                            'Sign in with Google',
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              color: const Color(0xFF203F9A),
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
               ),
-              onPressed: isLoading ? null : onGoogleSignIn,
-              child: const Text('Sign in with Google'),
             ),
           ),
         ],
       ),
     );
   }
-} 
+}

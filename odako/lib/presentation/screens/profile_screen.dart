@@ -238,7 +238,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       }
                       final data = snapshot.data ?? {};
                       final username = (data['username'] != null &&
-                              data['username'].toString().isNotEmpty)
+                                  data['username'].toString().isNotEmpty)
                           ? data['username']
                           : 'User';
                       final email =
@@ -354,9 +354,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         'Completed Tasks: $completedTaskCount',
                                         style: theme.textTheme.bodyLarge
                                             ?.copyWith(
-                                              color:
-                                                  theme.colorScheme.onSurface,
-                                            ),
+                                                color:
+                                                    theme.colorScheme.onSurface,
+                                                ),
                                       ),
                                     ),
                                     Expanded(
@@ -364,9 +364,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         'Login Streak 🔥: $streak',
                                         style: theme.textTheme.bodyLarge
                                             ?.copyWith(
-                                              color:
-                                                  theme.colorScheme.onSurface,
-                                            ),
+                                                color:
+                                                    theme.colorScheme.onSurface,
+                                                ),
                                       ),
                                     ),
                                   ],
@@ -440,9 +440,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         'No badges yet! Complete tasks to earn them.',
                                         style: theme.textTheme.bodyLarge
                                             ?.copyWith(
-                                              color:
-                                                  theme.colorScheme.onSurface,
-                                            ),
+                                                color:
+                                                    theme.colorScheme.onSurface,
+                                                ),
                                       )
                                     : SizedBox(
                                         height: 120,
@@ -467,9 +467,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       right: 16),
                                                   padding: const EdgeInsets
                                                       .symmetric(
-                                                    vertical: 12,
-                                                    horizontal: 8,
-                                                  ),
+                                                      vertical: 12,
+                                                      horizontal: 8,
+                                                      ),
                                                   decoration: BoxDecoration(
                                                     color: unlocked
                                                         ? Colors.white
@@ -539,22 +539,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SizedBox(
                     width: double.infinity,
                     height: 50,
-                    child: ElevatedButton.icon(
-                      onPressed: () => _logout(context),
-                      icon: const Icon(Icons.logout, color: Colors.white),
-                      label: Text(
-                        'Sign Out',
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
+                    child: InkWell(
+                      onTap: () => _logout(context),
+                      borderRadius: BorderRadius.circular(12),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          image: const DecorationImage(
+                            image: AssetImage('lib/presentation/assets/signin&out_button_red.png'),
+                            fit: BoxFit.fill,
+                          ),
                         ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFD32F2F),
-                        foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.logout, color: Colors.white),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Sign Out',
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

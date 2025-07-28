@@ -63,7 +63,8 @@ class DailyProgressCircle extends StatelessWidget {
     } catch (_) {
       bg = colorScheme.surface;
     }
-    final fg = progressColor ?? colorScheme.primary;
+    const Color fixedProgressColor = Color(0xFFE7A0CC);
+
     final percentText = total == 0 ? '--%' : '${(percent * 100).round()}%';
     return Container(
       key: ValueKey(percentText),
@@ -78,7 +79,7 @@ class DailyProgressCircle extends StatelessWidget {
             child: CircularProgressIndicator(
               value: total == 0 ? 0 : percent,
               backgroundColor: backgroundColor ?? bg,
-              color: fg,
+              color: fixedProgressColor,
               strokeWidth: size * 0.10,
             ),
           ),
@@ -100,4 +101,4 @@ class DailyProgressCircle extends StatelessWidget {
       ),
     );
   }
-} 
+}

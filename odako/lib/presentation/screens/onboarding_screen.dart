@@ -283,8 +283,10 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                         child: TabBar(
                           controller: _tabController,
                           indicator: BoxDecoration(
-                            color: theme.colorScheme.primary.withAlpha(30),
-                            borderRadius: BorderRadius.circular(12),
+                            image: DecorationImage(
+                              image: AssetImage('lib/presentation/assets/chatbox1_variant_1.png'),
+                              fit: BoxFit.fill,
+                              ),
                           ),
                           labelColor: theme.colorScheme.primary,
                           unselectedLabelColor:

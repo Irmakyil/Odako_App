@@ -11,8 +11,8 @@ final Map<int, String> moodPrompts = {
 };
 
 class AIService {
-  static const String _geminiApiKey = 'AIzaSyArxXZemsiMMfDstQ9MtfZpf3rrdMLg15k';
-  static const String _geminiApiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';  
+  static const String _geminiApiKey = '';
+  static const String _geminiApiUrl = '';  
 
   static Future<Map<String, dynamic>?> fetchUserProfile({String? uid}) async {
     try {

@@ -91,6 +91,9 @@ flutter:
     - lib/presentation/assets/medium.png
     - lib/presentation/assets/high.png
     - lib/presentation/assets/low.png
+    - lib/presentation/assets/create_account.png
+    - lib/presentation/assets/button_signin.png
+    - lib/presentation/assets/signout.png
 
 
 flutter_icons:

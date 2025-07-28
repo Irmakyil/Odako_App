@@ -243,7 +243,6 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 0,
           backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
           fixedSize: const Size(double.infinity, 45),
           visualDensity: VisualDensity.compact,
         ),
@@ -319,7 +318,6 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.zero,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                elevation: 5,
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
                 fixedSize: const Size(150, 45),

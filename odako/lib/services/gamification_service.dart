@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 typedef Badge = Map<String, dynamic>;
 
 class GamificationService {
-  // Singleton pattern
   static final GamificationService _instance = GamificationService._internal();
   factory GamificationService() => _instance;
   GamificationService._internal();
@@ -13,42 +12,44 @@ class GamificationService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+
+
   final List<Badge> badgeDefinitions = [
     {
-      'id': 'first_step',
+      'id': 'headstart',
       'name': 'Headstart',
       'desc': 'You completed your first task!',
-      'icon': '🏁',
+      'icon': 'lib/presentation/assets/achievement_headstart.png',
       'condition': (int completedTaskCount, bool isFirstTimeUser) =>
-        completedTaskCount == 1 && isFirstTimeUser,
+          completedTaskCount == 1 && isFirstTimeUser,
     },
     {
-      'id': 'consistent_mind',
+      'id': 'mushroom_madness',
       'name': 'Mushroom Madness',
-      'desc': 'Completed all tasks for 3 days in a row',
-      'icon': '🍄',
+      'desc': 'Complete all tasks for 3 days in a row',
+      'icon': 'lib/presentation/assets/achievement_mushroom.png',
       'condition': (int streak, int streakCompletionRate) =>
-        streak == 3 && streakCompletionRate == 100,
+          streak == 3 && streakCompletionRate == 100,
     },
     {
-      'id': 'focused_day',
+      'id': 'charm',
       'name': 'Third Time\'s the Charm',
-      'desc': 'Completed all 3 tasks today',
-      'icon': '🗓️',
+      'desc': 'Complete all 3 tasks today',
+      'icon': 'lib/presentation/assets/achievement_charm.png',
       'condition': (int todayCount) => todayCount == 3,
     },
     {
-      'id': 'morning_start',
+      'id': 'early_bird',
       'name': 'Early Bird',
-      'desc': 'Completed a task between 06:00–12:00',
-      'icon': '🌅',
+      'desc': 'Complete a task between 06:00–12:00',
+      'icon': 'lib/presentation/assets/achievement_bird.png',
       'condition': (bool isMorning) => isMorning,
     },
     {
-      'id': 'productive_streak',
+      'id': 'tenacious_ten',
       'name': 'Tenacious Ten',
-      'desc': 'Completed 10 tasks in Total',
-      'icon': '🎖️',
+      'desc': 'Complete 10 tasks in Total',
+      'icon': 'lib/presentation/assets/achievement_tenacious.png',
       'condition': (int completedTaskCount) => completedTaskCount >= 10,
     },
   ];
@@ -109,14 +110,14 @@ class GamificationService {
       final streak = (profile['streak'] ?? 0) as int;
       final isMorning = completedAt.hour >= 6 && completedAt.hour < 12;
       final isFirstTimeUser = (profile['createdAt'] != null && completedTaskCount == 1);
-      final streakCompletionRate = 100; 
+      final streakCompletionRate = 100;
       for (final badge in badgeDefinitions) {
         final badgeId = badge['id'] as String;
         try {
           final badgeDoc = await badgesRef.doc(badgeId).get();
           if (badgeDoc.exists) {
             debugPrint('Badge $badgeId already unlocked, skipping.');
-            continue; 
+            continue;
           }
           bool unlocked = false;
           try {
@@ -125,19 +126,19 @@ class GamificationService {
               continue;
             }
             switch (badgeId) {
-              case 'first_step':
+              case 'headstart':
                 unlocked = badge['condition'](completedTaskCount, isFirstTimeUser);
                 break;
-              case 'consistent_mind':
+              case 'mushroom_madness':
                 unlocked = badge['condition'](streak, streakCompletionRate);
                 break;
-              case 'focused_day':
+              case 'charm':
                 unlocked = badge['condition'](totalTasksToday);
                 break;
-              case 'morning_start':
+              case 'early_bird':
                 unlocked = badge['condition'](isMorning);
                 break;
-              case 'productive_streak':
+              case 'tenacious_ten':
                 unlocked = badge['condition'](completedTaskCount);
                 break;
               default:
@@ -194,11 +195,11 @@ class GamificationService {
       return badgeDefinitions.map((badge) {
         final isUnlocked = unlockedIds.contains(badge['id']);
         final unlockedDocList = unlocked.docs.where((d) => d.id == badge['id']).toList();
-        final unlockedData = unlockedDocList.isNotEmpty ? unlockedDocList.first : null;
+        final unlockedData = unlockedDocList.isNotEmpty ? unlockedDocList.first.data() : null;
         return {
           ...badge,
           'unlocked': isUnlocked,
-          'unlockedAt': unlockedData != null ? unlockedData.data()['unlockedAt'] : null,
+          'unlockedAt': unlockedData != null ? unlockedData['unlockedAt'] : null,
         };
       }).toList();
     } catch (e) {
@@ -206,4 +207,4 @@ class GamificationService {
       return badgeDefinitions.map((b) => {...b, 'unlocked': false}).toList();
     }
   }
-} 
+}

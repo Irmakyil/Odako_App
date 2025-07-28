@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../../services/ai_service.dart';
 import '../widgets/chat_bubble.dart';
 
@@ -35,13 +34,14 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  bool _isLoading = false;
+  bool _isLoading = false; // This controls the send button and overall loading state
 
   @override
   void initState() {
     super.initState();
+    // Scroll to bottom after the first frame is rendered
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+      _scrollToBottom();
     });
   }
 
@@ -54,7 +54,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<void> _sendMessage() async {
     final text = _controller.text.trim();
-    if (text.isEmpty) return;
+    if (text.isEmpty) return; // Only check for empty text here, _isLoading is handled by GestureDetector
 
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
@@ -68,7 +68,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     try {
       setState(() {
-        _isLoading = true;
+        _isLoading = true; // Set loading state when sending message
       });
 
       await chatCol.add({
@@ -81,8 +81,10 @@ class _ChatScreenState extends State<ChatScreen> {
 
       _scrollToBottom();
 
+      // Get AI reply
       final aiReply = await AIService.sendMessageToGemini(text);
 
+      // Save AI reply to Firestore
       await chatCol.add({
         'text': aiReply,
         'isUser': false,
@@ -96,9 +98,9 @@ class _ChatScreenState extends State<ChatScreen> {
     } finally {
       if (mounted) {
         setState(() {
-          _isLoading = false;
+          _isLoading = false; // Reset loading state
         });
-        _scrollToBottom();
+        _scrollToBottom(); // Scroll to bottom after AI response
       }
     }
   }
@@ -107,7 +109,7 @@ class _ChatScreenState extends State<ChatScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent + 100,
+          _scrollController.position.maxScrollExtent + 100, // Add some buffer
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
@@ -124,7 +126,7 @@ class _ChatScreenState extends State<ChatScreen> {
         Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('lib/presentation/assets/na_background_5.png'),
+              image: AssetImage('lib/presentation/assets/na_background_3.png'),
               fit: BoxFit.cover,
             ),
           ),
@@ -205,10 +207,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                   .map((doc) => ChatMessage.fromFirestore(doc.data() as Map<String, dynamic>))
                                   .toList();
 
-                              final showGreeting = messages.isEmpty && !_isLoading;
-                              int itemCount = messages.length +
-                                  (showGreeting ? 1 : 0) +
-                                  (_isLoading ? 1 : 0);
+                              final showGreeting = messages.isEmpty; // No need for _isLoading here
+                              int itemCount = messages.length + (showGreeting ? 1 : 0); // Removed _isLoading check
 
                               return ListView.builder(
                                 controller: _scrollController,
@@ -226,31 +226,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
                                   final msgIndex = showGreeting ? index - 1 : index;
 
-                                  if (_isLoading && msgIndex == messages.length) {
-                                    return Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Container(
-                                        margin: const EdgeInsets.symmetric(vertical: 4),
-                                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                                        decoration: BoxDecoration(
-                                          color: Theme.of(context).colorScheme.surface,
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(16),
-                                            topRight: Radius.circular(16),
-                                            bottomRight: Radius.circular(16),
-                                          ),
-                                        ),
-                                        child: const SizedBox(
-                                          width: 24,
-                                          height: 24,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                            color: Color(0xFFE84797),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
+                                  // Removed the _isLoading typing indicator block as it's not applicable here.
+                                  // The ChatMessage class in this file does not have an isTyping property.
 
                                   if (msgIndex < 0 || msgIndex >= messages.length) {
                                     return const SizedBox.shrink();
@@ -287,26 +264,18 @@ class _ChatScreenState extends State<ChatScreen> {
                             contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                           ),
                           onSubmitted: _isLoading ? null : (_) => _sendMessage(),
+                          enabled: !_isLoading, // Disable input when loading
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: const Color(0xFFE84797),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Theme.of(context).shadowColor.withAlpha(20),
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: IconButton(
-                          icon: const Icon(Icons.send),
-                          color: Theme.of(context).colorScheme.onPrimary,
-                          onPressed: _isLoading ? null : _sendMessage,
+                      // Replaced the Container with IconButton with a GestureDetector wrapping Image.asset
+                      GestureDetector(
+                        onTap: _isLoading ? null : _sendMessage, // Disable tap when loading
+                        child: Image.asset(
+                          'lib/presentation/assets/button_send.png', // Your send button image
+                          width: 48, // Adjust width as needed
+                          height: 48, // Adjust height as needed
                         ),
                       ),
                     ],

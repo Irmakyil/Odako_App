@@ -430,7 +430,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     const SizedBox(width: 8),
                                     Icon(
                                       Icons.stars,
-                                      color: Color(0xFFE7A0CC),
+                                      color: Color(0xFF203F9A),
                                     ),
                                   ],
                                 ),
@@ -573,7 +573,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Column(
                       children: [
                         Text(
-                          'Odako',
+                          'Reishi',
                           style: theme.textTheme.headlineSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: theme.colorScheme.onSurface,

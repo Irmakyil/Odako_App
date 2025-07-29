@@ -53,8 +53,8 @@
   <summary><h2>Sprint 1 Çalışma Dökümantasyonları</h2></summary>
   
   ![dosya_1](https://github.com/user-attachments/assets/b2e9d9fd-f471-4534-9580-dfdd1b464d8b)
-  1. [Gereksinim Analizi](https://github.com/Irmakyil/YZTA-Bootcamp/blob/main/Project%20Management%20Files/Sprint%201/YZTA-Bootcamp-GereksinimAnalizi.pdf)
-  2. [Google Play Uygulama Araştırması ve Analizi](https://github.com/Irmakyil/YZTA-Bootcamp/blob/main/Project%20Management%20Files/Sprint%201/YZTA-Bootcamp-GooglePlayUygulama%20Ara%C5%9Ft%C4%B1rmas%C4%B1VeAnalizi.pdf)
+  * [Gereksinim Analizi](https://github.com/Irmakyil/YZTA-Bootcamp/blob/main/Project%20Management%20Files/Sprint%201/YZTA-Bootcamp-GereksinimAnalizi.pdf)
+  * [Google Play Uygulama Araştırması ve Analizi](https://github.com/Irmakyil/YZTA-Bootcamp/blob/main/Project%20Management%20Files/Sprint%201/YZTA-Bootcamp-GooglePlayUygulama%20Ara%C5%9Ft%C4%B1rmas%C4%B1VeAnalizi.pdf)
      
 </details>
 
@@ -62,8 +62,8 @@
   <summary><h2>Uygulama UI Navigasyon Şeması ve Test Demo Videosu</h2></summary>
   
   ![UI_navigasyon](https://github.com/user-attachments/assets/395ad34a-1b78-417b-b5d6-813b858b2a7d)
-  1. [1. Demo_Video](https://github.com/user-attachments/assets/82fc1744-c4d9-43a1-bdd0-8fdcf7ec9b30)
-  2. [2. Demo_Video](https://github.com/user-attachments/assets/05a6f66c-695b-44d6-9e34-ce3401b3b85f)
+  * [1. Demo_Video](https://github.com/user-attachments/assets/82fc1744-c4d9-43a1-bdd0-8fdcf7ec9b30)
+  * [2. Demo_Video](https://github.com/user-attachments/assets/05a6f66c-695b-44d6-9e34-ce3401b3b85f)
 
 </details>     
 
@@ -119,9 +119,9 @@
 
   ![dosya_2](https://github.com/user-attachments/assets/c682f87e-0be2-4d99-8e46-893aa9c8c5c4)
   <img width="1000" height="1500" alt="data_info_histogram" src="https://github.com/user-attachments/assets/884868d3-b08c-478f-99d7-6e809e3ef5af" />
-  1. [ADHD Araştırması](https://github.com/Irmakyil/YZTA-Bootcamp/blob/main/Project%20Management%20Files/Sprint%202/Bootcamp%20-%20ADHD%20Ara%C5%9Ft%C4%B1rmas%C4%B1%20ve%20Genel%20Direktifler.pdf)
-  2. [Uygulama Geliştirme Ana İlkeleri El Kitapçığı](https://github.com/Irmakyil/YZTA-Bootcamp/blob/main/Project%20Management%20Files/Sprint%202/Bootcamp%20-%20Uygulama%20Geli%C5%9Ftirme%20Ana%20%C4%B0lkeleri%20El%20Kitap%C3%A7%C4%B1%C4%9F%C4%B1.pdf)
-  3. [Exploratory Data Analysis](https://github.com/Irmakyil/YZTA-Bootcamp/blob/main/Data%20Analysis/ADHD_EDA.ipynb)
+  * [ADHD Araştırması](https://github.com/Irmakyil/YZTA-Bootcamp/blob/main/Project%20Management%20Files/Sprint%202/Bootcamp%20-%20ADHD%20Ara%C5%9Ft%C4%B1rmas%C4%B1%20ve%20Genel%20Direktifler.pdf)
+  * [Uygulama Geliştirme Ana İlkeleri El Kitapçığı](https://github.com/Irmakyil/YZTA-Bootcamp/blob/main/Project%20Management%20Files/Sprint%202/Bootcamp%20-%20Uygulama%20Geli%C5%9Ftirme%20Ana%20%C4%B0lkeleri%20El%20Kitap%C3%A7%C4%B1%C4%9F%C4%B1.pdf)
+  * [Exploratory Data Analysis](https://github.com/Irmakyil/YZTA-Bootcamp/blob/main/Data%20Analysis/ADHD_EDA.ipynb)
 
 </details>
   
@@ -185,6 +185,7 @@
 <details>
   <summary><h2>Reishi Açıklama Dosyası</h2></summary>
 
+  * [Reishi Açıklama Dosyası](https://github.com/Irmakyil/Reishi_App/blob/main/Project%20Management%20Files/Sprint%203/Reishi%20A%C3%A7%C4%B1klama%20Dosyas%C4%B1.pdf)
   <img width="1748" height="912" alt="Reishi Açıklama Dosyası" src="https://github.com/user-attachments/assets/e808579c-14ec-49ee-9c16-9b8ff334fc1e" />
 
 </details>

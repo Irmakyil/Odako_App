@@ -150,7 +150,7 @@ class MainMenuScreen extends StatelessWidget {
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-            title: const Text('Odako'),
+            title: const Text('Reishi'),
             centerTitle: true,
             backgroundColor: Colors.transparent,
             elevation: 0,

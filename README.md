@@ -128,8 +128,7 @@
 <details>
   <summary><h2>Uygulama Konsept Çizimleri ve Maskot Çalışması</h2></summary>
 
-  <img width="308" height="615" alt="app_design_1" src="https://github.com/user-attachments/assets/e73c761a-dcbd-4b32-b3cd-edf1913c457c" />
-  <img alt="app_design_2" src="https://github.com/user-attachments/assets/a5b4f7c9-7217-44cb-9a8e-ae7900b73179" />
+  <img width="1395" height="1240" alt="concept" src="https://github.com/user-attachments/assets/94d695f8-cdfc-43cb-bc08-fd611072d75b" />
   <img width="2000" height="1600" alt="designs_2" src="https://github.com/user-attachments/assets/21621b00-604f-4cd7-b640-dddf988331f6" />
 
 </details>

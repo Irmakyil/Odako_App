@@ -170,7 +170,7 @@
 </details>
 
 <details>
-  <summary><h1>Sprint 3 (Pending)</h1></summary>
+  <summary><h1>Sprint 3</h1></summary>
   
 * ### **Sprint Notları**
   Product Backlog URL'ine tıklayarak Notion üzerinden takip edilen görevlere göz atabilirsiniz. Sprint 3'te yapılan her görevin açıklamaları ve User Story'ler, görevin üstüne tıklandığında çıkan ekrandan incelenebilir. Sprint 3 ile birlikte Bootcamp sürecinin sonuna gelinmiştir. Bu proje kapsamında geliştirilmesi planlanan bazı özellikler ve işlevler, 6 haftalık Bootcamp projesi geliştirme süresi dahilinde uygulamada yer edinmemiştir. Uygulamanın yapısı, sayfaları, hizmetleri, işlevleri, uygulamada kullanılan teknolojiler, 6 haftalık süre içerisinde eklenememiş özellikler ve kullanım senaryosu ***Reishi Açıklama Dosyası*** kapsamında detaylıca anlatılmıştır.
@@ -182,10 +182,10 @@
 * ### **Backlog düzeni ve Story Seçimleri**
     Product backlog için Notion kullanılmıştır. Notion'da Sprint 3 için görevlerin yazılı olduğu tablo üzerinden proje gelişimi takip edilmiştir. Google Sheets kullanılarak Burndown Chart hazırlanmıştır. User Story'ler kullanıcıların deneyimleri tahmin edilerek yazılmıştır.
 
- <details>
+<details>
   <summary><h2>Reishi Açıklama Dosyası</h2></summary>
 
-  (in progress)
+  <img width="1748" height="912" alt="Reishi Açıklama Dosyası" src="https://github.com/user-attachments/assets/e808579c-14ec-49ee-9c16-9b8ff334fc1e" />
 
 </details>
   

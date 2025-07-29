@@ -40,14 +40,14 @@
   <summary><h1>Sprint 1</h1></summary>
   
 * ### **Sprint Notları**
-  Product Backlog URL'a tıklanarak Notion üzerinden takip edilen görevlere göz atılabilir. 1. Sprintte yapılan her görevin açıklamaları görevin üstüne tıklandığında çıkan ekrandan incelenebilir. User Story'ler 1. sprintte teknik çalışmalar ve detaylara girilmediğinden yazılmamıştır. 2. ve 3. sprintte User Story'ler eklenecektir. 
+  Product Backlog URL'ine tıklanarak Notion üzerinden takip edilen görevlere göz atılabilir. Sprint 1'de yapılan her görevin açıklamaları görevin üstüne tıklandığında çıkan ekrandan incelenebilir. User Story'ler 1. sprintte teknik çalışmalar ve detaylara girilmediğinden yazılmamıştır. Sprint 2 ve Sprint 3'te User Story'ler eklenecektir. 
 
   * **Sprint içinde tamamlanması tahmin edilen puan:** 100 puan
 
   * **Puan tamamlama mantığı:** Proje boyunca tamamlanması planlanan toplamda 300 puanlık görev bulunmaktadır. Her sprintte 100 puanlık görev tamamlanması yönünde karar alındı.
 
 * ### **Backlog düzeni ve Story Seçimleri**
-    Product backlog için Notion kullanılmıştır. Notion'da proje için bir Workspace açılmış ve her sprint için görevlerin yazılı olduğu 3 ayrı tablo hazırlanmıştır. Google Sheets kullanılarak Burndown Chart hazırlanmıştır.
+    Product backlog için Notion kullanılmıştır. Notion'da proje için bir Workspace açılmış ve her Sprint için görevlerin yazılı olduğu 3 ayrı tablo hazırlanmıştır. Google Sheets kullanılarak Burndown Chart hazırlanmıştır.
 
 <details>
   <summary><h2>Sprint 1 Çalışma Dökümantasyonları</h2></summary>
@@ -91,7 +91,7 @@
 </details>
 
 * ### **Sprint Review**
-  Başlangıçta proje fikri olarak eğitim teması üzerinden bir proje fikri yapma fikri Enis tarafından ortaya atılmıştır. Ancak daha sonraki toplantılarda ve beyin fırtınalarında bu fikrin kullanışlı olmayacağına karar verilmiş ve onun yerine sağlık alanında ADHD konusunda bir yapay zeka destekli mobil uygulama fikri Zeynep tarafından öne sürülmüş ve takımın ortak kararı ile bu konu hakkında proje yapılmasına karar verilmiştir. Birinci sprintte herkese görev dağılımı yapılmıştır. Birinci sprintte verilen karar üzerine Enis Scrum Master rolü ile dökümantasyonları, asistan ile görüşmeleri yapacak, Notion üzerinden görevleri ve takımı takip edecektir. ADHD konusunda teknik bilgi ve teknoloji araştırması ve yapay zeka entegrasyonunu yapacaktır. Zeynep, Product Owner olarak uygulamanın gidişatı ve geliştirilme süreçlerinde konsept kararları ve fikirleri almıştır. Uygulamanın sanat-tasarımı ve dizaynını Zeynep üstlenecektir. 1. sprintte de mockup dizaynlarını yapmıştır. Irmak ve Hayrünnisa birlikte Flutter kullanarak mobil uygulamanın hazırlanması ve kodlanması görevini almışlardır. Irmak ve Hayrünnisa, ayrı olarak bir demo geliştirip testler yürütmüşler ve sonuçları takımla paylaşmışlardır. Süreç içinde görevlerin değişebilmesi her zaman söz konusudur. 
+  Başlangıçta proje fikri olarak eğitim teması üzerinden bir proje fikri yapma fikri Enis tarafından ortaya atılmıştır. Ancak daha sonraki toplantılarda ve beyin fırtınalarında bu fikrin kullanışlı olmayacağına karar verilmiş ve onun yerine sağlık alanında ADHD konusunda bir yapay zeka destekli mobil uygulama fikri Zeynep tarafından öne sürülmüş ve takımın ortak kararı ile bu konu hakkında proje yapılmasına karar verilmiştir. Sprint 1'de herkese görev dağılımı yapılmıştır. Sprint 1'de verilen karar üzerine Enis Scrum Master rolü ile dökümantasyonları, asistan ile görüşmeleri yapacak, Notion üzerinden görevleri ve takımı takip edecektir. ADHD konusunda teknik bilgi ve teknoloji araştırması ve yapay zeka entegrasyonunu yapacaktır. Zeynep, Product Owner olarak uygulamanın gidişatı ve geliştirilme süreçlerinde konsept kararları ve fikirleri almıştır. Uygulamanın sanat-tasarımı ve dizaynını Zeynep üstlenecektir. Sprint 1'de de mockup dizaynlarını yapmıştır. Irmak ve Hayrünnisa birlikte Flutter kullanarak mobil uygulamanın hazırlanması ve kodlanması görevini almışlardır. Irmak ve Hayrünnisa, ayrı olarak bir demo geliştirip testler yürütmüşler ve sonuçları takımla paylaşmışlardır. Süreç içinde görevlerin değişebilmesi her zaman söz konusudur. 
 
 * ### **Sprint Retrospective**
   * Geliştirilen mobil uygulama için takım olarak ortak verilen karar doğrulturusunda, işlevlerin ve özelliklerin yeterli sayıda tutulması ve uygulamaya gereğinden fazla özellik eklenmemesi projeyi zamanında bitirebilmek için kabul edilmiştir.
@@ -105,14 +105,14 @@
   <summary><h1>Sprint 2</h1></summary>
   
 * ### **Sprint Notları**
-  Product Backlog URL'a tıklanarak Notion üzerinden takip edilen görevlere göz atılabilir. 2. Sprintte yapılan her görevin açıklamaları ve User Story'ler görevin üstüne tıklandığında çıkan ekrandan incelenebilir.
+  Product Backlog URL'ine tıklanarak Notion üzerinden takip edilen görevlere göz atılabilir. Sprint 2'de yapılan her görevin açıklamaları ve User Story'ler görevin üstüne tıklandığında çıkan ekrandan incelenebilir.
 
   * **Sprint içinde tamamlanması tahmin edilen puan:** 100 puan
 
   * **Puan tamamlama mantığı:** Proje boyunca tamamlanması planlanan toplamda 300 puanlık görev bulunmaktadır. Her sprintte 100 puanlık görev tamamlanması yönünde karar alındı.
 
 * ### **Backlog düzeni ve Story Seçimleri**
-    Product backlog için Notion kullanılmıştır. Notion'da 2. sprint için görevlerin yazılı olduğu tablo üzerinden proje gelişimi takip edilmiştir. Google Sheets kullanılarak Burndown Chart hazırlanmıştır. User Story'ler kullanıcıların deneyimleri tahmin edilerek yazılmıştır.
+    Product backlog için Notion kullanılmıştır. Notion'da Sprint 2 için görevlerin yazılı olduğu tablo üzerinden proje gelişimi takip edilmiştir. Google Sheets kullanılarak Burndown Chart hazırlanmıştır. User Story'ler kullanıcıların deneyimleri tahmin edilerek yazılmıştır.
 
  <details>
   <summary><h2>Sprint 2 Çalışma Dökümantasyonları</h2></summary>
@@ -173,24 +173,17 @@
   <summary><h1>Sprint 3 (Pending)</h1></summary>
   
 * ### **Sprint Notları**
-  Product Backlog URL'a tıklanarak Notion üzerinden takip edilen görevlere göz 
-atılabilir. 3. Sprintte yapılan her görevin açıklamaları ve User Story'ler görevin 
-üstüne tıklandığında çıkan ekrandan incelenebilir.
+  Product Backlog URL'ine tıklayarak Notion üzerinden takip edilen görevlere göz atabilirsiniz. Sprint 3'te yapılan her görevin açıklamaları ve User Story'ler, görevin üstüne tıklandığında çıkan ekrandan incelenebilir. Sprint 3 ile birlikte Bootcamp sürecinin sonuna gelinmiştir. Bu proje kapsamında geliştirilmesi planlanan bazı özellikler ve işlevler, 6 haftalık Bootcamp projesi geliştirme süresi dahilinde uygulamada yer edinmemiştir. Uygulamanın yapısı, sayfaları, hizmetleri, işlevleri, uygulamada kullanılan teknolojiler, 6 haftalık süre içerisinde eklenememiş özellikler ve kullanım senaryosu ***Reishi Açıklama Dosyası*** kapsamında detaylıca anlatılmıştır.
 
   * **Sprint içinde tamamlanması tahmin edilen puan:** 100 puan
 
-  * **Puan tamamlama mantığı:** Proje boyunca tamamlanması planlanan toplamda 300 
-puanlık görev bulunmaktadır. Her sprintte 100 puanlık görev tamamlanması yönünde 
-karar alındı.
+  * **Puan tamamlama mantığı:** Proje boyunca tamamlanması planlanan toplamda 300 puanlık görev bulunmaktadır. Her sprintte 100 puanlık görev tamamlanması yönünde karar alındı.
 
 * ### **Backlog düzeni ve Story Seçimleri**
-    Product backlog için Notion kullanılmıştır. Notion'da 3. sprint için görevlerin 
-yazılı olduğu tablo üzerinden proje gelişimi takip edilmiştir. Google Sheets 
-kullanılarak Burndown Chart hazırlanmıştır. User Story'ler kullanıcıların 
-deneyimleri tahmin edilerek yazılmıştır.
+    Product backlog için Notion kullanılmıştır. Notion'da Sprint 3 için görevlerin yazılı olduğu tablo üzerinden proje gelişimi takip edilmiştir. Google Sheets kullanılarak Burndown Chart hazırlanmıştır. User Story'ler kullanıcıların deneyimleri tahmin edilerek yazılmıştır.
 
  <details>
-  <summary><h2>Sprint 3 Çalışma Dökümantasyonları</h2></summary>
+  <summary><h2>Reishi Açıklama Dosyası</h2></summary>
 
   (in progress)
 

@@ -72,6 +72,7 @@ flutter:
     - lib/presentation/assets/achievement_tenacious.png
     - lib/presentation/assets/Button.png
     - lib/presentation/assets/button_send.png
+    - lib/presentation/assets/button_blue.png
     - lib/presentation/assets/signin&out_button_blue.png
     - lib/presentation/assets/signin&out_button_white.png
     - lib/presentation/assets/signin&out_button_red.png
@@ -80,6 +81,7 @@ flutter:
     - lib/presentation/assets/background_good.png
     - lib/presentation/assets/background_mid.png
     - lib/presentation/assets/background_bad.png
+    - lib/presentation/assets/background_signin_on.png
     - lib/presentation/assets/box_profile1c.png
     - lib/presentation/assets/box_profile2c.png
     - lib/presentation/assets/box_profile3c.png

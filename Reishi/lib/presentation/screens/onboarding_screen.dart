@@ -248,30 +248,30 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     fit: BoxFit.contain,
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 35),
                 Container(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 8.0,
+                    horizontal: 20.0,
+                    vertical: 15.0,
                   ),
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('lib/presentation/assets/Button.png'),
-                      fit: BoxFit.cover,
+                      image: AssetImage('lib/presentation/assets/button_blue.png'),
+                      fit: BoxFit.fill,
                     ),
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   child: Text(
                     'Your personalized AI helper for ADHD.',
                     style: theme.textTheme.bodyLarge?.copyWith(
-                      color: Color.fromARGB(255, 0, 0, 0),
+                      color: Colors.white,
                     ),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 const SizedBox(height: 32),
                 DefaultTabController(
-                  length: 2,
+                  length: 35,
                   initialIndex: _tabController.index,
                   child: Column(
                     children: [
@@ -285,14 +285,13 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                           indicator: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
-                                'lib/presentation/assets/chatbox1_variant_1.png',
+                                'lib/presentation/assets/background_signin_on.png',
                               ),
-                              fit: BoxFit.fill,
+                              fit: BoxFit.cover,
                             ),
                           ),
-                          labelColor: theme.colorScheme.primary,
-                          unselectedLabelColor:
-                              theme.textTheme.bodyMedium?.color,
+                         labelColor: Colors.black,
+                         unselectedLabelColor: Colors.black,
                           tabs: const [
                             Tab(text: 'Sign Up'),
                             Tab(text: 'Sign In'),

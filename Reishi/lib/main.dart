@@ -33,13 +33,14 @@ class OdakoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Odako',
+      title: 'Reishi',
       theme: ThemeData(
         textTheme: GoogleFonts.ranchersTextTheme(), 
       ),
       initialRoute: AppRoutes.splash,
       routes: {
         AppRoutes.splash: (context) => const SplashScreen(), 
+        AppRoutes.profileOnboarding: (context) => const ProfileOnboardingScreen(),
         AppRoutes.onboarding: (context) => const OnboardingScreen(),
         AppRoutes.moodSelection: (context) => const MoodSelectionScreen(),
         AppRoutes.moodSelector: (context) => const MoodSelectionScreen(),
@@ -49,7 +50,6 @@ class OdakoApp extends StatelessWidget {
         AppRoutes.mainMenu: (context) => const MainMenuScreen(),
         AppRoutes.chat: (context) => const ChatScreen(),
         AppRoutes.profile: (context) => const ProfileScreen(),
-        AppRoutes.profileOnboarding: (context) => const ProfileOnboardingScreen(),
       },
       debugShowCheckedModeBanner: false,
     );

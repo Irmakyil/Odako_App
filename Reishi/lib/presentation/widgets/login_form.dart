@@ -114,7 +114,7 @@ class LoginForm extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   image: const DecorationImage(
-                    image: AssetImage('lib/presentation/assets/signin&out_button_white.png'),
+                    image: AssetImage('lib/presentation/assets/signin&out_button_pink.png'),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -129,7 +129,7 @@ class LoginForm extends StatelessWidget {
                           Text(
                             'Sign in with Google',
                             style: theme.textTheme.titleMedium?.copyWith(
-                              color: const Color(0xFF203F9A),
+                              color: Colors.white,
                               fontWeight: FontWeight.w600,
                             ),
                           ),

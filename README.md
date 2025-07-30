@@ -211,14 +211,14 @@ tartışılmıştır.
 <details>
   <summary><h2>Sprint 3 Tablosu Güncellemesi</h2></summary>
 
-  (in progress)
+  <img width="1600" height="900" alt="backlog_sprint3" src="https://github.com/user-attachments/assets/29655a9a-6010-4823-99f0-10f3712cb499" />
 
 </details>
 
 <details>
   <summary><h2>Sprint 3 Burndown Chart</h2></summary>
 
-  (in progress)
+  <img width="1967" height="529" alt="Burn Down Chart - Sprint 3-1" src="https://github.com/user-attachments/assets/0dae7d38-785e-4e9a-a325-5f639bfe0c11" />
 
 </details>
 

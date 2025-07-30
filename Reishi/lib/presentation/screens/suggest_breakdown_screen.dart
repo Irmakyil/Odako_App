@@ -249,7 +249,7 @@ class _SuggestBreakdownScreenState extends State<SuggestBreakdownScreen> {
         child: Ink(
           decoration: BoxDecoration(
             image: const DecorationImage(
-              image: AssetImage('lib/presentation/assets/Button.png'),
+              image: AssetImage('lib/presentation/assets/button_blue.png'),
               fit: BoxFit.cover,
             ),
             borderRadius: BorderRadius.circular(10),

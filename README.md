@@ -1,5 +1,5 @@
 ## **Takım İsmi**
-**Takım Odak04**
+**ODAKO_04**
 
 ## **Takım Üyeleri**
 | Üye | Rol | LinkedIn |
@@ -192,7 +192,7 @@
 <details>
   <summary><h2>Uygulamanın Son Hali</h2></summary>
 
-  (in progress)
+  <img width="1675" height="1240" alt="final_form" src="https://github.com/user-attachments/assets/e796d559-e3f5-41ba-bd6b-de81aee3cf64" />
 
 </details>
   

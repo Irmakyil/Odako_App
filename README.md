@@ -13,7 +13,7 @@
 
 # **Proje Bilgileri**
 ## **Ürün İsmi**
-**Reishi**
+<img width="400" height="225" alt="name_logo" src="https://github.com/user-attachments/assets/8927e802-45db-4edf-bf40-c306c675ff83" />
 
 ## **Ürün Logosu**
 <img width="300" height="300" alt="logo" src="https://github.com/user-attachments/assets/02098571-a1f9-47b3-a531-6a836cd4cd6e" />

@@ -172,7 +172,7 @@
   <summary><h1>Sprint 3</h1></summary>
   
 * ### **Sprint Notları**
-  Product Backlog URL'ine tıklayarak Notion üzerinden takip edilen görevlere göz atabilirsiniz. Sprint 3'te yapılan her görevin açıklamaları ve User Story'ler, görevin üstüne tıklandığında çıkan ekrandan incelenebilir. Sprint 3 ile birlikte Bootcamp sürecinin sonuna gelinmiştir. Bu proje kapsamında geliştirilmesi planlanan bazı özellikler ve işlevler, 6 haftalık Bootcamp projesi geliştirme süresi dahilinde uygulamada yer edinmemiştir. Uygulamanın yapısı, sayfaları, hizmetleri, işlevleri, uygulamada kullanılan teknolojiler, 6 haftalık süre içerisinde eklenememiş özellikler ve kullanım senaryosu ***Reishi Açıklama Dosyası*** kapsamında detaylıca anlatılmıştır.
+  Product Backlog URL'ine tıklayarak Notion üzerinden takip edilen görevlere göz atabilirsiniz. Sprint 3'te yapılan her görevin açıklamaları ve User Story'ler, görevin üstüne tıklandığında çıkan ekrandan incelenebilir. Sprint 3 ile birlikte Bootcamp sürecinin sonuna gelinmiştir. Bu proje kapsamında geliştirilmesi planlanan bazı özellikler ve işlevler, 6 haftalık Bootcamp projesi geliştirme süresi dahilinde uygulamada yer edinmemiştir. Uygulamanın yapısı, sayfaları, hizmetleri, işlevleri, uygulamada kullanılan teknolojiler, 6 haftalık süre içerisinde eklenememiş özellikler ve kullanım senaryosu [Reishi Açıklama Dosyası](https://github.com/Irmakyil/Reishi_App/blob/main/Project%20Management%20Files/Sprint%203/Reishi%20A%C3%A7%C4%B1klama%20Dosyas%C4%B1.pdf) kapsamında detaylıca anlatılmıştır.
 
   * **Sprint içinde tamamlanması tahmin edilen puan:** 100 puan
 

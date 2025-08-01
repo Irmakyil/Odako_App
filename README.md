@@ -234,7 +234,7 @@ tartışılmıştır.
 
 ## **Uygulama Tanıtım Videosu**
 
-[![thumbnail](https://github.com/user-attachments/assets/9ac92534-8b7a-42b1-aedd-503d78329a12)](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+[![thumbnail](https://github.com/user-attachments/assets/9ac92534-8b7a-42b1-aedd-503d78329a12)](https://youtu.be/6gh9rOzsUeM?si=XjWDpGW6B6xvWFik)
 
 
 

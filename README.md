@@ -223,12 +223,13 @@
 </details>
 
 * ### **Sprint Review**
-  * Sprint 3'de (in progress)
+  * Sprint 3'de ana görev olarak uygulamanın Frontend dizaynı üzerinden geçilmiş ve başarı rozetleri gibi bir çok yeni element eklenmiştir. Backend kısmında çok değişiklikler olmamakla birlikte, dosyalarda ve kodlarda temizliğe gidilmiş ve teslime hazır hale getirilmiştir. Uygulama için kişiye özel bildirim özelliği Firebase üzerinden eklenmiştir. Zeynep, son dizaynların ve görsel elementlerin hazırlanmasında görev almıştır. Enis, Frontend'in düzenlenmsei, tanıtım videosunun çekilmesi, editlenmesi ve projenin yönetiminde görev almıştır. Hayrünnisa da Frontend'in düzenlemesinde Enis'e yardım etmiştir. Irmak, Backend'in son düzenlemeleri, kodun temizlenmesi, [Reishi Açıklama Dosyası](https://github.com/Irmakyil/Reishi_App/blob/main/Project%20Management%20Files/Sprint%203/Reishi%20A%C3%A7%C4%B1klama%20Dosyas%C4%B1.pdf)nın yazılması ve bildirim fonksiyonlarının eklenmesinde görev almıştır. Bu Sprint ile YZTA Bootcamp sürecinin sonuna gelinmiş ve takım olarak güzel bir proje geliştirme süreci deneyimlenmiştir.
 
 
 * ### **Sprint Retrospective**
   * Duygusal Gelişim Takibi özelliği, Bootcamp sürecinin bitimine kalan sürenin yetersizliği, ayrıca Backend tarafında gerektireceği teknik hazırlık ve yapılacak işlerin boyutundan dolayı takım olarak uygulamada yer almamasında karar kılınmıştır.
-  * (in progress)
+  * Sprint 3 ile birlikte uygulama son formunu almıştır ve Bootcamp için teslime hazır hale getirilmiştir.
+  * Takım olarak gelecekte başka olası projelerde işbirliği yapılabileceğine ve iletişimde kalınacağına dair söz verilmiştir.
 
 </details>
 

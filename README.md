@@ -201,13 +201,11 @@
 <details>
   <summary><h2>Daily Scrum</h2></summary>
 
-  Daily Scrum buluşmaları Whatsapp üzerinden yapılmıştır. Haftada 1-2 kez ise Google 
-Meets üzerinden toplantı yaparak takım olarak proje hakkındaki ilerleme 
-tartışılmıştır.
+  Daily Scrum buluşmaları Whatsapp üzerinden yapılmıştır. Haftada 1-2 kez ise Google Meets üzerinden toplantı yaparak takım olarak proje hakkındaki ilerleme tartışılmıştır.
 
-  WHATSAPP KOLAJ (in progress)
-  GOOGLE MEET SS (in progress) ???
-  
+  <img width="2000" height="1600" alt="daily_scrum_3" src="https://github.com/user-attachments/assets/0922e503-4134-471a-8e2e-2024a1dc3f67" />
+  <img width="1920" height="1080" alt="sprint3_meets" src="https://github.com/user-attachments/assets/d915d2c5-c4a6-4704-9a24-43d0a6fa4354" />
+
 </details>
 
 <details>

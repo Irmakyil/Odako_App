@@ -21,7 +21,7 @@
 ## **Ürün Açıklaması**
 **Reishi**, ADHD'ye sahip bireylerin dikkat, zaman yönetimi ve motivasyon sorunlarına destek olmak amacıyla geliştirilmiş, yapay zeka destekli bir mobil uygulamadır. Yardımsever maskotumuz *Reishi* sayesinde kullanıcılar her gün uygulamaya günlük hedeflerini ve duygularını anlatır ve planlama konusunda yardım alırlar. *Reishi*, durum incelemesi yapar ve görevleri kişiye özel dikkat döngülerine göre planlar. 
 * Detaylı bilgi ve açıklama için [Reishi Açıklama Dosyası](https://github.com/Irmakyil/Reishi_App/blob/main/Project%20Management%20Files/Sprint%203/Reishi%20A%C3%A7%C4%B1klama%20Dosyas%C4%B1.pdf)'nı okuyabilirsiniz.
-* Uygulamayı [APK dosyası](https://github.com/Irmakyil/Reishi_App/blob/main/Project%20Management%20Files/reishi_v1.0.0.apk)nı indirerek kullanabilirsiniz. 
+* Uygulamayı [APK dosyası](https://github.com/Irmakyil/Reishi_App/blob/main/Project%20Management%20Files/reishi_v1.0.0.apk)nı indirerek kullanabilirsiniz. ***(Sadece Android cihazlar için.)***
 
 ## **Ürün Özellikleri**
 | **Özellik** | **Açıklama** | 
@@ -35,7 +35,7 @@
 ## **Hedef Kitle**
 **Reishi** gençler, öğrenciler, dijital ortamda dikkat kaybı yaşayanlar ve özellikle ADHD'ye sahip bireyler için hazırlanmıştır. Kolay kullanılabilir bir kişisel asistan deneyimi sunar.
 
-## **Product Backlog URL**
+## **🗂️Product Backlog URL**
 [Notion Backlog Documentation](https://www.notion.so/22621a28ee5680bcb8dec59ebcd3ba30?v=22621a28ee56804ea835000cfb89769e&source=copy_link)
 
 <details>
